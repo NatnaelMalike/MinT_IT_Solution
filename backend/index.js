@@ -4,6 +4,7 @@ import dotenv from  'dotenv'
 dotenv.config()
 const app = express() 
 mongoose.connect(`mongodb://localhost:27017/MinT_IT_Solution`)
+app.use(express.json())
 .then(() => {
     console.log("DB Connected Successfully");
     app.listen(() => {
