@@ -1,3 +1,4 @@
+import Joi from "joi";
 import mongoose from "mongoose";
 const adminSchema = mongoose.Schema({
     fullName: {
@@ -7,6 +8,7 @@ const adminSchema = mongoose.Schema({
     email: {
         type: String,
         required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -22,6 +24,16 @@ const adminSchema = mongoose.Schema({
     },
 });
 
+function userValidator(user) {
+    const schema = Joi.object({
+        fullName: Joi.string().required().min(5).max(50),
+        email: Joi.string().email().required().min(5).max(255),
+        password: Joi.string().required().min(6).max(255),
+        phone: Joi.string().required(),
+        department: Joi.string().required()
+    });
+    return schema.validate(user);
+}
 const User = new mongoose.model("Normal users", adminSchema);
 
-export default User;
+export {User, userValidator};

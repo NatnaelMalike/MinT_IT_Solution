@@ -1,12 +1,10 @@
 import express from "express";
-import {User, userValidator} from "../models/user.js";
-
-const router = express.Router();
-
+import {Technician, techValidator} from "../models/technician.js";
+const router = express.Router()
 router.post("/", async (req, res) => {
-    const {error} = userValidator(req.body);
+    const {error} = techValidator(req.body);
     if(error) return res.status(400).send(error.details[0].message)
-    const user = new User({
+    const user = new Technician({
         fullName: req.body.fullName,
         email: req.body.email,
         password: req.body.password,
@@ -17,4 +15,4 @@ router.post("/", async (req, res) => {
     res.send(user);
 });
 
-export default router;
+export default router

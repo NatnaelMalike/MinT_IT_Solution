@@ -1,23 +1,34 @@
 import mongoose from "mongoose";
+import Joi from "joi";
 const adminSchema = mongoose.Schema({
     fullName: {
         type: String,
-        required: true
+        required: true,
     },
-    email:{
+    email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
-    password:{
+    password: {
         type: String,
-        required: true
+        required: true,
     },
-    phone:{
+    phone: {
         type: String,
-        required: true
-    }
-})
+        required: true,
+    },
+});
 
-const Admin = new mongoose.model('Admin users', adminSchema)
+function adminValidator(admin) {
+    const schema = Joi.object({
+        fullName: Joi.string().required().min(5).max(50),
+        email: Joi.string().email().required().min(5).max(255),
+        password: Joi.string().required().min(6).max(255),
+        phone: Joi.string().required(),
+    });
+    return schema.validate(admin);
+}
+const Admin = new mongoose.model("Admin users", adminSchema);
 
-export default Admin
+export { Admin, adminValidator };
