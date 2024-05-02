@@ -3,13 +3,13 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import users from "./routes/users.js";
 import admins from './routes/admins.js';
-import technicians from './routes/technicians'
+import technicians from './routes/technicians.js'
 dotenv.config();
 const app = express();
 app.use(express.json());
-app.use("api/user", users);
-app.use("api/admin", admins);
-app.use("api/technicians", technicians);
+app.use("/api/user", users);
+app.use("/api/admin", admins);
+app.use("/api/technician", technicians);
 
 
 mongoose
