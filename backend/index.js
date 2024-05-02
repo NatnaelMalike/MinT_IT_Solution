@@ -1,9 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import users from "./routes/users.js";
-import admins from './routes/admins.js';
-import technicians from './routes/technicians.js'
+import users from "./routes/userRoutes.js";
+import admins from './routes/adminRoutes.js';
+import technicians from './routes/technicianRoutes.js'
 dotenv.config();
 const app = express();
 app.use(express.json());

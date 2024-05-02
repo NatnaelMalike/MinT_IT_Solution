@@ -1,14 +1,11 @@
-import express from "express";
 import { User, userValidator } from "../models/user.js";
 
-const router = express.Router();
-
-router.get("/", async (req, res) => {
+const getUser = async (req, res) => {
     const users = await User.find().sort({ fullName: 1 });
     res.send(users);
-});
+};
 
-router.post("/", async (req, res) => {
+const addUser = async (req, res) => {
     const { error } = userValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     const user = new User({
@@ -20,8 +17,9 @@ router.post("/", async (req, res) => {
     });
     await user.save();
     res.send(user);
-});
-router.put("/:id", async (req, res) => {
+};
+
+const updateUser = async (req, res) => {
     const { error } = userValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     const user = await User.findByIdAndUpdate(
@@ -37,15 +35,13 @@ router.put("/:id", async (req, res) => {
             new: true,
         }
     );
-    if(!user) return res.status(404).send('User not Found!')
-    res.send(user)
+    if (!user) return res.status(404).send("User not Found!");
+    res.send(user);
+};
 
-});
-
-router.delete('/:id', async (req, res) => {
-    const user = await User.findByIdAndDelete(req.params.id)
-    if(!user) return res.status(404).send('User not Found!')
-    res.send(user)
-
-})
-export default router;
+const deleteUser = async (req, res) => {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).send("User not Found!");
+    res.send(user);
+};
+export {getUser, addUser, updateUser, deleteUser};
