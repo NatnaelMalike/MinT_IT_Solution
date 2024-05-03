@@ -1,18 +1,24 @@
 import Joi from "joi";
+import { lowerCase } from "lodash";
 import mongoose from "mongoose";
 const adminSchema = mongoose.Schema({
     fullName: {
         type: String,
         required: true,
+        minLength: 5,
+        maxLength: 50
     },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        lowerCase: true
     },
     password: {
         type: String,
         required: true,
+        minLength: 6,
+        maxLength: 1024
     },
     department: {
         type: String,
