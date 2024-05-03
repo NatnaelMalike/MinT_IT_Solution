@@ -25,6 +25,7 @@ const adminSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    role:'admin'
 });
 
 function adminValidator(admin) {

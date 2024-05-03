@@ -28,6 +28,8 @@ const adminSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    role: 'normal'
+    
 });
 
 function userValidator(user) {
