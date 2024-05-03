@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Joi from "joi";
-import { lowerCase } from "lodash";
 const adminSchema = mongoose.Schema({
     fullName: {
         type: String,
@@ -27,6 +26,11 @@ const adminSchema = mongoose.Schema({
     },
     role:'admin'
 });
+
+adminSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign({ _id: this._id, role: this.role }, process.env.ACCESS_JWT_PRIVATE_KEY);
+    return token
+}
 
 function adminValidator(admin) {
     const schema = Joi.object({

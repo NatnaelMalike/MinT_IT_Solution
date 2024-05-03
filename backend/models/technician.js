@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Joi from "joi";
 import { lowerCase } from "lodash";
-const adminSchema = mongoose.Schema({
+const technicianSchema = mongoose.Schema({
     fullName: {
         type: String,
         required: true,
@@ -31,6 +31,11 @@ const adminSchema = mongoose.Schema({
     role: 'technician'
 });
 
+technicianSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign({ _id: this._id, role: this.role }, process.env.ACCESS_JWT_PRIVATE_KEY);
+    return token
+}
+
 function techValidator(technician) {
     const schema = Joi.object({
         fullName: Joi.string().required().min(5).max(50),
@@ -41,6 +46,6 @@ function techValidator(technician) {
     });
     return schema.validate(technician);
 }
-const Technician = new mongoose.model("Technician users", adminSchema);
+const Technician = new mongoose.model("Technician users", technicianSchema);
 
 export {Technician, techValidator};
