@@ -1,4 +1,6 @@
 import { User, userValidator } from "../models/user.js";
+import bcrypt from "bcrypt";
+import _ from "lodash";
 
 const getUser = async (req, res) => {
     const users = await User.find().sort({ fullName: 1 });
@@ -8,13 +10,11 @@ const getUser = async (req, res) => {
 const addUser = async (req, res) => {
     const { error } = userValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-    const user = new User({
-        fullName: req.body.fullName,
-        email: req.body.email,
-        password: req.body.password,
-        department: req.body.department,
-        phone: req.body.phone,
-    });
+    let user = await User.findOne({ email: req.body.email });
+    if (user) return res.status(400).send("User Already Registered !!!");
+    user = new User(_.pick(req.body, ["fullName", "email", "password", "department", "phone"]));
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
     await user.save();
     res.send(user);
 };
@@ -22,20 +22,16 @@ const addUser = async (req, res) => {
 const updateUser = async (req, res) => {
     const { error } = userValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-    const user = await User.findByIdAndUpdate(
+    let user = await User.findByIdAndUpdate(
         req.params.id,
-        {
-            fullName: req.body.fullName,
-            email: req.body.email,
-            password: req.body.password,
-            department: req.body.department,
-            phone: req.body.phone,
-        },
+        _.pick(req.body, ["fullName", "email", "password", "department", "phone"]),
         {
             new: true,
         }
     );
     if (!user) return res.status(404).send("User not Found!");
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(user.password, salt);
     res.send(user);
 };
 
