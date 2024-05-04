@@ -2,6 +2,7 @@ import { Admin, adminValidator } from "../models/admin.js";
 import bcrypt from "bcrypt";
 import _ from "lodash";
 
+
 const getAdmin = async (req, res) => {
     const users = await Admin.find();
     res.send(users);

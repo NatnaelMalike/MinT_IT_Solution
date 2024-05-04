@@ -1,6 +1,6 @@
 import Joi from "joi";
-import { lowerCase } from "lodash";
 import mongoose from "mongoose";
+import jwt from 'jsonwebtoken'
 const userSchema = mongoose.Schema({
     fullName: {
         type: String,
@@ -28,7 +28,10 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    role: 'normal'
+    role:{
+        type: String,
+        default : 'normal'
+    }
     
 });
 userSchema.methods.generateAuthToken = function () {

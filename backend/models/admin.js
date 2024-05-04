@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Joi from "joi";
+import jwt from 'jsonwebtoken'
 const adminSchema = mongoose.Schema({
     fullName: {
         type: String,
@@ -24,7 +25,10 @@ const adminSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    role:'admin'
+    role:{
+        type: String,
+        default : 'admin'
+    }
 });
 
 adminSchema.methods.generateAuthToken = function () {

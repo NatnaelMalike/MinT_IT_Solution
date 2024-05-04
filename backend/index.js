@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/api/user", users);
 app.use("/api/admin", admins);
 app.use("/api/technician", technicians);
-app.use("api/login", login)
+app.use("/api/login", login)
 
 
 mongoose
