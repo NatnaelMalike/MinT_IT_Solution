@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Joi from "joi";
-import { lowerCase } from "lodash";
 const technicianSchema = mongoose.Schema({
     fullName: {
         type: String,
