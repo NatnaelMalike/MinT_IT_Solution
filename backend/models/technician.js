@@ -1,18 +1,24 @@
 import mongoose from "mongoose";
 import Joi from "joi";
-const adminSchema = mongoose.Schema({
+import jwt from 'jsonwebtoken'
+const technicianSchema = mongoose.Schema({
     fullName: {
         type: String,
         required: true,
+        minLength: 5,
+        maxLength: 50
     },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        lowerCase: true
     },
     password: {
         type: String,
         required: true,
+        minLength: 6,
+        maxLength: 1024
     },
     phone: {
         type: String,
@@ -22,7 +28,16 @@ const adminSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    role:{
+        type: String,
+        default : 'technician'
+    }
 });
+
+technicianSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign({ _id: this._id, role: this.role }, process.env.ACCESS_JWT_PRIVATE_KEY);
+    return token
+}
 
 function techValidator(technician) {
     const schema = Joi.object({
@@ -34,6 +49,6 @@ function techValidator(technician) {
     });
     return schema.validate(technician);
 }
-const Technician = new mongoose.model("Technician users", adminSchema);
+const Technician = new mongoose.model("Technician users", technicianSchema);
 
 export {Technician, techValidator};

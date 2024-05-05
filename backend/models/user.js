@@ -1,18 +1,24 @@
 import Joi from "joi";
 import mongoose from "mongoose";
-const adminSchema = mongoose.Schema({
+import jwt from 'jsonwebtoken'
+const userSchema = mongoose.Schema({
     fullName: {
         type: String,
         required: true,
+        minLength: 5,
+        maxLength: 50
     },
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        lowerCase: true
     },
     password: {
         type: String,
         required: true,
+        minLength: 6,
+        maxLength: 1024
     },
     department: {
         type: String,
@@ -22,8 +28,16 @@ const adminSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    role:{
+        type: String,
+        default : 'normal'
+    }
+    
 });
-
+userSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign({ _id: this._id, role: this.role }, process.env.ACCESS_JWT_PRIVATE_KEY);
+    return token
+}
 function userValidator(user) {
     const schema = Joi.object({
         fullName: Joi.string().required().min(5).max(50),
@@ -34,6 +48,6 @@ function userValidator(user) {
     });
     return schema.validate(user);
 }
-const User = new mongoose.model("Normal users", adminSchema);
+const User = new mongoose.model("Normal users", userSchema);
 
 export {User, userValidator};

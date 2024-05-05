@@ -1,15 +1,20 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import users from "./routes/users.js";
-import admins from './routes/admins.js';
-import technicians from './routes/technicians.js'
+import users from "./routes/userRoutes.js";
+import admins from './routes/adminRoutes.js';
+import technicians from './routes/technicianRoutes.js'
+import login from "./routes/auth.js";
+import cookieParser from "cookie-parser";
+
 dotenv.config();
 const app = express();
+app.use(cookieParser())
 app.use(express.json());
 app.use("/api/user", users);
 app.use("/api/admin", admins);
 app.use("/api/technician", technicians);
+app.use("/api/login", login)
 
 
 mongoose
