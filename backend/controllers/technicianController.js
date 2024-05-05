@@ -17,7 +17,12 @@ const addTechnician = async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
     await user.save();
     const token = user.generateAuthToken()
-    res.header('x-auth-token',token).send(_.pick(user, ["fullName", "email", "password", "department", "phone"]));
+    // res.header('x-auth-token',token).send(_.pick(user, ["fullName", "email", "password", "department", "phone"]));
+    res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 3600000
+    });
+    res.send(_.pick(user, ["fullName", "email", "password", "department", "phone"]))
 };
 
 const updateTechnician = async (req, res) => {

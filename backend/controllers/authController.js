@@ -28,6 +28,11 @@ const login = async (req, res) => {
     if (!validPassword)
         return res.status(400).send("Incorrect email or Password");
     const token = user.generateAuthToken();
+
+    res.cookie("token", token, {
+        httpOnly: true,
+        maxAge: 3600000, // 1 hour
+    });
     res.send(token);
 };
 
@@ -38,4 +43,4 @@ function validator(credentials) {
     });
     return schema.validate(credentials);
 }
-export default login
+export default login;

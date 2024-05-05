@@ -17,7 +17,12 @@ const addUser = async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
     await user.save();
     const token = user.generateAuthToken()
-    res.header('x-auth-token',token).send(_.pick(user, ["_id", "name", "email"]));
+    // res.header('x-auth-token',token).send(_.pick(user, ["_id", "name", "email"]));
+    res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 3600000 // mitigate CSRF attacks
+    });
+    res.send(_.pick(user, ["_id", "name", "email"]))
 };
 
 const updateUser = async (req, res) => {
