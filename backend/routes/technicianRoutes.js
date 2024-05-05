@@ -5,13 +5,13 @@ import {
     updateTechnician,
     deleteTechnician,
 } from "../controllers/technicianController.js";
-
+import admin from "../middleware/admin.js";
 
 const router = express.Router();
 
-router.get("/",  getTechnician);
-router.post("/", addTechnician);
-router.put("/:id", updateTechnician);
-router.delete("/:id", deleteTechnician);
+router.get("/", admin,  getTechnician);
+router.post("/", admin, addTechnician);
+router.put("/:id", admin, updateTechnician);
+router.delete("/:id", admin, deleteTechnician);
 
 export default router;

@@ -6,14 +6,15 @@ import admins from './routes/adminRoutes.js';
 import technicians from './routes/technicianRoutes.js'
 import login from "./routes/auth.js";
 import cookieParser from "cookie-parser";
+import authorize from "./middleware/authorization.js";
 
 dotenv.config();
 const app = express();
 app.use(cookieParser())
 app.use(express.json());
-app.use("/api/user", users);
-app.use("/api/admin", admins);
-app.use("/api/technician", technicians);
+app.use("/api/user", authorize, users);
+app.use("/api/admin", authorize, admins);
+app.use("/api/technician", authorize, technicians);
 app.use("/api/login", login)
 
 
