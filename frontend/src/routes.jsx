@@ -13,7 +13,7 @@ import UserSignup from "./pages/signup/UserSignup";
 
 const router = createBrowserRouter([
 
-    {path: '/user', element: <UserHomepage/>},
+    {path: '/', element: <UserHomepage/>},
     {path: '/user/login', element: <UserLogin/>},
     {path: '/user/signup', element: <UserSignup/>},
     {path: '/admin', element: <AdminHomepage/>},
