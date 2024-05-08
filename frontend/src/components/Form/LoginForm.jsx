@@ -15,8 +15,8 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-    email: z.string().email(),
-    password: z.string().min(6),
+    email: z.string().email({message:"Invalid Email Address"}),
+    password: z.string().min(6, {message: "Password must be 6 or more characters long" }),
 });
 
 export default function LoginForm() {
@@ -28,7 +28,6 @@ export default function LoginForm() {
         },
     });
 
-    // 2. Define a submit handler.
     function onSubmit(values) {
         console.log(values);
     }
