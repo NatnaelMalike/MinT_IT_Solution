@@ -13,7 +13,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import ComboboxForm from "../ComboBoxForm";
+import ComboboxDemo from "../ComboboxForm";
 
 // const phoneRegExp = /^(?:\+251)?09\d{8}$/
 const formSchema = z.object({
@@ -112,7 +112,7 @@ export default function UserForm() {
                         <FormItem>
                             <FormLabel className="block">Department</FormLabel>
                             <FormControl>
-                                <ComboboxForm />
+                                <ComboboxDemo />
                             </FormControl>
                             <FormDescription>
                                 This is your phone number for The

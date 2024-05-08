@@ -5,18 +5,16 @@ import UserHomepage from "./pages/home/UserHomepage";
 import TechnicianHomepage from "./pages/home/TechnicianHomepage";
 import AdminSignup from "./pages/signup/AdminSignupPage";
 import TechnicianSignup from "./pages/signup/TechnicianSignupPage";
-import UserSignup from "./pages/signup/UserSignup";
+import UserSignup from "./pages/signup/UserSignupPage";
 
 const router = createBrowserRouter([
+    { path: "/", element: <LoginPage /> },
+    { path: "/user", element: <UserHomepage /> },
+    { path: "/user/signup", element: <UserSignup /> },
+    { path: "/admin", element: <AdminHomepage /> },
+    { path: "/admin/signup", element: <AdminSignup /> },
+    { path: "/technician", element: <TechnicianHomepage /> },
+    { path: "/technician/signup", element: <TechnicianSignup /> },
+]);
 
-    {path: '/', element: <LoginPage/>},
-    {path: '/user', element: <UserHomepage/>},
-    {path: '/user/signup', element: <UserSignup/>},
-    {path: '/admin', element: <AdminHomepage/>},
-    {path: '/admin/signup', element: <AdminSignup/>},
-    {path: '/technician', element: <TechnicianHomepage/>},
-    {path: '/technician/signup', element: <TechnicianSignup/>}
-
-])
-
-export default router
+export default router;
