@@ -13,7 +13,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import SelectForm from "../SelectForm";
+import SelectForm from "../../components/Technician/SelectForm";
 
 // const phoneRegExp = /^(?:\+251)?09\d{8}$/
 const formSchema = z.object({
@@ -114,7 +114,7 @@ export default function TechnicianForm() {
                         <FormItem>
                             <FormLabel>Department</FormLabel>
                             <FormControl>
-                                <SelectForm  {...field}/>
+                                <SelectForm {...field} />
                             </FormControl>
                             <FormDescription>
                                 This is your department/desk for The
