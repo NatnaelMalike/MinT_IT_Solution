@@ -21,7 +21,8 @@ const formSchema = z.object({
     password: z
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
-    fullName: z.string().min(1,{message: "Name is required"}),
+    fullName: z.string().min(1, { message: "Name is required" }),
+    department: z.string().min(1, { message: "Department should be selected" }),
     phone: z.string().refine((value) => /^(?:\+251)?09\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
@@ -35,6 +36,7 @@ export default function TechnicianForm() {
             fullName: "",
             phone: "",
             password: "",
+            department: "",
         },
     });
 
@@ -110,12 +112,12 @@ export default function TechnicianForm() {
                     name="department"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Phone Number</FormLabel>
+                            <FormLabel>Department</FormLabel>
                             <FormControl>
-                               <SelectForm />
+                                <SelectForm  {...field}/>
                             </FormControl>
                             <FormDescription>
-                                This is your phone number for The
+                                This is your department/desk for The
                                 MinT_IT_Solution technician account.
                             </FormDescription>
                             <FormMessage />
@@ -135,7 +137,8 @@ export default function TechnicianForm() {
                                 />
                             </FormControl>
                             <FormDescription>
-                                This is your password for The technician account.
+                                This is your password for The technician
+                                account.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>

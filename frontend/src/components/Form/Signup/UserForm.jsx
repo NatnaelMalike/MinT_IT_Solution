@@ -13,7 +13,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import ComboboxDemo from "../ComboboxForm";
+import { ComboboxDemo } from "../ComboBoxForm";
 
 // const phoneRegExp = /^(?:\+251)?09\d{8}$/
 const formSchema = z.object({
@@ -22,6 +22,9 @@ const formSchema = z.object({
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
     fullName: z.string().min(1, { message: "Name is required" }),
+    department: z.string({
+        required_error: "Please select a department.",
+    }),
     phone: z.string().refine((value) => /^(?:\+251)?09\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
@@ -34,6 +37,7 @@ export default function UserForm() {
             email: "",
             fullName: "",
             phone: "",
+            department: "",
             password: "",
         },
     });
@@ -115,7 +119,7 @@ export default function UserForm() {
                                 <ComboboxDemo />
                             </FormControl>
                             <FormDescription>
-                                This is your phone number for The
+                                This is your Department for The
                                 MinT_IT_Solution user account.
                             </FormDescription>
                             <FormMessage />
