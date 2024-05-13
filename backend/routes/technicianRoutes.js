@@ -9,9 +9,9 @@ import admin from "../middleware/admin.js";
 
 const router = express.Router();
 
-router.get("/", admin,  getTechnician);
-router.post("/", admin, addTechnician);
-router.put("/:id", admin, updateTechnician);
-router.delete("/:id", admin, deleteTechnician);
+router.get("/",  getTechnician);
+router.post("/", addTechnician);
+router.put("/:id", updateTechnician);
+router.delete("/:id", deleteTechnician);
 
 export default router;

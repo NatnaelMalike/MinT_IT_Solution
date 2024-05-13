@@ -13,7 +13,6 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { ComboboxDemo } from "../ComboBoxForm";
 
 // const phoneRegExp = /^(?:\+251)?09\d{8}$/
 const formSchema = z.object({
@@ -116,11 +115,11 @@ export default function UserForm() {
                         <FormItem>
                             <FormLabel className="block">Department</FormLabel>
                             <FormControl>
-                                <ComboboxDemo />
+                                
                             </FormControl>
                             <FormDescription>
-                                This is your Department for The
-                                MinT_IT_Solution user account.
+                                This is your Department for The MinT_IT_Solution
+                                user account.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>

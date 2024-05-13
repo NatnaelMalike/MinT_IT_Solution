@@ -7,14 +7,21 @@ import technicians from './routes/technicianRoutes.js'
 import login from "./routes/auth.js";
 import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorization.js";
+import cors from "cors"
 
 dotenv.config();
 const app = express();
+app.use(
+    cors({
+    origin: 'http://localhost:5173',
+    methods: ['GET, POST, PUT, DELETE'],
+    allowedHeaders: ['Content-Type']
+}))
 app.use(cookieParser())
 app.use(express.json());
-app.use("/api/user", authorize, users);
-app.use("/api/admin", authorize, admins);
-app.use("/api/technician", authorize, technicians);
+app.use("/api/user", users);
+app.use("/api/admin", admins);
+app.use("/api/technician", technicians);
 app.use("/api/login", login)
 
 
