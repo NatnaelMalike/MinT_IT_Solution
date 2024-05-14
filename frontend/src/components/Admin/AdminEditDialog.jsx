@@ -10,28 +10,24 @@ import {
 } from "@/components/ui/dialog";
 import { SquarePlus } from "lucide-react";
 import AdminCard from "./AdminCard";
-import AdminForm from "@/pages/Admin/AdminForm";
-export default function AdminDialog() {
+import AdminEditForm from "@/pages/Admin/AdminEditForm";
+export default function AdminEditDialog({btn, id}) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="secondary" className="space-x-2">
-                    <SquarePlus />
-                    <p>Add Admin</p>
-                </Button>
+                {btn}
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-                <DialogTitle>Add Admin User</DialogTitle>
+                <DialogTitle>update Admin User</DialogTitle>
                 <DialogDescription>
-                    Adding a new adminstrator to the system
+                    updating an existig adminstrator in the system
                 </DialogDescription>
             </DialogHeader>
                 <AdminCard>
-                    <AdminForm/>
+                    <AdminEditForm id={id}/>
                 </AdminCard>
             </DialogContent>
         </Dialog>
     );
 }
-

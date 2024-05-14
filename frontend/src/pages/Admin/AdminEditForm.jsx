@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 import {
     Form,
     FormControl,
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
     password: z
@@ -25,22 +27,31 @@ const formSchema = z.object({
     }),
 });
 
-export default function AdminForm() {
+export default function AdminEditForm() {
+    const {id} = useParams()
     const form = useForm({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-            email: "",
-            fullName: "",
-            phone: "",
-            password: "",
-        },
+        resolver: zodResolver(formSchema)
     });
+    
+    useEffect(() => {
+        axios
+            .get(`http://localhost:4000/api/admin/${id}`)
+            .then((response) => {
+                form.setValue("email", response.data.email)
+                form.setValue("fullName", response.data.fullName)
+                form.setValue("phone", response.data.phone)
+                form.setValue("password", response.data.password)
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
     function onSubmit(data) {
         axios
-            .post("http://localhost:4000/api/admin", data)
+            .put(`http://localhost:4000/api/admin/${id}`, data)
             .then(() => {
-                toast("Admin Account created Successfully");
+                toast("Admin Account updated Successfully");
             })
             .catch((err) => {
                 console.log(err);

@@ -50,4 +50,10 @@ const deleteAdmin = async (req, res) => {
     res.send(user);
 };
 
-export { getAdmin, addAdmin, updateAdmin, deleteAdmin };
+const getById = async(req, res)=>{
+    const user = await Admin.findById(req.params.id);
+    if (!user) return res.status(404).send("User not Found!");
+    res.send(user)
+}
+
+export { getAdmin, addAdmin, updateAdmin, deleteAdmin, getById };

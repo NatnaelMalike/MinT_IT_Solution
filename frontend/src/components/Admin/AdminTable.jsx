@@ -9,7 +9,9 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { Pencil, Trash2 } from "lucide-react";
-
+import AdminEditDialog from "./AdminEditDialog";
+import AdminEditCard from "./AdminEditCard";
+import { Link } from "react-router-dom";
 
 
 export default function AdminTable({admins}) {
@@ -33,12 +35,13 @@ export default function AdminTable({admins}) {
                         <TableCell>{admin.password}</TableCell>
                         <TableCell>{admin.phone}</TableCell>
                         <TableCell className="flex gap-4">
-                            <Pencil className="cursor-pointer"/> <Trash2 className="cursor-pointer"/>
+                             <Link to={`/admin/edit/${admin._id}`}><Pencil className="cursor-pointer"/></Link>
+                             <Link to={`/admin/delete/${admin._id}`}><Trash2 className="cursor-pointer"/></Link>  
                         </TableCell>
                     </TableRow>
                 ))}
             </TableBody>
-         
+
         </Table>
     );
 }
