@@ -1,5 +1,6 @@
 import logo from "../assets/img/MinT-Logo.jpg";
 import LoginForm from "@/components/Form/LoginForm";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
     return (
@@ -12,6 +13,8 @@ const LoginPage = () => {
                     Sign in to your account
                 </h2>
                 <LoginForm />
+                <div className="text-right mt-4 text-sm">Need an Account? <Link className="text-teal-500 text-base hover:opacity-90 hover:underline" to={'/user/signup'}>Signup</Link></div>
+                
             </div>
             
         </div>

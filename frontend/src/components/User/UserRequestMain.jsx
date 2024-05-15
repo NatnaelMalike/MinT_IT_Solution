@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import UserHeader from "./UserHeader";
 import UserCard from "./UserCard";
+import UserTable from "./UserTable";
 
-const UserMain = () => {
+const UserRequestMain = () => {
     const [user, setUser] = useState([]);
     useEffect(() => {
         axios
@@ -19,10 +20,10 @@ const UserMain = () => {
         <div className="flex flex-col grow">
             <UserHeader />
             <div className="grow" id="main">
-                <UserCard user={user}/>
+                <UserTable user={user}/>
             </div>
         </div>
     );
 };
 
-export default UserMain;
+export default UserRequestMain;

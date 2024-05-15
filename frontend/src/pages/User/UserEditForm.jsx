@@ -1,7 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import { useEffect } from "react";
 import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -15,8 +13,6 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import ComboboxDemo from "@/components/User/ComboBox";
-import { toast } from "sonner";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
@@ -24,35 +20,33 @@ const formSchema = z.object({
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
     fullName: z.string().min(1, { message: "Name is required" }),
-    department: z.string().min(1,{
-        message: "Please select a department.",
+    department: z.string({
+        required_error: "Please select a department.",
     }),
     phone: z.string().refine((value) => /^(?:\+251)?0[1-9]\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
 });
 
-export default function UserForm() {
+export default function UserEditForm() {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
             fullName: "",
             phone: "",
-            department: "Department One",
+            department: "",
             password: "",
         },
     });
 
-    function onSubmit(data) {
-axios.post('http://localhost:4000/api/user', data).then(()=>{
-    toast('User Account Created Successfully!')
-})
+    function onSubmit(values) {
+        console.log(values);
     }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className=" grid md:grid-cols-2 gap-8 w-96 md:min-w-[800px] items-start">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
                     control={form.control}
                     name="fullName"
@@ -118,9 +112,9 @@ axios.post('http://localhost:4000/api/user', data).then(()=>{
                     name="department"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel className="block mb-2">Department</FormLabel>
+                            <FormLabel className="block">Department</FormLabel>
                             <FormControl>
-                                <ComboboxDemo {...field}/>
+                                
                             </FormControl>
                             <FormDescription>
                                 This is your Department for The MinT_IT_Solution
@@ -149,7 +143,7 @@ axios.post('http://localhost:4000/api/user', data).then(()=>{
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="self-end">Submit</Button>
+                <Button type="submit">Submit</Button>
             </form>
         </Form>
     );

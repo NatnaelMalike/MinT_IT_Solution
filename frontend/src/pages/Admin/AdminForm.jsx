@@ -40,7 +40,7 @@ export default function AdminForm() {
         axios
             .post("http://localhost:4000/api/admin", data)
             .then(() => {
-                toast("Admin Account created Successfully");
+                toast("Admin Account created Successfully!");
             })
             .catch((err) => {
                 console.log(err);

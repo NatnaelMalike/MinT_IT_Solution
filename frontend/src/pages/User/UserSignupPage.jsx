@@ -1,10 +1,11 @@
+import { Toaster } from "sonner";
 import logo from "../../assets/img/MinT-Logo.jpg";
 import UserForm from "@/pages/User/UserForm";
 const UserSignupPage = () => {
     return (
-        <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-            <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                <div className="flex items-center flex-col">
+        <div className="flex min-h-full px-6 py-8 lg:px-8">
+            <div className="mx-auto sm:w-full flex flex-col items-center">
+                <div className="flex items-center flex-col max-w-96">
                     <img src={logo} alt="" />
                 </div>
                 <h2 className="my-10 text-xl text-center font-medium leading-9 tracking-tight text-gray-900">
@@ -12,6 +13,7 @@ const UserSignupPage = () => {
                 </h2>
                 <UserForm />
             </div>
+            <Toaster/>
         </div>
     );
 };

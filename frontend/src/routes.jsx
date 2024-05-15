@@ -8,10 +8,19 @@ import TechnicianSignup from "./pages/Technnician/TechnicianSignupPage";
 import UserSignup from "./pages/User/UserSignupPage";
 import AdminMain from "./components/Admin/AdminMain";
 import AdminEditCard from "./components/Admin/AdminEditCard";
+import UserMain from "./components/User/UserMain";
+import UserEditForm from "./pages/User/UserEditForm";
 
 const router = createBrowserRouter([
-    { path: "/", element: <LoginPage /> },
-    { path: "/user", element: <UserHomepage /> },
+    { path: "/login", element: <LoginPage /> },
+    {
+        path: "/user",
+        element: <UserHomepage />,
+        children: [
+            { index: true, element: <UserMain /> },
+            { path: "edit", element: <UserEditForm /> }
+        ],
+    },
     { path: "/user/signup", element: <UserSignup /> },
     {
         path: "/admin",

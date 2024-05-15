@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import users from "./routes/userRoutes.js";
 import admins from './routes/adminRoutes.js';
 import technicians from './routes/technicianRoutes.js'
+import department from './routes/departmentRoutes.js'
 import login from "./routes/auth.js";
 import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorization.js";
@@ -23,6 +24,7 @@ app.use("/api/user", users);
 app.use("/api/admin", admins);
 app.use("/api/technician", technicians);
 app.use("/api/login", login)
+app.use("/api/department", department)
 
 
 mongoose
