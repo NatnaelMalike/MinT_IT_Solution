@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { SquarePlus } from "lucide-react";
 import UserRequestCard from "./UserRequestCard";
-import RequestForm from "@/pages/User/RequestForm";
+import RequestForm from "@/components/User/RequestForm";
 export default function UserDialog() {
     return (
         <Dialog>

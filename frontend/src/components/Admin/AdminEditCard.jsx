@@ -6,7 +6,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import AdminEditForm from "@/pages/Admin/AdminEditForm";
+import AdminEditForm from "./AdminEditForm";
 export default function AdminEditCard() {
     return (
         <Card className="w-96 mx-auto">

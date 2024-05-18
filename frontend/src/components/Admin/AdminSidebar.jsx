@@ -5,63 +5,58 @@ import {
     ShieldCheck,
     User,
     Users,
+    HomeIcon,
+    TicketIcon,
+    UsersIcon,
+    BuildingIcon,
+    SettingsIcon
 } from "lucide-react";
 import logo from "../../assets/img/MinT-Logo.jpg";
-
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList,
-    CommandSeparator,
-    CommandShortcut,
-} from "@/components/ui/command";
-
-export default function AdminSidebar() {
+import { Link } from "react-router-dom";
+export default function AdminSidebar(params) {
     return (
-        <Command className="rounded-lg border shadow-md w-80 min-h-screen flex flex-col gap-8">
-            <div className="">
-                <img
-                    src={logo}
-                    alt="Organization Logo"
-                    className="rounded-md h-36 mx-auto"
-                />
+        <div className="flex-1 overflow-auto py-2 space-y-8">
+            <div className="flex items-center justify-between px-4 py-2 w-4/5 mx-auto">
+                <img src={logo} alt="" srcset="" />
             </div>
-            <CommandInput placeholder="Type a command or search..." />
-            <CommandList>
-                <CommandEmpty>No results found.</CommandEmpty>
-                <CommandGroup heading="Manage Users" className="mt-4">
-                    <CommandItem>
-                        <ShieldCheck className="mr-2 h-4 w-4" />
-                        <span>Admin</span>
-                    </CommandItem>
-                    <CommandItem>
-                        <Users className="mr-2 h-4 w-4" />
-                        <span>User</span>
-                    </CommandItem>
-                    <CommandItem>
-                        <Wrench className="mr-2 h-4 w-4" />
-                        <span>Technician</span>
-                    </CommandItem>
-                </CommandGroup>
-                <CommandSeparator />
-                <CommandGroup heading="Other" className="mt-4">
-                    <CommandItem>
-                        <User className="mr-2 h-4 w-4" />
-                        <span>Profile</span>
-                    </CommandItem>
-                    <CommandItem>
-                        <GitPullRequestArrow className="mr-2 h-4 w-4" />
-                        <span>Requests</span>
-                    </CommandItem>
-                    <CommandItem>
-                        <Settings className="mr-2 h-4 w-4" />
-                        <span>Settings</span>
-                    </CommandItem>
-                </CommandGroup>
-            </CommandList>
-        </Command>
+            <nav className="grid items-start px-4 text-sm font-medium">
+                <Link
+                    className="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
+                    href="#">
+                    <HomeIcon className="h-4 w-4" />
+                    Dashboard
+                </Link>
+                <Link
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    href="#">
+                    <TicketIcon className="h-4 w-4" />
+                    Tickets
+                </Link>
+                <Link
+                    className="flex items-center gap-3 rounded-lg bg-gray-100 px-3 py-2 text-gray-900 transition-all hover:text-gray-900 dark:bg-gray-800 dark:text-gray-50 dark:hover:text-gray-50"
+                    href="#">
+                    <UsersIcon className="h-4 w-4" />
+                    Technicians
+                </Link>
+                <Link
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    href="#">
+                    <UsersIcon className="h-4 w-4" />
+                    Users
+                </Link>
+                <Link
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    href="#">
+                    <BuildingIcon className="h-4 w-4" />
+                    Departments
+                </Link>
+                <Link
+                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-gray-500 transition-all hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
+                    href="#">
+                    <SettingsIcon className="h-4 w-4" />
+                    Settings
+                </Link>
+            </nav>
+        </div>
     );
 }

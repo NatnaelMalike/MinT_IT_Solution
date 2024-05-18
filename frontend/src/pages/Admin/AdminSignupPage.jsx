@@ -1,5 +1,5 @@
 import logo from "../../assets/img/MinT-Logo.jpg";
-import AdminForm from "@/pages/Admin/AdminForm";
+import AdminForm from "@/components/Admin/AdminForm";
 
 const AdminSignupPage = () => {
     return (

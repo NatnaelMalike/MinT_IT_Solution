@@ -13,30 +13,30 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import SelectForm from "./SelectForm";
 
+// const phoneRegExp = /^(?:\+251)?09\d{8}$/
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
     password: z
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
     fullName: z.string().min(1, { message: "Name is required" }),
-    department: z.string({
-        required_error: "Please select a department.",
-    }),
-    phone: z.string().refine((value) => /^(?:\+251)?0[1-9]\d{8}$/.test(value), {
+    department: z.string().min(1, { message: "Department should be selected" }),
+    phone: z.string().refine((value) => /^(?:\+251)?09\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
 });
 
-export default function UserEditForm() {
+export default function TechnicianForm() {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
             fullName: "",
             phone: "",
-            department: "",
             password: "",
+            department: "",
         },
     });
 
@@ -61,7 +61,7 @@ export default function UserEditForm() {
                             </FormControl>
                             <FormDescription>
                                 This is your Full Name for The MinT_IT_Solution
-                                user account.
+                                technician account.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -81,7 +81,7 @@ export default function UserEditForm() {
                             </FormControl>
                             <FormDescription>
                                 This is your email address for The
-                                MinT_IT_Solution user account.
+                                MinT_IT_Solution technician account.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -101,7 +101,7 @@ export default function UserEditForm() {
                             </FormControl>
                             <FormDescription>
                                 This is your phone number for The
-                                MinT_IT_Solution user account.
+                                MinT_IT_Solution technician account.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -112,13 +112,13 @@ export default function UserEditForm() {
                     name="department"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel className="block">Department</FormLabel>
+                            <FormLabel>Department</FormLabel>
                             <FormControl>
-                                
+                                <SelectForm {...field} />
                             </FormControl>
                             <FormDescription>
-                                This is your Department for The MinT_IT_Solution
-                                user account.
+                                This is your department/desk for The
+                                MinT_IT_Solution technician account.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -137,7 +137,8 @@ export default function UserEditForm() {
                                 />
                             </FormControl>
                             <FormDescription>
-                                This is your password for The user account.
+                                This is your password for The technician
+                                account.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>

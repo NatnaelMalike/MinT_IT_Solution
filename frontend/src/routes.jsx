@@ -9,19 +9,25 @@ import UserSignup from "./pages/User/UserSignupPage";
 import AdminMain from "./components/Admin/AdminMain";
 import AdminEditCard from "./components/Admin/AdminEditCard";
 import UserMain from "./components/User/UserMain";
-import UserEditForm from "./pages/User/UserEditForm";
+import UserEditForm from "./components/User/UserEditForm";
 
 const router = createBrowserRouter([
+    // Login Page
     { path: "/login", element: <LoginPage /> },
+
+    // User Dashboard
     {
         path: "/user",
         element: <UserHomepage />,
         children: [
             { index: true, element: <UserMain /> },
-            { path: "edit", element: <UserEditForm /> }
+            { path: "edit", element: <UserEditForm /> },
         ],
     },
+    // User Signup
     { path: "/user/signup", element: <UserSignup /> },
+
+    // Admin Dashboard
     {
         path: "/admin",
         element: <AdminHomepage />,
@@ -30,7 +36,9 @@ const router = createBrowserRouter([
             { path: "edit/:id", element: <AdminEditCard /> },
         ],
     },
+    // Admin Signup
     { path: "/admin/signup", element: <AdminSignup /> },
+    // Technician Dashboard
     { path: "/technician", element: <TechnicianHomepage /> },
     { path: "/technician/signup", element: <TechnicianSignup /> },
 ]);
