@@ -4,7 +4,7 @@ import _ from "lodash";
 
 
 const getAdmin = async (req, res) => {
-    const users = await Admin.find();
+    const users = await Admin.find({},{password: 0});
     res.send(users);
 };
 
@@ -33,7 +33,7 @@ const updateAdmin = async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
     let user = await Admin.findByIdAndUpdate(
         req.params.id,
-        _.pick(req.body, ["fullName", "email", "password", "phone"]),
+        _.pick(req.body, ["fullName", "email", "phone"]),
         {
             new: true,
         }

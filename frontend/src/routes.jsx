@@ -10,6 +10,7 @@ import AdminMain from "./components/Admin/AdminMain";
 import AdminEditCard from "./components/Admin/AdminEditCard";
 import UserMain from "./components/User/UserMain";
 import UserEditForm from "./components/User/UserEditForm";
+import Dashboard from "./components/Admin/Dashboard";
 
 const router = createBrowserRouter([
     // Login Page
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
         path: "/admin",
         element: <AdminHomepage />,
         children: [
-            { index: true, element: <AdminMain /> },
+            { index: true, element: <Dashboard /> },
             { path: "edit/:id", element: <AdminEditCard /> },
         ],
     },
