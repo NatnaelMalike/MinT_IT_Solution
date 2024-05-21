@@ -1,6 +1,6 @@
 import { Bell, SearchIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "./ui/input";
+import { Input } from "@/components/ui/input";
 const Header = () => {
     return (
         <div className="flex h-14 lg:h-[60px] items-center justify-between gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40">

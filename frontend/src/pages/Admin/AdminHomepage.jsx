@@ -1,6 +1,5 @@
-import AdminSidebar from "@/components/Admin/AdminSidebar";
-import Main from "@/components/Admin/Main";
-import Card from "@/components/CustomCard";
+import AdminSidebar from "@/components/AdminLayout/AdminSidebar";
+import Main from "@/components/AdminLayout/Main";
 import { Toaster } from "sonner";
 
 const AdminHomepage = () => {

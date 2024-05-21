@@ -21,6 +21,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import AdminEditDialog from "./AdminEditDialog";
 export default function AdminTable() {
     const [admins, setAdmins] = useState([]);
     useEffect(() => {
@@ -56,9 +57,7 @@ export default function AdminTable() {
                                 <TableCell>{admin.email}</TableCell>
                                 <TableCell>{admin.phone}</TableCell>
                                 <TableCell className="flex gap-4">
-                                    <Link to={`/admin/edit/${admin._id}`}>
-                                        <Pencil className="cursor-pointer" />
-                                    </Link>
+                                    <AdminEditDialog id={admin._id}/>
                                     <Link to={`/admin/delete/${admin._id}`}>
                                         <Trash2 className="cursor-pointer" />
                                     </Link>
@@ -68,7 +67,6 @@ export default function AdminTable() {
                     </TableBody>
                 </Table>
             </CardContent>
-           
         </Card>
     );
 }

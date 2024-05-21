@@ -1,5 +1,5 @@
 import InfoCards from "./InfoCards";
-import AdminTable from "./AdminTable";
+import AdminTable from "../Admin/admin_components/AdminTable";
 const Dashboard = () => {
     return (
         <div className="space-y-8">

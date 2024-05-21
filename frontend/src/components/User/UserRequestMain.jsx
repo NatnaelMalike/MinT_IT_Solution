@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UserHeader from "./UserHeader";
-import UserCard from "./UserCard";
-import UserTable from "./UserTable";
+import UserCard from "./user_components/UserCard";
+import UserTable from "./user_components/UserTable";
 
 const UserRequestMain = () => {
     const [user, setUser] = useState([]);
@@ -10,7 +10,7 @@ const UserRequestMain = () => {
         axios
             .get("http://localhost:4000/api/user")
             .then((response) => {
-                setUser((response.data));
+                setUser(response.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -20,7 +20,7 @@ const UserRequestMain = () => {
         <div className="flex flex-col grow">
             <UserHeader />
             <div className="grow" id="main">
-                <UserTable user={user}/>
+                <UserTable user={user} />
             </div>
         </div>
     );

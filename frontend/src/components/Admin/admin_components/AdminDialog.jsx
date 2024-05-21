@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { SquarePlus } from "lucide-react";
 import AdminCard from "./AdminCard";
-import AdminForm from "@/components/Admin/AdminForm";
+import AdminForm from "@/components/Admin/admin_components/AdminForm";
 export default function AdminDialog() {
     return (
         <Dialog>

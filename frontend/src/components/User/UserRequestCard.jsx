@@ -6,7 +6,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import AdminForm from "@/components/Admin/AdminForm";
+import AdminForm from "@/components/Admin/admin_components/AdminForm";
 export default function UserRequestCard({ children }) {
     return (
         <Card className="w-96 mx-auto">

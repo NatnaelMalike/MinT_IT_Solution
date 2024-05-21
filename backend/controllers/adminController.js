@@ -1,4 +1,4 @@
-import { Admin, adminValidator } from "../models/admin.js";
+import { Admin, adminValidator, updateAdminValidator } from "../models/admin.js";
 import bcrypt from "bcrypt";
 import _ from "lodash";
 
@@ -29,7 +29,7 @@ const addAdmin = async (req, res) => {
 };
 
 const updateAdmin = async (req, res) => {
-    const { error } = adminValidator(req.body);
+    const { error } = updateAdminValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     let user = await Admin.findByIdAndUpdate(
         req.params.id,

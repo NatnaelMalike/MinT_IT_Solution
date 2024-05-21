@@ -14,7 +14,7 @@ import AdminEditCard from "./AdminEditCard";
 import { Link } from "react-router-dom";
 
 
-export default function UserTable({admins}) {
+export default function UserTable({users}) {
     return (
         <Table>
             <TableCaption>A list of all admin users.</TableCaption>
@@ -22,21 +22,20 @@ export default function UserTable({admins}) {
                 <TableRow>
                     <TableHead>Full Name</TableHead>
                     <TableHead>Email Address</TableHead>
-                    <TableHead>Passwords</TableHead>
                     <TableHead>Phone Number</TableHead>
+                    <TableHead>Department</TableHead>
                     <TableHead>Operations</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {admins.map((admin) => (
-                    <TableRow key={admin._id}>
-                        <TableCell>{admin.fullName}</TableCell>
-                        <TableCell>{admin.email}</TableCell>
-                        <TableCell>{admin.password}</TableCell>
-                        <TableCell>{admin.phone}</TableCell>
+                {users.map((user) => (
+                    <TableRow key={user._id}>
+                        <TableCell>{user.fullName}</TableCell>
+                        <TableCell>{user.email}</TableCell>
+                        <TableCell>{user.department}</TableCell>
+                        <TableCell>{user.phone}</TableCell>
                         <TableCell className="flex gap-4">
-                             <Link to={`/admin/edit/${admin._id}`}><Pencil className="cursor-pointer"/></Link>
-                             <Link to={`/admin/delete/${admin._id}`}><Trash2 className="cursor-pointer"/></Link>  
+                             <Link to={`/user/delete/${user._id}`}><Trash2 className="cursor-pointer"/></Link>  
                         </TableCell>
                     </TableRow>
                 ))}
