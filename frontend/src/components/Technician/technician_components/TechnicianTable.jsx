@@ -21,18 +21,8 @@ import {
 } from "@/components/ui/card";
 import TechnicianEditDialog from "./TechnicianEditDialog";
 import TechnicianDeleteDialog from "./TechnicianDeleteDialog";
-export default function TechnicianTable() {
-    const [technicians, setTechnicians] = useState([]);
-    useEffect(() => {
-        axios
-            .get("http://localhost:4000/api/technician")
-            .then((response) => {
-                setTechnicians((response.data));
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+export default function TechnicianTable({technicians}) {
+
     return (
         <Card>
             <CardHeader>

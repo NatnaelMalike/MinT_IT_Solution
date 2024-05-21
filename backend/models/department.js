@@ -16,7 +16,7 @@ function departmentValidator(department) {
     return schema.validate(department);
 }
 const Department = new mongoose.model(
-    "Organization structure",
+    "Department",
     departmentSchema
 );
 export { Department, departmentValidator };

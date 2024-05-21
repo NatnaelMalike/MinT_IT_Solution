@@ -28,10 +28,11 @@ const updateDepartment = async (req, res) => {
 const deleteDepartment = async (req, res) => {
     const department = await Department.findByIdAndDelete(req.params.id);
     if (!department) return res.status(404).send("Department not Found");
-    res.send(user);
+    res.send(department);
 };
 const getById = async(req, res)=>{
     const department = await Department.findById(req.params.id);
-    if(!department) return res.status(404).send("Department not Found")
+    if(!department) return res.status(404).send("Department not Found");
+    res.send(department)
 }
 export { getDepartment, addDepartment, updateDepartment, deleteDepartment, getById };

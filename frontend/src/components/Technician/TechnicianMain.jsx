@@ -7,7 +7,7 @@ const TechnicianMain = () => {
     const [technicians, setTechnicians] = useState([]);
     useEffect(() => {
         axios
-            .get("http://localhost:4000/api/admin")
+            .get("http://localhost:4000/api/technician")
             .then((response) => {
                 setTechnicians(response.data);
             })
