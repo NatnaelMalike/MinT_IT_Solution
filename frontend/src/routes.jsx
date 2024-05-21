@@ -10,6 +10,7 @@ import AdminMain from "./components/Admin/AdminMain";
 import UserMain from "./components/User/UserMain";
 import UserEditForm from "./components/User/UserEditForm";
 import Dashboard from "./components/Dashboard/Dashboard";
+import TechnicianMain from "./components/Technician/TechnicianMain";
 
 const router = createBrowserRouter([
     // Login Page
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <Dashboard /> },
             { path: 'admin_users', element: <AdminMain /> },
+            { path: 'technicians', element: <TechnicianMain /> },
         ],
     },
     // Admin Signup

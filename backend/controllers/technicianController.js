@@ -1,4 +1,4 @@
-import {Technician, techValidator} from "../models/technician.js";
+import {Technician, UpdateTechValidator, techValidator} from "../models/technician.js";
 import bcrypt from "bcrypt";
 import _ from "lodash";
 
@@ -26,11 +26,11 @@ const addTechnician = async (req, res) => {
 };
 
 const updateTechnician = async (req, res) => {
-    const { error } = techValidator(req.body);
+    const { error } = UpdateTechValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     const user = await Technician.findByIdAndUpdate(
         req.params.id,
-        _.pick(req.body, ["fullName", "email", "password", "department", "phone"]),
+        _.pick(req.body, ["fullName", "email", "department", "phone"]),
         {
             new: true,
         }
@@ -46,5 +46,10 @@ const deleteTechnician = async (req, res) => {
     if (!user) return res.status(404).send("User not Found!");
     res.send(user);
 };
+const getById = async(req, res)=>{
+    const user = await Technician.findById(req.params.id);
+    if (!user) return res.status(404).send("User not Found!");
+    res.send(user)
+}
 
-export { getTechnician, addTechnician, updateTechnician, deleteTechnician };
+export { getTechnician, addTechnician, updateTechnician, deleteTechnician, getById };

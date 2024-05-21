@@ -49,6 +49,15 @@ function techValidator(technician) {
     });
     return schema.validate(technician);
 }
+function UpdateTechValidator(technician) {
+    const schema = Joi.object({
+        fullName: Joi.string().required().min(5).max(50),
+        email: Joi.string().email().required().min(5).max(255),
+        phone: Joi.string().required(),
+        department: Joi.string().required()
+    });
+    return schema.validate(technician);
+}
 const Technician = new mongoose.model("Technician users", technicianSchema);
 
-export {Technician, techValidator};
+export {Technician, techValidator, UpdateTechValidator};

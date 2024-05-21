@@ -8,8 +8,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Pencil, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -21,15 +19,15 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import AdminEditDialog from "./AdminEditDialog";
-import AdminDeleteDialog from "./AdminDeleteDialog";
-export default function AdminTable() {
-    const [admins, setAdmins] = useState([]);
+import TechnicianEditDialog from "./TechnicianEditDialog";
+import TechnicianDeleteDialog from "./TechnicianDeleteDialog";
+export default function TechnicianTable() {
+    const [technicians, setTechnicians] = useState([]);
     useEffect(() => {
         axios
-            .get("http://localhost:4000/api/admin")
+            .get("http://localhost:4000/api/technician")
             .then((response) => {
-                setAdmins((response.data));
+                setTechnicians((response.data));
             })
             .catch((error) => {
                 console.log(error);
@@ -38,8 +36,8 @@ export default function AdminTable() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Admin Users</CardTitle>
-                <CardDescription>A list of all admin users</CardDescription>
+                <CardTitle>Technician Users</CardTitle>
+                <CardDescription>A list of all technician users</CardDescription>
             </CardHeader>
             <CardContent>
                 <Table>
@@ -47,19 +45,21 @@ export default function AdminTable() {
                         <TableRow>
                             <TableHead>Full Name</TableHead>
                             <TableHead>Email Address</TableHead>
+                            <TableHead>Profession</TableHead>
                             <TableHead>Phone Number</TableHead>
                             <TableHead>Operations</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {admins.map((admin) => (
-                            <TableRow key={admin._id}>
-                                <TableCell>{admin.fullName}</TableCell>
-                                <TableCell>{admin.email}</TableCell>
-                                <TableCell>{admin.phone}</TableCell>
+                        {technicians.map((technician) => (
+                            <TableRow key={technician._id}>
+                                <TableCell>{technician.fullName}</TableCell>
+                                <TableCell>{technician.email}</TableCell>
+                                <TableCell>{technician.department}</TableCell>
+                                <TableCell>{technician.phone}</TableCell>
                                 <TableCell className="flex gap-4">
-                                    <AdminEditDialog id={admin._id}/>
-                                    <AdminDeleteDialog id={admin._id}/>
+                                    <TechnicianEditDialog id={technician._id}/>
+                                    <TechnicianDeleteDialog id={technician._id}/>
                                 </TableCell>
                             </TableRow>
                         ))}

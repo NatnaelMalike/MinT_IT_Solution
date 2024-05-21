@@ -1,7 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { useEffect } from "react";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -12,15 +13,18 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import SelectForm from "./SelectForm";
+import { toast } from "sonner";
 
-// const phoneRegExp = /^(?:\+251)?09\d{8}$/
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
-    password: z
-        .string()
-        .min(6, { message: "Password must be 6 or more characters long" }),
     fullName: z.string().min(1, { message: "Name is required" }),
     department: z.string().min(1, { message: "Department should be selected" }),
     phone: z.string().refine((value) => /^(?:\+251)?09\d{8}$/.test(value), {
@@ -28,20 +32,38 @@ const formSchema = z.object({
     }),
 });
 
-export default function TechnicianForm() {
+export default function TechnicianEditForm({id}) {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
             fullName: "",
             phone: "",
-            password: "",
             department: "",
         },
     });
-
-    function onSubmit(values) {
-        console.log(values);
+    useEffect(() => {
+        axios
+            .get(`http://localhost:4000/api/technician/${id}`)
+            .then((response) => {
+                form.setValue("email", response.data.email);
+                form.setValue("fullName", response.data.fullName);
+                form.setValue("phone", response.data.phone);
+                form.setValue("department", response.data.department);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
+    function onSubmit(data) {
+        axios
+            .put(`http://localhost:4000/api/technician/${id}`, data)
+            .then(() => {
+                toast("Technician User Updated Successfully");
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     return (
@@ -112,38 +134,34 @@ export default function TechnicianForm() {
                     name="department"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Department</FormLabel>
-                            <FormControl>
-                                <SelectForm {...field} />
-                            </FormControl>
+                            <FormLabel>Profession</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select Profession" />
+                                    </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                    <SelectItem value="Profession 1">
+                                        Proffession 1
+                                    </SelectItem>
+                                    <SelectItem value="Profession 2">
+                                        Profession 2
+                                    </SelectItem>
+                                    <SelectItem value="Profession 3">
+                                        Profession 3
+                                    </SelectItem>
+                                </SelectContent>
+                            </Select>
                             <FormDescription>
-                                This is your department/desk for The
-                                MinT_IT_Solution technician account.
+                                This is your profession for The MinT_IT_Solution
+                                technician account.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                                <Input
-                                    placeholder="Enter Your Password"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormDescription>
-                                This is your password for The technician
-                                account.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+
                 <Button type="submit">Submit</Button>
             </form>
         </Form>

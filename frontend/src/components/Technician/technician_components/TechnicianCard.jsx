@@ -6,7 +6,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-export default function AdminCard({ children }) {
+export default function TechnicianCard({ children }) {
     return (
         <Card className="w-96 mx-auto">
             <CardContent>{children}</CardContent>
