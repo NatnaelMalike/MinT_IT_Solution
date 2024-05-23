@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
+import LoginPage from "./pages/login/LoginPage";
 import AdminHomepage from "./pages/Admin/AdminHomepage";
 import UserHomepage from "./pages/User/UserHomepage";
 import TechnicianHomepage from "./pages/Technnician/TechnicianHomepage";
@@ -7,11 +7,11 @@ import AdminSignup from "./pages/Admin/AdminSignupPage";
 import TechnicianSignup from "./pages/Technnician/TechnicianSignupPage";
 import UserSignup from "./pages/User/UserSignupPage";
 import AdminMain from "./components/Admin/AdminMain";
-import UserMain from "./components/User/UserMain";
 import UserEditForm from "./components/User/UserEditForm";
-import Dashboard from "./components/Dashboard/Dashboard";
-import TechnicianMain from "./components/Technician/TechnicianMain";
-import DepartmentMain from "./components/Department/DepartmentMain";
+import Dashboard from "./components/AdminLayout/admin_components/Dashboard/Dashboard";
+import TechnicianMain from "./components/AdminLayout/admin_components/Technician/TechnicianMain";
+import DepartmentMain from "./components/AdminLayout/admin_components/Department/DepartmentMain";
+import UserMain from "./components/AdminLayout/admin_components/User/UserMain";
 
 const router = createBrowserRouter([
     // Login Page
@@ -35,9 +35,10 @@ const router = createBrowserRouter([
         element: <AdminHomepage />,
         children: [
             { index: true, element: <Dashboard /> },
-            { path: 'admin_users', element: <AdminMain /> },
-            { path: 'technicians', element: <TechnicianMain /> },
-            { path: 'departments', element: <DepartmentMain /> },
+            { path: "admin_users", element: <AdminMain /> },
+            { path: "users", element: <UserMain /> },
+            { path: "technicians", element: <TechnicianMain /> },
+            { path: "departments", element: <DepartmentMain /> },
         ],
     },
     // Admin Signup

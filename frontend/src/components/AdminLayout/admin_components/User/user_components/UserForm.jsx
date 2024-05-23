@@ -120,7 +120,7 @@ axios.post('http://localhost:4000/api/user', data).then(()=>{
                         <FormItem>
                             <FormLabel className="block mb-2">Department</FormLabel>
                             <FormControl>
-                                <ComboboxDemo {...field}/>
+                                
                             </FormControl>
                             <FormDescription>
                                 This is your Department for The MinT_IT_Solution

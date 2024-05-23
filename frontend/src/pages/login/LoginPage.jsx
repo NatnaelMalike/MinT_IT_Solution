@@ -1,4 +1,4 @@
-import logo from "../assets/img/MinT-Logo.jpg";
+import logo from "../../assets/img/MinT-Logo.jpg"
 import LoginForm from "@/components/Form/LoginForm";
 import { Link } from "react-router-dom";
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UserHeader from "./UserHeader";
-import UserCard from "./user_components/UserCard";
+import UserCard from "../AdminLayout/admin_components/User/user_components/UserCard";
 
 const UserMain = () => {
     const [user, setUser] = useState([]);

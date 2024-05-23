@@ -1,5 +1,5 @@
 import logo from "../../assets/img/MinT-Logo.jpg";
-import TechnicianForm from "@/components/Technician/technician_components/TechnicianForm";
+import TechnicianForm from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianForm";
 const TechnicianSignupPage = () => {
     return (
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">

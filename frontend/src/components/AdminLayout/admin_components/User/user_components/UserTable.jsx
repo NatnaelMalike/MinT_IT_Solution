@@ -8,16 +8,25 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Pencil, Trash2 } from "lucide-react";
-import AdminEditDialog from "./AdminEditDialog";
-import AdminEditCard from "./AdminEditCard";
-import { Link } from "react-router-dom";
-
-
-export default function UserTable({users}) {
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import UserDeleteDialog from "./UserDeleteDialog";
+export default function UserTable({ users }) {
     return (
+        <Card>
+            <CardHeader>
+                <CardTitle> Workers</CardTitle>
+                <CardDescription>A list of all workers in the organization</CardDescription>
+            </CardHeader>
+            <CardContent>
         <Table>
-            <TableCaption>A list of all admin users.</TableCaption>
+            <TableCaption>A list of all users.</TableCaption>
             <TableHeader>
                 <TableRow>
                     <TableHead>Full Name</TableHead>
@@ -35,12 +44,13 @@ export default function UserTable({users}) {
                         <TableCell>{user.department}</TableCell>
                         <TableCell>{user.phone}</TableCell>
                         <TableCell className="flex gap-4">
-                             <Link to={`/user/delete/${user._id}`}><Trash2 className="cursor-pointer"/></Link>  
+                            <UserDeleteDialog />
                         </TableCell>
                     </TableRow>
                 ))}
             </TableBody>
-
         </Table>
+        </CardContent>
+        </Card>
     );
 }
