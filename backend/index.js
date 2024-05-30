@@ -5,6 +5,7 @@ import users from "./routes/userRoutes.js";
 import admins from './routes/adminRoutes.js';
 import technicians from './routes/technicianRoutes.js'
 import department from './routes/departmentRoutes.js'
+import request from './routes/requestRoutes.js'
 import login from "./routes/auth.js";
 import cookieParser from "cookie-parser";
 import authorize from "./middleware/authorization.js";
@@ -25,7 +26,7 @@ app.use("/api/admin", admins);
 app.use("/api/technician", technicians);
 app.use("/api/login", login)
 app.use("/api/department", department)
-
+app.use("/api/request", request)
 
 mongoose
     .connect(`mongodb://localhost:27017/MinT_IT_Solution`)
@@ -36,3 +37,5 @@ mongoose
         });
     })
     .catch((err) => console.log(`Couldn't Connect to DB`, err));
+
+    

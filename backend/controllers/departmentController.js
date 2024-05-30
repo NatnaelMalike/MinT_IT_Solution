@@ -17,7 +17,7 @@ const addDepartment = async (req, res) => {
 const updateDepartment = async (req, res) => {
     const { error } = departmentValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-    let department = await Department.findByIdAndUpdate(
+    const department = await Department.findByIdAndUpdate(
         req.params.id,
         _.pick(req.body, ["name"]),
         { new: true }
