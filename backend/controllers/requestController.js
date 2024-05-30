@@ -1,0 +1,3 @@
+const getRequest = (req, res)=>{
+
+}

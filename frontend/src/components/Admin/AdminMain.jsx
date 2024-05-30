@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AdminTable from "./admin_components/AdminTable";
-import AdminHeader from "./admin_components/AdminHeader";
+import Header from "../Header";
+import AddDialog from "../AddDialog";
+import AdminForm from "./admin_components/AdminForm";
 const AdminMain = () => {
     const [admins, setAdmins] = useState([]);
     useEffect(() => {
@@ -16,7 +18,11 @@ const AdminMain = () => {
     }, []);
     return (
         <div className="flex flex-col grow gap-8">
-            <AdminHeader />
+            <Header title="Manage Admins">
+                <AddDialog entity="Admin">
+                    <AdminForm />
+                </AddDialog>
+            </Header>
             <div className="grow" id="main">
                 <AdminTable admins={admins} />
             </div>

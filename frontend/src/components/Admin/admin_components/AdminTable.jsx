@@ -8,9 +8,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Pencil, Trash2 } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 
 import {
@@ -21,20 +19,24 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import AdminEditDialog from "./AdminEditDialog";
 import AdminDeleteDialog from "./AdminDeleteDialog";
+import { IdContext } from "@/contexts/Context";
+import AdminEditForm from "./AdminEditForm";
+import EditDialog from "@/components/EditDialog";
+
 export default function AdminTable() {
     const [admins, setAdmins] = useState([]);
     useEffect(() => {
         axios
             .get("http://localhost:4000/api/admin")
             .then((response) => {
-                setAdmins((response.data));
+                setAdmins(response.data);
             })
             .catch((error) => {
                 console.log(error);
             });
     }, []);
+
     return (
         <Card>
             <CardHeader>
@@ -58,8 +60,12 @@ export default function AdminTable() {
                                 <TableCell>{admin.email}</TableCell>
                                 <TableCell>{admin.phone}</TableCell>
                                 <TableCell className="flex gap-4">
-                                    <AdminEditDialog id={admin._id}/>
-                                    <AdminDeleteDialog id={admin._id}/>
+                                    <IdContext.Provider value={admin._id}>
+                                        <EditDialog entity="Admin">
+                                            <AdminEditForm />
+                                        </EditDialog>
+                                    </IdContext.Provider>
+                                    <AdminDeleteDialog id={admin._id} />
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -69,4 +75,3 @@ export default function AdminTable() {
         </Card>
     );
 }
-
