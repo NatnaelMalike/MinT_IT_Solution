@@ -2,7 +2,7 @@ import { Request, requestValidator } from "../models/request.js";
 import _ from "lodash";
 
 const getRequest = async (req, res) => {
-    const requests = await Request.find();
+    const requests = await Request.find().populate('user_id', "fullName department phone -_id");
     res.send(requests);
 };
 
