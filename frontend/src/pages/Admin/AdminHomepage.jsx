@@ -4,7 +4,7 @@ import { Toaster } from "sonner";
 
 const AdminHomepage = () => {
     return (
-        <div className="grid min-h-screen w-full overflow-hidden lg:grid-cols-[280px_1fr] bg-gray-50">
+        <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] bg-background">
             <Aside />
             <Main />
             <Toaster />

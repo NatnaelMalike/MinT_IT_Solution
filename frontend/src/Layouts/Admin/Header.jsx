@@ -45,7 +45,7 @@ const Header = () => {
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="flex flex-col">
-                <nav className="grid items-start px-2  font-medium lg:px-4 space-y-8">
+                <nav className="grid items-start px-4  font-medium space-y-8">
                 <div className="border-b">
                     <Link
                         to={"/helper_desk"}
@@ -82,7 +82,6 @@ const Header = () => {
                         <GitPullRequestArrow className="h-4 w-4" />
                         Escalated Request
                     </Link>
-                   
                     <Link
                         to={"/admin/technicians"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">

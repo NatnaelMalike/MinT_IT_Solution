@@ -19,7 +19,7 @@ import { Link } from "react-router-dom";
 const Aside = () => {
     return (
         <div className="hidden border-r md:block">
-            <div className="flex h-full max-h-screen flex-col gap-2"></div>
+            <div className="flex h-full max-h-screen flex-col gap-2">
             <div className="border-b">
                 <Link
                     to={"/admin"}
@@ -32,7 +32,7 @@ const Aside = () => {
                 </Link>
             </div>
             <div className="flex-1">
-                <nav className="grid items-start px-2  font-medium lg:px-4 space-y-8">
+                <nav className="grid items-start p-4  font-medium ">
                     <Link
                         to={"/admin/dashboard"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
@@ -56,6 +56,8 @@ const Aside = () => {
                     Settings
                 </Link>
             </div>
+            </div>
+            
         </div>
     );
 };
