@@ -5,7 +5,10 @@ const getRequest = async (req, res) => {
     const requests = await Request.find().populate('user_id', "fullName department phone -_id");
     res.send(requests);
 };
-
+const getById = async (req, res) => {
+    const request = await Request.findOne(req.params.id)
+    if(!request) return res.status(404).send("Request not Found!!!")
+}
 const addRequest = async (req, res) => {
     const { error } = requestValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -33,4 +36,4 @@ const deleteRequest = async(req, res)=>{
         res.send(request)
 }
 
-export {getRequest, addRequest, updateRequest, deleteRequest}
+export {getRequest, addRequest, updateRequest, deleteRequest, getById}

@@ -1,10 +1,10 @@
-import Header from "./Header";
 import { Outlet } from "react-router-dom";
+import Header from "./Header";
 const Main = () => {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col grow">
             <Header />
-            <div className="grow bg-white p-6" id="main">
+            <div className="grow p-8" id="main">
                 <Outlet />
             </div>
         </div>
