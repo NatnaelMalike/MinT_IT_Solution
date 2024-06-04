@@ -1,6 +1,6 @@
 import { Toaster } from "sonner";
 import logo from "../../assets/img/MinT-Logo.jpg";
-import UserForm from "@/components/AdminLayout/admin_components/User/user_components/UserForm";
+import UserForm from "@/components/User/user_components/UserForm";
 const UserSignupPage = () => {
     return (
         <div className="flex min-h-full px-6 py-8 lg:px-8">

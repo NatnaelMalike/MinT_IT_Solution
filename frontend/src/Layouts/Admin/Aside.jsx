@@ -17,13 +17,13 @@ import {
     Wallet,
 } from "lucide-react";
 import logo from "../../assets/img/MinT-Logo.jpg";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 const Aside = () => {
     return (
         <div className="hidden border-r md:block">
             <div className="flex h-full max-h-screen flex-col gap-2">
                 <div className="border-b">
-                    <Link
+                    <NavLink
                         to={"/helper_desk"}
                         className="flex items-center gap-2 font-semibold mb-4">
                         <img
@@ -31,62 +31,62 @@ const Aside = () => {
                             alt="Organization Logo"
                             className="rounded-md h-36 mx-auto"
                         />
-                    </Link>
+                    </NavLink>
                 </div>
             <div className="flex-1">
                 <nav className="grid items-start p-4  font-medium">
-                    <Link
+                    <NavLink
                         to={"/admin/dashboard"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <HomeIcon className="h-4 w-4" />
                         Dashboard
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                         to={"/admin/requests"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <GitPullRequestArrow className="h-4 w-4" />
                         Requests
-                    </Link>
-                    <Link
-                        to={"/admin/helper_admins"}
+                    </NavLink>
+                    <NavLink
+                        to={"/admin/admin_users"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <Users className="h-4 w-4" />
                         Helper Admins
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                         to={"/admin/escalated_requests"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <GitPullRequestArrow className="h-4 w-4" />
                         Escalated Request
-                    </Link>
+                    </NavLink>
 
-                    <Link
+                    <NavLink
                         to={"/admin/technicians"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <Users className="h-4 w-4" />
                         Technicians
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                         to={"/admin/users"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <Users className="h-4 w-4" />
                         Users
-                    </Link>
-                    <Link
+                    </NavLink>
+                    <NavLink
                         to={"/admin/departments"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <BuildingIcon className="h-4 w-4" />
                         Departments
-                    </Link>
+                    </NavLink>
                 </nav>
             </div>
             <div className="mt-auto p-4 font-medium">
-                <Link
+                <NavLink
                     to={"/helper_desk"}
                     className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                     <Settings className="h-4 w-4" />
                     Settings
-                </Link>
+                </NavLink>
             </div>
             </div>
         </div>

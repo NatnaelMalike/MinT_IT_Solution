@@ -8,6 +8,7 @@ const UserMain = () => {
             .get("http://localhost:4000/api/user")
             .then((response) => {
                 setUsers(response.data);
+                console.log(response.data)
             })
             .catch((error) => {
                 console.log(error);

@@ -9,7 +9,7 @@ const AdminHomepage = () => {
             <Main />
             <Toaster />
         </div>
-    );
+    );  
 };
 
 export default AdminHomepage;

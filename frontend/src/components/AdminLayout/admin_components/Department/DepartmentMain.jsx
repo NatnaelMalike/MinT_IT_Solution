@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import DepartmentTable from "./department_components/DepartmentTable";
-import DepartmentHeader from "./department_components/DepartmentHeader";
+import AddDialog from "@/components/AddDialog";
+import Header from "@/components/Header";
+import DepartmentForm from "./department_components/DepartmentForm";
 
 const DepartmentMain = () => {
     const [departments, setDepartments] = useState([]);
@@ -17,7 +19,11 @@ const DepartmentMain = () => {
     }, []);
     return (
         <div className="flex flex-col grow gap-8">
-            <DepartmentHeader />
+             <Header title="Manage Departments">
+                <AddDialog entity="Department">
+                    <DepartmentForm />
+                </AddDialog>
+            </Header>
             <div className="grow" id="main">
                 <DepartmentTable departments={departments} />
             </div>

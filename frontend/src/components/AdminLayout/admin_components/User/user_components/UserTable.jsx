@@ -41,8 +41,8 @@ export default function UserTable({ users }) {
                     <TableRow key={user._id}>
                         <TableCell>{user.fullName}</TableCell>
                         <TableCell>{user.email}</TableCell>
-                        <TableCell>{user.department}</TableCell>
                         <TableCell>{user.phone}</TableCell>
+                        <TableCell>{user.department["name"]}</TableCell>
                         <TableCell className="flex gap-4">
                             <UserDeleteDialog />
                         </TableCell>

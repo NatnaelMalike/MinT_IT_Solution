@@ -1,8 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
+import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,8 +15,21 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+} from "@/components/ui/command";
+import { Check, ChevronsUpDown } from "lucide-react";
+
 import { Input } from "@/components/ui/input";
-import ComboboxDemo from "@/components/User/ComboBox";
 import { toast } from "sonner";
 
 const formSchema = z.object({
@@ -24,7 +38,7 @@ const formSchema = z.object({
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
     fullName: z.string().min(1, { message: "Name is required" }),
-    department: z.string().min(1,{
+    department: z.string().min(1, {
         message: "Please select a department.",
     }),
     phone: z.string().refine((value) => /^(?:\+251)?0[1-9]\d{8}$/.test(value), {
@@ -33,26 +47,39 @@ const formSchema = z.object({
 });
 
 export default function UserForm() {
+    const [departments, setDepartments] = useState([]);
+    useEffect(() => {
+        axios
+            .get("http://localhost:4000/api/department")
+            .then((response) => {
+                setDepartments(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
             fullName: "",
             phone: "",
-            department: "Department One",
+            department: "",
             password: "",
         },
     });
 
     function onSubmit(data) {
-axios.post('http://localhost:4000/api/user', data).then(()=>{
-    toast('User Account Created Successfully!')
-})
+        axios.post("http://localhost:4000/api/user", data).then(() => {
+            toast("User Account Created Successfully!");
+        });
     }
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className=" grid md:grid-cols-2 gap-8 w-96 md:min-w-[800px] items-start">
+            <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className=" grid md:grid-cols-2 gap-8 w-96 md:min-w-[800px] items-start">
                 <FormField
                     control={form.control}
                     name="fullName"
@@ -118,13 +145,66 @@ axios.post('http://localhost:4000/api/user', data).then(()=>{
                     name="department"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel className="block mb-2">Department</FormLabel>
-                            <FormControl>
-                                
-                            </FormControl>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <FormControl>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            className={cn(
+                                                "w-full justify-between",
+                                                !field.value &&
+                                                    "text-muted-foreground"
+                                            )}>
+                                            {field.value
+                                                ? departments.find(
+                                                      (department) =>
+                                                          department._id ===
+                                                          field.value
+                                                  )?.name
+                                                : "Select Your Department"}
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                        </Button>
+                                    </FormControl>
+                                </PopoverTrigger>
+                                <PopoverContent className="p-0 max-h-80 overflow-y-scroll">
+                                    <Command>
+                                        <CommandInput
+                                            placeholder="Search Department..."
+                                            className="h-9"
+                                        />
+                                        <CommandEmpty>
+                                            No City found.
+                                        </CommandEmpty>
+                                        <CommandGroup>
+                                            {departments.map((department) => (
+                                                <CommandItem
+                                                    value={department._id}
+                                                    key={department._id}
+                                                    onSelect={() => {
+                                                        form.setValue(
+                                                            "department",
+                                                            department._id
+                                                        );
+                                                    }}>
+                                                    {department.name}
+                                                    <Check
+                                                        className={cn(
+                                                            "ml-auto h-4 w-4",
+                                                            department._id ===
+                                                                field.value
+                                                                ? "opacity-100"
+                                                                : "opacity-0"
+                                                        )}
+                                                    />
+                                                </CommandItem>
+                                            ))}
+                                        </CommandGroup>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
                             <FormDescription>
-                                This is your Department for The MinT_IT_Solution
-                                user account.
+                                This is the name of the Your Department.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -149,7 +229,9 @@ axios.post('http://localhost:4000/api/user', data).then(()=>{
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="self-end">Submit</Button>
+                <Button type="submit" className="self-end">
+                    Submit
+                </Button>
             </form>
         </Form>
     );

@@ -2,7 +2,7 @@ import _ from "lodash";
 import { Department, departmentValidator } from "../models/department.js";
 
 const getDepartment = async (req, res) => {
-    const departments = await Department.find();
+    const departments = await Department.find().sort({name: 1});
     res.send(departments);
 };
 const addDepartment = async (req, res) => {

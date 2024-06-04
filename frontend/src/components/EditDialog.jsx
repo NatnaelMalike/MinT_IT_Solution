@@ -19,7 +19,7 @@ export default function EditDialog({entity, children}) {
     return (
         <Dialog open={open} onOpenChange={handleDialogChange}>
             <DialogTrigger asChild>
-                <Pencil className="cursor-pointer" />
+                <Pencil className="cursor-pointer text-primary" />
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>

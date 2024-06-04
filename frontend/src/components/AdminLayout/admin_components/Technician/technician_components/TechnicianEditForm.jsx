@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,8 +20,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import {
+    Card,
+    CardContent,
+  
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { IdContext } from "@/contexts/Context";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
@@ -32,7 +38,8 @@ const formSchema = z.object({
     }),
 });
 
-export default function TechnicianEditForm({id}) {
+export default function TechnicianEditForm() {
+    const id = useContext(IdContext);
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -67,7 +74,9 @@ export default function TechnicianEditForm({id}) {
     }
 
     return (
-        <Form {...form}>
+        <Card>
+            <CardContent>
+            <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
                     control={form.control}
@@ -165,5 +174,8 @@ export default function TechnicianEditForm({id}) {
                 <Button type="submit">Submit</Button>
             </form>
         </Form>
+            </CardContent>
+        </Card>
+        
     );
 }

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import TechnicianHeader from "./technician_components/TechnicianHeader";
 import TechnicianTable from "./technician_components/TechnicianTable";
+import Header from "@/components/Header";
+import AddDialog from "@/components/AddDialog";
+import TechnicianForm from "./technician_components/TechnicianForm";
 
 const TechnicianMain = () => {
     const [technicians, setTechnicians] = useState([]);
@@ -17,7 +19,11 @@ const TechnicianMain = () => {
     }, []);
     return (
         <div className="flex flex-col grow gap-8">
-            <TechnicianHeader />
+            <Header title="Manage Technicians">
+                <AddDialog entity="Technician">
+                    <TechnicianForm />
+                </AddDialog>
+            </Header>
             <div className="grow" id="main">
                 <TechnicianTable technicians={technicians} />
             </div>

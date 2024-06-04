@@ -8,8 +8,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
 
 import {
     Card,
@@ -24,19 +22,8 @@ import { IdContext } from "@/contexts/Context";
 import AdminEditForm from "./AdminEditForm";
 import EditDialog from "@/components/EditDialog";
 
-export default function AdminTable() {
-    const [admins, setAdmins] = useState([]);
-    useEffect(() => {
-        axios
-            .get("http://localhost:4000/api/admin")
-            .then((response) => {
-                setAdmins(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
-
+export default function AdminTable({ admins }) {
+ 
     return (
         <Card>
             <CardHeader>

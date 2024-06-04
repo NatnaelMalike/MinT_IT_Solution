@@ -8,8 +8,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { useState, useEffect } from "react";
-import axios from "axios";
 
 import {
     Card,
@@ -19,8 +17,10 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import TechnicianEditDialog from "./TechnicianEditDialog";
 import TechnicianDeleteDialog from "./TechnicianDeleteDialog";
+import EditDialog from "@/components/EditDialog";
+import { IdContext } from "@/contexts/Context";
+import TechnicianEditForm from "./TechnicianEditForm";
 export default function TechnicianTable({technicians}) {
 
     return (
@@ -48,7 +48,11 @@ export default function TechnicianTable({technicians}) {
                                 <TableCell>{technician.department}</TableCell>
                                 <TableCell>{technician.phone}</TableCell>
                                 <TableCell className="flex gap-4">
-                                    <TechnicianEditDialog id={technician._id}/>
+                                <IdContext.Provider value={technician._id}>
+                                        <EditDialog entity="Department">
+                                            <TechnicianEditForm />
+                                        </EditDialog>
+                                    </IdContext.Provider>
                                     <TechnicianDeleteDialog id={technician._id}/>
                                 </TableCell>
                             </TableRow>

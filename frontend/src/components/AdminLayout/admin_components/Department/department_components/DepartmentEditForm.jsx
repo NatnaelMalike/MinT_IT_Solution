@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -12,15 +12,22 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import {
+    Card,
+    CardContent,
+  
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { toast } from "sonner";
+import { IdContext } from "@/contexts/Context";
 
 const formSchema = z.object({
     name: z.string().min(1, { message: "Department is required" }),
 });
 
-export default function DepartmentEditForm({id}) {
+export default function DepartmentEditForm() {
+    const id = useContext(IdContext)
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -49,7 +56,9 @@ export default function DepartmentEditForm({id}) {
     }
 
     return (
-        <Form {...form}>
+<Card>
+    <CardContent>
+    <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
                     control={form.control}
@@ -75,5 +84,8 @@ export default function DepartmentEditForm({id}) {
                 <Button type="submit">Submit</Button>
             </form>
         </Form>
+    </CardContent>
+</Card>
+       
     );
 }

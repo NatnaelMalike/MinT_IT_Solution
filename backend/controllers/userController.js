@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import _ from "lodash";
 
 const getUser = async (req, res) => {
-    const users = await User.find().sort({ fullName: 1 });
+    const users = await User.find().populate("department", "name -_id").sort({ fullName: 1 });
     res.send(users);
 };
 

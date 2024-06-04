@@ -22,7 +22,8 @@ const userSchema = mongoose.Schema(
             maxLength: 1024,
         },
         department: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Department",
             required: true,
         },
         phone: {
