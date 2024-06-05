@@ -27,8 +27,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useLogout } from "@/hooks/useLogout";
 
 const Header = () => {
+    const {logout} = useLogout()
+    const handleLogoutClick = ()=>{
+        logout()
+    }
     return (
         <header className="flex h-14 items-center gap-4 border-b bg-background/90 px-4 lg:h-[60px] lg:px-6">
             <Sheet>
@@ -104,7 +109,7 @@ const Header = () => {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>Settings</DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Logout</DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleLogoutClick}>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </header>

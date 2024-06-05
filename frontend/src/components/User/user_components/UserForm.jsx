@@ -31,6 +31,7 @@ import { Check, ChevronsUpDown } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { useSignup } from "@/hooks/useSignup";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
@@ -47,7 +48,9 @@ const formSchema = z.object({
 });
 
 export default function UserForm() {
+    const {signup, isLoading, error} = useSignup()
     const [departments, setDepartments] = useState([]);
+   
     useEffect(() => {
         axios
             .get("http://localhost:4000/api/department")
@@ -70,9 +73,10 @@ export default function UserForm() {
     });
 
     function onSubmit(data) {
-        axios.post("http://localhost:4000/api/user", data).then(() => {
-            toast("User Account Created Successfully!");
-        });
+        signup(data)
+        // axios.post("http://localhost:4000/api/user", data).then(() => {
+        //     toast("User Account Created Successfully!");
+        // });
     }
 
     return (
@@ -145,6 +149,7 @@ export default function UserForm() {
                     name="department"
                     render={({ field }) => (
                         <FormItem>
+                            <FormLabel>Department</FormLabel>
                             <Popover>
                                 <PopoverTrigger asChild>
                                     <FormControl>
@@ -232,7 +237,9 @@ export default function UserForm() {
                 <Button type="submit" className="self-end">
                     Submit
                 </Button>
+
             </form>
+            
         </Form>
     );
 }

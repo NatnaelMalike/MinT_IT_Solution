@@ -13,6 +13,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useLogin } from "@/hooks/useLogin";
 
 const formSchema = z.object({
     email: z.string().email({message:"Invalid Email Address"}),
@@ -20,6 +21,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+    const {login, isLoading, error} = useLogin()
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -28,8 +30,8 @@ export default function LoginForm() {
         },
     });
 
-    function onSubmit(values) {
-        console.log(values);
+    function onSubmit(data) {
+        login(data)
     }
 
     return (
