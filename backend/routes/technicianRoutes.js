@@ -6,9 +6,13 @@ import {
     deleteTechnician,
     getById,
 } from "../controllers/technicianController.js";
+import authorize from "../middleware/authorization.js";
+
 import admin from "../middleware/admin.js";
 
+
 const router = express.Router();
+router.use(authorize)
 
 router.get("/",  getTechnician);
 router.get('/:id', getById)

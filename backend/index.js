@@ -8,7 +8,6 @@ import department from './routes/departmentRoutes.js'
 import request from './routes/requestRoutes.js'
 import login from "./routes/auth.js";
 import assignTechnician from "./routes/assignmentRoutes.js"
-import cookieParser from "cookie-parser";
 
 import authorize from "./middleware/authorization.js";
 import cors from "cors"
@@ -26,7 +25,6 @@ app.use(
     allowedHeaders: ['Content-Type']
 }))
 
-app.use(cookieParser())
 app.use(express.json());
 app.use("/api/user", users);
 app.use("/api/admin", admins);

@@ -5,8 +5,12 @@ import {
     addDepartment,
     getById,
 } from "../controllers/departmentController.js";
+import authorize from "../middleware/authorization.js";
+
 import express from "express";
 const router = express.Router();
+
+
 router.get("/", getDepartment);
 router.get("/:id", getById);
 router.post("/", addDepartment);

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
 import AdminHomepage from "./pages/Admin/AdminHomepage";
 import UserHomepage from "./pages/User/UserHomepage";
@@ -13,22 +13,30 @@ import DepartmentMain from "./components/AdminLayout/admin_components/Department
 import UserMain from "./components/AdminLayout/admin_components/User/UserMain";
 import HelperHomepage from "./pages/HelperDesk/HelperHomepage";
 import RequestMain from "./components/AdminLayout/admin_components/Request/RequestMain";
+import { useAuthContext } from "./hooks/useAuthContext";
 // import Profile from "./components/HelperDesk/Profile";
+const RoutesComponent = ()=>{
+    const { user } = useAuthContext();
 
 const router = createBrowserRouter([
     // Login Page
-    { path: "/login", element: <LoginPage /> },
+    {
+        path: "/login",
+        element: !user ? <LoginPage /> : <Navigate to="/user" />,
+    },
 
     // User Dashboard
     {
         path: "/user",
-        element: <UserHomepage />,
-        children: [
-          
-        ],
+        element: user ? <UserHomepage /> : <Navigate to="/login" />,
+
+        children: [],
     },
     // User Signup
-    { path: "/user/signup", element: <UserSignup /> },
+    {
+        path: "/user/signup",
+        element: !user ? <UserSignup /> : <Navigate to="/user" />,
+    },
 
     // Helper Admin Dashboard
     // {
@@ -71,5 +79,7 @@ const router = createBrowserRouter([
     // ] },
     // { path: "/technician/signup", element: <TechnicianSignup /> },
 ]);
+return <RouterProvider router={router} />;
+}
 
-export default router;
+export default RoutesComponent;
