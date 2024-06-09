@@ -30,7 +30,7 @@ const login = async (req, res) => {
     if (!validPassword)
         return res.status(400).send("Incorrect email or Password");
     const token = user.generateAuthToken();
-    res.send({token});
+    res.send(token);
 };
 
 function validator(credentials) {
