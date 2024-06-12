@@ -22,6 +22,8 @@ import {
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const formSchema = z.object({
     // user_id: z.string().min(1, { message: "User have to Logged in!" }),
@@ -32,13 +34,18 @@ const formSchema = z.object({
 });
 
 export default function RequestForm() {
+    const {user} = useAuthContext()
     const form = useForm({
         resolver: zodResolver(formSchema)
     });
 
     function onSubmit(data) {
         axios
-            .post("http://localhost:4000/api/request", data)
+            .post("http://localhost:4000/api/request", data, {
+                headers: {
+                    'Authorization' : `Bearer ${user.token}`
+                }
+            })
             .then(() => {
                 toast("Issue Requested Successfully!");
             })
@@ -119,9 +126,9 @@ export default function RequestForm() {
                     name="description"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>Problem Description</FormLabel>
                             <FormControl>
-                                <Input
+                                <Textarea
                                     placeholder="Please state details about your issue"
                                     {...field}
                                 />

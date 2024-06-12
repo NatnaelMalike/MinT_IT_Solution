@@ -54,6 +54,7 @@ function userValidator(user) {
     });
     return schema.validate(user);
 }
+
 const User = new mongoose.model("Normal users", userSchema);
 
 export { User, userValidator };

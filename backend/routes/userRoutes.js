@@ -5,7 +5,7 @@ import admin from "../middleware/admin.js";
 import authorize from "../middleware/authorization.js";
 
 const router = express.Router();
-router.use(authorize)
+// router.use(authorize)
 
 router.get("/", getUser);
 router.post("/", addUser);

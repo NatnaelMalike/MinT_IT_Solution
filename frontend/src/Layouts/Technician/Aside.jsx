@@ -34,31 +34,31 @@ const Aside = () => {
                 <div className="flex-1">
                     <nav className="grid items-start p-4  font-medium ">
                         <Link
-                            to={"/admin/dashboard"}
+                            to={"/technician"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <User className="h-4 w-4" />
                             Profile
                         </Link>
                         <Link
-                            to={"/admin/users"}
+                            to={"/technician/requests"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             Requests
                         </Link>
                         <Link
-                            to={"/admin/users"}
+                            to={"/technician/requests"}
                             className="flex items-center gap-3 whitespace-nowrap rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             In-Progress Requests
                         </Link>
                         <Link
-                            to={"/admin/users"}
+                            to={"/technician/requests"}
                             className="flex items-center gap-3 whitespace-nowrap rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             Resolved Requests
                         </Link>
                         <Link
-                            to={"/admin/users"}
+                            to={"/technician/requests"}
                             className="flex items-center gap-3 whitespace-nowrap rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             UnResolved Requests

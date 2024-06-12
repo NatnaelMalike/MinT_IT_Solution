@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import {
     Table,
     TableBody,
@@ -8,8 +10,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-
-
 import {
     Card,
     CardContent,
@@ -18,13 +18,23 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import RequestForm from "@/components/AdminLayout/admin_components/Request/request_components/RequestForm";
 
-
-export default function RequestTable({ requests }) {
-   
-
+const RequestTable = () => {
+    const [requests, setRequests] = useState([]);
+    useEffect(() => {
+        axios
+            .get("http://localhost:4000/api/request")
+            .then((response) => {
+                setRequests(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
     return (
-        <Card>
+        <div className="flex flex-col gap-8">
+            <Card>
             <CardHeader>
                 <CardTitle>Requests</CardTitle>
                 <CardDescription>A list of all  Issued Problems</CardDescription>
@@ -60,5 +70,9 @@ export default function RequestTable({ requests }) {
                 </Table>
             </CardContent>
         </Card>
+           
+        </div>
     );
-}
+};
+
+export default RequestTable;

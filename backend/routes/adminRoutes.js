@@ -10,7 +10,6 @@ import authorize from "../middleware/authorization.js";
 import admin from "../middleware/admin.js";
 
 const router = express.Router();
-router.use(authorize)
 
 router.get("/", getAdmin);
 router.get("/:id", getById);

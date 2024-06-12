@@ -12,9 +12,11 @@ const getById = async (req, res) => {
 const addRequest = async (req, res) => {
     const { error } = requestValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-    const request = new Request(
-        _.pick(req.body, ["user_id", "issueType", "description"])
-    );
+    const {issueType, description} = req.body
+    const user_id = '66697d5b2e4ce0e25ceac7d8';
+    const request = new Request({
+        issueType, description, user_id
+    });
     await request.save();
     res.send(request);
 };

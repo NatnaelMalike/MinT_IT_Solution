@@ -34,37 +34,37 @@ const Aside = () => {
                 <div className="flex-1">
                     <nav className="grid items-start p-4 font-medium  ">
                         <Link
-                            to={"/admin/dashboard"}
+                            to={"/helper_desk"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <User className="h-4 w-4" />
                             Profile
                         </Link>
                         <Link
-                            to={"/admin/users"}
+                            to={"/helper_desk/requests"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             Requests
                         </Link>
                         <Link
-                            to={"/admin/users"}
+                            to={"/helper_desk/requests"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             Assign a Request
                         </Link>
                         <Link
-                            to={"/admin/users"}
+                            to={"/helper_desk/requests"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             Escalated Request
                         </Link>
                         <Link
-                            to={"/admin/users"}
+                            to={"/helper_desk/requests"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             Closed Request
                         </Link>
                         <Link
-                            to={"/admin/users"}
+                            to={"/helper_desk/requests"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <Users className="h-4 w-4" />
                             Technicians

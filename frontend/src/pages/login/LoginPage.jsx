@@ -13,8 +13,11 @@ const LoginPage = () => {
                     Sign in to your account
                 </h2>
                 <LoginForm />
-                <div className="text-right mt-4 text-sm">Need an Account? <Link className="text-teal-500 text-base hover:opacity-90 hover:underline" to={'/user/signup'}>Signup</Link></div>
-                
+                <div className="flex justify-between items-center mt-4">
+                <Link to={'/forget-password'} className="hover:text-teal-500">Forget Password</Link>
+                <div>Need an Account? <Link className="text-teal-500 text-base hover:opacity-90 hover:underline" to={'/user/signup'}>Signup</Link></div>
+
+                </div>
             </div>
             
         </div>

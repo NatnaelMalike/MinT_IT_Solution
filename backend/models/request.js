@@ -38,7 +38,6 @@ const requestSchema = mongoose.Schema(
 );
 function requestValidator(request) {
     const schema = Joi.object({
-        user_id: Joi.required(),
         issueType: Joi.required(),
         description: Joi.string().required(),
     });

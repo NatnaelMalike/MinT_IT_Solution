@@ -14,7 +14,9 @@ import UserMain from "./components/AdminLayout/admin_components/User/UserMain";
 import HelperHomepage from "./pages/HelperDesk/HelperHomepage";
 import RequestMain from "./components/AdminLayout/admin_components/Request/RequestMain";
 import { useAuthContext } from "./hooks/useAuthContext";
-// import Profile from "./components/HelperDesk/Profile";
+import ForgetPassword from "./pages/reset_password/ForgetPassword";
+import RequestPage from "./pages/User/user_components/RequestPage";
+import RequestTable from "./components/Helper_Admin/RequestTable";
 const RoutesComponent = ()=>{
     const { user } = useAuthContext();
 
@@ -29,29 +31,34 @@ const router = createBrowserRouter([
     {
         path: "/user",
         element: user ? <UserHomepage /> : <Navigate to="/login" />,
+        children: [
+            { path: "requests", element: <RequestPage /> },
 
-        children: [],
+        ],
     },
     // User Signup
     {
         path: "/user/signup",
         element: !user ? <UserSignup /> : <Navigate to="/user" />,
     },
-
+    {
+        path: "/forget-password",
+        element: !user ? <ForgetPassword /> : <Navigate to="/user" />,
+    },
     // Helper Admin Dashboard
-    // {
-    //     path: "/helper_desk",
-    //     element: <HelperHomepage />,
-    //     children: [
-    //         { index: true, element: <Profile /> },
-    //         { path: "profile", element: <Profile /> },
-    //         { path: "requests", element: <Profile /> },
-    //         { path: "assign_request", element: <Profile /> },
-    //         { path: "escalated_requests", element: <Profile /> },
-    //         { path: "closed_requests", element: <Profile /> },
-    //         { path: "technicians", element: <Profile /> },
-    //     ],
-    // },
+    {
+        path: "/helper_desk",
+        element: <HelperHomepage />,
+        children: [
+            { index: true, element: <RequestTable /> },
+            { path: "profile", element: <RequestTable /> },
+            { path: "requests", element: <RequestTable /> },
+            { path: "assign_request", element: <RequestTable /> },
+            { path: "escalated_requests", element: <RequestTable /> },
+            { path: "closed_requests", element: <RequestTable /> },
+            { path: "technicians", element: <RequestTable /> },
+        ],
+    },
     // Admin Dashboard
     {
         path: "/admin",
@@ -68,16 +75,16 @@ const router = createBrowserRouter([
     // Admin Signup
     { path: "/admin/signup", element: <AdminSignup /> },
     // Technician Dashboard
-    // { path: "/technician", element: <TechnicianHomepage />, children: [
-    //     { index: true, element: <Profile /> },
-    //     { path: "profile", element: <Profile /> },
-    //     { path: "requests", element: <Profile /> },
-    //     { path: "assign_request", element: <Profile /> },
-    //     { path: "escalated_requests", element: <Profile /> },
-    //     { path: "closed_requests", element: <Profile /> },
-    //     { path: "technicians", element: <Profile /> },
-    // ] },
-    // { path: "/technician/signup", element: <TechnicianSignup /> },
+    { path: "/technician", element: <TechnicianHomepage />, children: [
+        { index: true, element: <RequestTable /> },
+        { path: "profile", element: <RequestTable /> },
+        { path: "requests", element: <RequestTable /> },
+        { path: "assign_request", element: <RequestTable /> },
+        { path: "escalated_requests", element: <RequestTable /> },
+        { path: "closed_requests", element: <RequestTable /> },
+        { path: "technicians", element: <RequestTable /> },
+    ] },
+    { path: "/technician/signup", element: <TechnicianSignup /> },
 ]);
 return <RouterProvider router={router} />;
 }
