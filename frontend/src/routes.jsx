@@ -23,17 +23,16 @@ const RoutesComponent = ()=>{
 const router = createBrowserRouter([
     // Login Page
     {
-        path: "/login",
-        element: !user ? <LoginPage /> : <Navigate to="/user" />,
+        path: "/",
+        element:<LoginPage />,
     },
 
     // User Dashboard
     {
         path: "/user",
-        element: user ? <UserHomepage /> : <Navigate to="/login" />,
+        element: <UserHomepage />,
         children: [
             { path: "requests", element: <RequestPage /> },
-
         ],
     },
     // User Signup

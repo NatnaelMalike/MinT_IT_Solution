@@ -18,7 +18,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import RequestForm from "@/components/AdminLayout/admin_components/Request/request_components/RequestForm";
 
 const RequestTable = () => {
     const [requests, setRequests] = useState([]);
@@ -70,7 +69,6 @@ const RequestTable = () => {
                 </Table>
             </CardContent>
         </Card>
-           
         </div>
     );
 };
