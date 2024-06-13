@@ -59,7 +59,9 @@ const updateTechnician = async (req, res) => {
 
 const deleteTechnician = async (req, res) => {
     const user = await Technician.findByIdAndDelete(req.params.id);
+
     if (!user) return res.status(404).send("User not Found!");
+    await Email.deleteOne({ email: user.email });
     res.send(user);
 };
 const getById = async (req, res) => {
