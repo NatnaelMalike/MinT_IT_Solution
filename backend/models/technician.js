@@ -29,6 +29,10 @@ const technicianSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        profession:{
+            type: String,
+            required: true
+        },
         role: {
             type: String,
             default: "technician",

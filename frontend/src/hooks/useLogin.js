@@ -11,7 +11,7 @@ export const useLogin = () => {
         await axios
             .post("http://localhost:4000/api/login", data)
             .then((res) => {
-                localStorage.setItem("token", JSON.stringify(res.data));
+                localStorage.setItem("token", res.data);
                 dispatch({ type: "LOGIN", payload: res.data });
                 setIsLoading(false);
             })

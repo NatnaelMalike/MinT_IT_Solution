@@ -1,4 +1,8 @@
-import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+    Navigate,
+    RouterProvider,
+    createBrowserRouter,
+} from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
 import AdminHomepage from "./pages/Admin/AdminHomepage";
 import UserHomepage from "./pages/User/UserHomepage";
@@ -13,41 +17,51 @@ import DepartmentMain from "./components/AdminLayout/admin_components/Department
 import UserMain from "./components/AdminLayout/admin_components/User/UserMain";
 import HelperHomepage from "./pages/HelperDesk/HelperHomepage";
 import RequestMain from "./components/AdminLayout/admin_components/Request/RequestMain";
-import { useAuthContext } from "./hooks/useAuthContext";
 import ForgetPassword from "./pages/reset_password/ForgetPassword";
 import RequestPage from "./pages/User/user_components/RequestPage";
 import RequestTable from "./components/Helper_Admin/RequestTable";
-const RoutesComponent = ()=>{
-    const { user } = useAuthContext();
+import UnAuthorized from "./pages/UnAuthorized";
+import ProtectedRoutes from "./pages/ProtectedRoutes";
 
 const router = createBrowserRouter([
     // Login Page
     {
         path: "/",
-        element:<LoginPage />,
+        element: <LoginPage />,
     },
 
     // User Dashboard
     {
         path: "/user",
-        element: <UserHomepage />,
-        children: [
-            { path: "requests", element: <RequestPage /> },
-        ],
+        element: (
+            <ProtectedRoutes role="normal">
+                <UserHomepage />
+            </ProtectedRoutes>
+        ),
+        children: [{ path: "requests", element: <RequestPage /> }],
     },
+
     // User Signup
     {
-        path: "/user/signup",
-        element: !user ? <UserSignup /> : <Navigate to="/user" />,
+        path: "/signup",
+        element: <UserSignup />,
     },
+
+    // Forgot Password
     {
         path: "/forget-password",
-        element: !user ? <ForgetPassword /> : <Navigate to="/user" />,
+        element: <ForgetPassword />,
+    },
+
+    // UnAuthorized
+    {
+        path: "/unauthorized",
+        element: <UnAuthorized />,
     },
     // Helper Admin Dashboard
     {
         path: "/helper_desk",
-        element: <HelperHomepage />,
+        element:  <ProtectedRoutes role={'admin'}><HelperHomepage /></ProtectedRoutes>,
         children: [
             { index: true, element: <RequestTable /> },
             { path: "profile", element: <RequestTable /> },
@@ -61,7 +75,7 @@ const router = createBrowserRouter([
     // Admin Dashboard
     {
         path: "/admin",
-        element: <AdminHomepage />,
+        element:  <ProtectedRoutes role={'admin'}><AdminHomepage /></ProtectedRoutes>,
         children: [
             { path: "dashboard", element: <Dashboard /> },
             { path: "requests", element: <RequestMain /> },
@@ -74,18 +88,20 @@ const router = createBrowserRouter([
     // Admin Signup
     { path: "/admin/signup", element: <AdminSignup /> },
     // Technician Dashboard
-    { path: "/technician", element: <TechnicianHomepage />, children: [
-        { index: true, element: <RequestTable /> },
-        { path: "profile", element: <RequestTable /> },
-        { path: "requests", element: <RequestTable /> },
-        { path: "assign_request", element: <RequestTable /> },
-        { path: "escalated_requests", element: <RequestTable /> },
-        { path: "closed_requests", element: <RequestTable /> },
-        { path: "technicians", element: <RequestTable /> },
-    ] },
+    {
+        path: "/technician",
+        element:  <ProtectedRoutes role={'technician'}><TechnicianHomepage /></ProtectedRoutes>,
+        children: [
+            { index: true, element: <RequestTable /> },
+            { path: "profile", element: <RequestTable /> },
+            { path: "requests", element: <RequestTable /> },
+            { path: "assign_request", element: <RequestTable /> },
+            { path: "escalated_requests", element: <RequestTable /> },
+            { path: "closed_requests", element: <RequestTable /> },
+            { path: "technicians", element: <RequestTable /> },
+        ],
+    },
     { path: "/technician/signup", element: <TechnicianSignup /> },
 ]);
-return <RouterProvider router={router} />;
-}
 
-export default RoutesComponent;
+export default router;

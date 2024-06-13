@@ -17,7 +17,7 @@ const addUser = async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
     await user.save();
     const token = user.generateAuthToken()
-    res.send({token})
+    res.send(token)
 };
 
 const updateUser = async (req, res) => {
