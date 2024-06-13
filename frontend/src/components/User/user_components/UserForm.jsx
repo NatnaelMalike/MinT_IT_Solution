@@ -73,12 +73,8 @@ export default function UserForm() {
     });
 
     function onSubmit(data) {
-        signup(data)
-        // axios.post("http://localhost:4000/api/user", data).then(() => {
-        //     toast("User Account Created Successfully!");
-        // });
+        signup(data,'user')
     }
-
     return (
         <Form {...form}>
             <form

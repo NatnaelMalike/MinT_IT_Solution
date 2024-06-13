@@ -25,10 +25,10 @@ export default function AddDialog({ entity, children }) {
                     <p>Add {entity}</p>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent >
                 <DialogHeader>
-                    <DialogTitle>Add {entity}</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-xl text-center mb-2">Add {entity}</DialogTitle>
+                    <DialogDescription className="text-base text-center mb-2">
                         Adding a new {entity} to the system
                     </DialogDescription>
                 </DialogHeader>

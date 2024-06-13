@@ -26,12 +26,28 @@ const technicianSchema = mongoose.Schema(
             required: true,
         },
         department: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Department",
+            required: true,
+        },
+        profession: {
             type: String,
             required: true,
+            enum: [
+                "Electrician",
+                "Data Center Technician",
+                "Cloud Support Specialist",
+                "Network Engineer",
+                "Field Service Technician",
+                "Web Administrator",
+                "Systems Analyst",
+                "Database Administrator",
+                "IT Support Technician",
+            ],
         },
         role: {
             type: String,
-            default: "technician",
+            default: "technician_user",
         },
     },
     { timestamps: true }
@@ -52,6 +68,7 @@ function techValidator(technician) {
         password: Joi.string().required().min(6).max(255),
         phone: Joi.string().required(),
         department: Joi.string().required(),
+        profession: Joi.string().required(),
     });
     return schema.validate(technician);
 }

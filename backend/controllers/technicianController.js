@@ -11,26 +11,21 @@ const getTechnician = async (req, res) => {
     const users = await Technician.find();
     res.send(users);
 };
-
 const addTechnician = async (req, res) => {
     const { error } = techValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-    const {email} = req.body
-    const existingEmail = await Email.findOne({ email });
+    const existingEmail = await Email.findOne({ email: req.body.email });
     if (existingEmail)
-        return res
-            .status(400)
-            .send("Email already registered in another collection");
-            const newEmail = new Email({ email } );
-            await newEmail.save();
-    let user = await Technician.findOne({ email: req.body.email });
-    if (user) return res.status(400).send("User Already Registered !!!");
-    user = new Technician(
+        return res.status(400).send("User already registered !!!");
+    const newEmail = new Email({ email: req.body.email });
+    await newEmail.save();
+    const user = new Technician(
         _.pick(req.body, [
             "fullName",
             "email",
             "password",
             "department",
+            "profession",
             "phone",
         ])
     );
@@ -46,7 +41,13 @@ const updateTechnician = async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
     const user = await Technician.findByIdAndUpdate(
         req.params.id,
-        _.pick(req.body, ["fullName", "email", "department", "phone"]),
+        _.pick(req.body, [
+            "fullName",
+            "email",
+            "department",
+            "profession",
+            "phone",
+        ]),
         {
             new: true,
         }

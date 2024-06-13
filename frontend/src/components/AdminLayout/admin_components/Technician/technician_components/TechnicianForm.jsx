@@ -19,24 +19,56 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+} from "@/components/ui/command";
+import { Card, CardContent } from "@/components/ui/card";
+
+import { cn } from "@/lib/utils";
+
+import { Check, ChevronsUpDown } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { toast } from "sonner";
+import { useSignup } from "@/hooks/useSignup";
+import { useEffect, useState } from "react";
 
-// const phoneRegExp = /^(?:\+251)?09\d{8}$/
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
     password: z
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
     fullName: z.string().min(1, { message: "Name is required" }),
-    department: z.string().min(1, { message: "Profession must be selected" }),
+    department: z.string().min(1, { message: "Department must be selected" }),
+    profession: z.string().min(1, { message: "Profession must be selected" }),
     phone: z.string().refine((value) => /^(?:\+251)?09\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
 });
 
 export default function TechnicianForm() {
+    const {signup, isLoading, error} = useSignup()
+    const [departments, setDepartments] = useState([]);
+   
+    useEffect(() => {
+        axios
+            .get("http://localhost:4000/api/department")
+            .then((response) => {
+                setDepartments(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -45,24 +77,23 @@ export default function TechnicianForm() {
             phone: "",
             password: "",
             department: "",
+            profession: ""
         },
     });
 
     function onSubmit(data) {
-        axios
-            .post("http://localhost:4000/api/technician", data)
-            .then(() => {
-                toast("Technician User Created Successfully!");
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        console.log(data)
+      signup(data ,'technician')
     }
 
     return (
+        <Card className="max-sm:w-11/12 sm:w-5/6 mx-auto p-4">
+            <CardContent>
+
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                <FormField
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-12">
+            <div className="flex-col space-y-4">
+            <FormField
                     control={form.control}
                     name="fullName"
                     render={({ field }) => (
@@ -115,16 +146,19 @@ export default function TechnicianForm() {
                                 />
                             </FormControl>
                             <FormDescription>
-                                This is your phone number for The
+                                This is the phone number for The
                                 MinT_IT_Solution technician account.
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+            </div>
+             <div className="flex-col space-y-4">
+
                 <FormField
                     control={form.control}
-                    name="department"
+                    name="profession"
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Profession</FormLabel>
@@ -172,6 +206,77 @@ export default function TechnicianForm() {
                         </FormItem>
                     )}
                 />
+                 <FormField
+                    control={form.control}
+                    name="department"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Department</FormLabel>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <FormControl>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            className={cn(
+                                                "w-full justify-between",
+                                                !field.value &&
+                                                    "text-muted-foreground"
+                                            )}>
+                                            {field.value
+                                                ? departments.find(
+                                                      (department) =>
+                                                          department._id ===
+                                                          field.value
+                                                  )?.name
+                                                : "Select Your Department"}
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                        </Button>
+                                    </FormControl>
+                                </PopoverTrigger>
+                                <PopoverContent className="p-0 max-h-80 overflow-y-scroll">
+                                    <Command>
+                                        <CommandInput
+                                            placeholder="Search Department..."
+                                            className="h-9"
+                                        />
+                                        <CommandEmpty>
+                                            No City found.
+                                        </CommandEmpty>
+                                        <CommandGroup>
+                                            {departments.map((department) => (
+                                                <CommandItem
+                                                    value={department._id}
+                                                    key={department._id}
+                                                    onSelect={() => {
+                                                        form.setValue(
+                                                            "department",
+                                                            department._id
+                                                        );
+                                                    }}>
+                                                    {department.name}
+                                                    <Check
+                                                        className={cn(
+                                                            "ml-auto h-4 w-4",
+                                                            department._id ===
+                                                                field.value
+                                                                ? "opacity-100"
+                                                                : "opacity-0"
+                                                        )}
+                                                    />
+                                                </CommandItem>
+                                            ))}
+                                        </CommandGroup>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
+                            <FormDescription>
+                                This is the name of the Your Department.
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                 <FormField
                     control={form.control}
                     name="password"
@@ -193,7 +298,10 @@ export default function TechnicianForm() {
                     )}
                 />
                 <Button type="submit">Submit</Button>
+             </div>
             </form>
         </Form>
+            </CardContent>
+        </Card>
     );
 }

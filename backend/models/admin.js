@@ -25,9 +25,14 @@ const adminSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        department: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Department",
+            required: true,
+        },
         role: {
             type: String,
-            default: "admin",
+            default: "helper_admin",
         },
     },
     { timestamps: true }

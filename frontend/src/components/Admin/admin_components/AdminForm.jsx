@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { DialogContext } from "@/contexts/Context";
 import { useContext } from "react";
+import { useSignup } from "@/hooks/useSignup";
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
     password: z
@@ -33,6 +34,7 @@ const formSchema = z.object({
 });
 
 export default function AdminForm() {
+    const {signup, isLoading, error} = useSignup()
     const handleDialogChange = useContext(DialogContext);
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -46,15 +48,7 @@ export default function AdminForm() {
 
     function onSubmit(data) {
         handleDialogChange();
-        axios
-            .post("http://localhost:4000/api/admin", data)
-            .then(() => {
-                toast.success("Admin Account created Successfully!");
-            })
-            .catch((err) => {
-                toast.
-                console.log(err);
-            });
+       signup(data, 'admin')
     }
 
     return (

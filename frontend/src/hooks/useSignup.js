@@ -7,10 +7,10 @@ export const useSignup = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const { dispatch } = useAuthContext();
-    const signup = async (data) => {
+    const signup = async (data, type) => {
         setIsLoading(true);
         await axios
-            .post("http://localhost:4000/api/user", data)
+            .post(`http://localhost:4000/api/${type}`, data)
             .then((res) => {
                 console.log(res.data)
                 localStorage.setItem("user", JSON.stringify(res.data))

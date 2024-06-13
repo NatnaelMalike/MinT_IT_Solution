@@ -32,7 +32,7 @@ const userSchema = mongoose.Schema(
         },
         role: {
             type: String,
-            default: "normal",
+            default: "normal_user",
         },
     },
     { timestamps: true }
