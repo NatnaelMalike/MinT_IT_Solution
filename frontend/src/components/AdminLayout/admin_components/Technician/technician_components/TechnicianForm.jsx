@@ -135,14 +135,32 @@ export default function TechnicianForm() {
                                     </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                    <SelectItem value="Profession 1">
-                                        Proffession 1
+                                    <SelectItem value="Electrician">
+                                        Electrician
                                     </SelectItem>
-                                    <SelectItem value="Profession 2">
-                                        Profession 2
+                                    <SelectItem value="Cloud Support Specialist">
+                                        Cloud Support Specialist
                                     </SelectItem>
-                                    <SelectItem value="Profession 3">
-                                        Profession 3
+                                    <SelectItem value="Network Engineer">
+                                        Network Engineer
+                                    </SelectItem>
+                                    <SelectItem value="Data Center Technician">
+                                        Data Center Technician
+                                    </SelectItem>
+                                    <SelectItem value="Field Service Technician">
+                                        Field Service Technician
+                                    </SelectItem>
+                                    <SelectItem value="Web Administrator">
+                                        Web Administrator
+                                    </SelectItem>
+                                    <SelectItem value="Systems Analyst">
+                                        Systems Analyst
+                                    </SelectItem>
+                                    <SelectItem value="Database Administrator">
+                                        Database Administrator
+                                    </SelectItem>
+                                    <SelectItem value="IT Support Technician">
+                                        IT Support Technician
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
