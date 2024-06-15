@@ -35,7 +35,17 @@ export default function DepartmentDeleteDialog({ id }) {
                         Are You Sure to delete this Department ?
                     </DialogDescription>
                 </DialogHeader>
-                <Button onClick={deleteDepartment} className='w-1/2 mx-auto'>Yes</Button>
+                <div className="flex gap-4">
+                    <Button
+                        onClick={deleteDepartment}
+                        className="grow"
+                        variant="destructive">
+                        Yes
+                    </Button>
+                    <DialogClose asChild>
+                        <Button className="grow">No</Button>
+                    </DialogClose>
+                </div>
             </DialogContent>
         </Dialog>
     );

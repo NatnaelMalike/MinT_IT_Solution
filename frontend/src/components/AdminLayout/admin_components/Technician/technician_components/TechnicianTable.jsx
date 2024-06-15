@@ -21,8 +21,9 @@ import TechnicianDeleteDialog from "./TechnicianDeleteDialog";
 import EditDialog from "@/components/EditDialog";
 import { IdContext } from "@/contexts/Context";
 import TechnicianEditForm from "./TechnicianEditForm";
-export default function TechnicianTable({technicians}) {
-
+import { useTechnicianContext } from "@/hooks/useTechnicianContext";
+export default function TechnicianTable() {
+const {technicians} = useTechnicianContext()
     return (
         <Card>
             <CardHeader>
@@ -41,7 +42,7 @@ export default function TechnicianTable({technicians}) {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {technicians.map((technician) => (
+                        { technicians && technicians.map((technician) => (
                             <TableRow key={technician._id}>
                                 <TableCell>{technician.fullName}</TableCell>
                                 <TableCell>{technician.email}</TableCell>

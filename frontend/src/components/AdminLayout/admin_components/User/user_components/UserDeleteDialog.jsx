@@ -35,7 +35,17 @@ export default function UserDeleteDialog({ id }) {
                         Are You Sure to delete this User ?
                     </DialogDescription>
                 </DialogHeader>
-                <Button onClick={deleteUser} className='w-1/2 mx-auto'>Yes</Button>
+                <div className="flex gap-4">
+                    <Button
+                        onClick={deleteUser}
+                        className="grow"
+                        variant="destructive">
+                        Yes
+                    </Button>
+                    <DialogClose asChild>
+                        <Button className="grow">No</Button>
+                    </DialogClose>
+                </div>
             </DialogContent>
         </Dialog>
     );

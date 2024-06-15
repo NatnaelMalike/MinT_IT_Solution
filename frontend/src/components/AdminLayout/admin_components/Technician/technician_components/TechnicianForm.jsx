@@ -83,7 +83,7 @@ export default function TechnicianForm() {
 
     function onSubmit(data) {
         console.log(data)
-      signup(data ,'technician')
+      signup(data ,'technician', 'ADD_TECHNICIAN')
     }
 
     return (
