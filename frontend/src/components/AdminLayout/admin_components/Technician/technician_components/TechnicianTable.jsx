@@ -36,6 +36,7 @@ const {technicians} = useTechnicianContext()
                         <TableRow>
                             <TableHead>Full Name</TableHead>
                             <TableHead>Email Address</TableHead>
+                            <TableHead>Department</TableHead>
                             <TableHead>Profession</TableHead>
                             <TableHead>Phone Number</TableHead>
                             <TableHead>Operations</TableHead>
@@ -46,11 +47,12 @@ const {technicians} = useTechnicianContext()
                             <TableRow key={technician._id}>
                                 <TableCell>{technician.fullName}</TableCell>
                                 <TableCell>{technician.email}</TableCell>
-                                <TableCell>{technician.department}</TableCell>
+                                <TableCell>{technician.department['name']}</TableCell>
+                                <TableCell>{technician.profession}</TableCell>
                                 <TableCell>{technician.phone}</TableCell>
                                 <TableCell className="flex gap-4">
                                 <IdContext.Provider value={technician._id}>
-                                        <EditDialog entity="Department">
+                                        <EditDialog entity="Technician">
                                             <TechnicianEditForm />
                                         </EditDialog>
                                     </IdContext.Provider>

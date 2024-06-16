@@ -78,6 +78,7 @@ function UpdateTechValidator(technician) {
         email: Joi.string().email().required().min(5).max(255),
         phone: Joi.string().required(),
         department: Joi.string().required(),
+        profession: Joi.string().required(),
     });
     return schema.validate(technician);
 }

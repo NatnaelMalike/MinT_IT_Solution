@@ -9,15 +9,15 @@ export const useSignup = () => {
     const [isLoading, setIsLoading] = useState(false);
     const { dispatch } = useAuthContext();
     const {dispatch: techDispatch}= useTechnicianContext()
-    const signup = async (data, type, action) => {
+    const signup =  (data, type, action) => {
         setIsLoading(true);
-        await axios
+         axios
             .post(`http://localhost:4000/api/${type}`, data)
             .then((res) => {
                 console.log(res.data)
                 localStorage.setItem("user", JSON.stringify(res.data))
                 dispatch({ type: 'LOGIN', payload: res.data.token });
-                techDispatch({ type: action, payload: res.data.user });
+                techDispatch({ type: action, payload: res.data.populatedUser });
                 setIsLoading(false)
             })
             .catch((error) => {

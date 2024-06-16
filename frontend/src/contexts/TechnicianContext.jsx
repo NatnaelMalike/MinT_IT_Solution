@@ -15,14 +15,12 @@ export const technicianReducer = (state, action)=>{
             return {
                 technicians: state.technicians.filter((technician)=>technician._id !== action.payload)
             }
-        // case 'UPDATE_TECHNICIAN':
-        //     return {
-        //         technicians: state.technicians.map((tech)=>{
-        //             if(tech.id === action.payload.id){
-        //                 return action.payload
-        //             }
-        //         })
-        //     }
+        case 'UPDATE_TECHNICIAN':
+            return {
+              technicians: state.technicians.map((technician) =>
+                technician._id === action.payload._id ? { ...action.payload } : technician
+            )
+            }
         default:
             return state
     }

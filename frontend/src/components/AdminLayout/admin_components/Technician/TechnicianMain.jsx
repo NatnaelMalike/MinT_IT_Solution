@@ -25,7 +25,7 @@ const TechnicianMain = () => {
                 });
         };
         fetchTechnicians();
-    }, []);
+    }, [dispatch]);
     return (
         <div className="flex flex-col grow gap-8">
             <Header title="Manage Technicians">

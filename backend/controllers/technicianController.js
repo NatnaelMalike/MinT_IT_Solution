@@ -8,7 +8,7 @@ import _ from "lodash";
 import Email from "../models/Email.js";
 
 const getTechnician = async (req, res) => {
-    const users = await Technician.find();
+    const users = await Technician.find().populate("department", "name -_id");
     res.send(users);
 };
 const addTechnician = async (req, res) => {
@@ -33,7 +33,8 @@ const addTechnician = async (req, res) => {
     user.password = await bcrypt.hash(user.password, salt);
     await user.save();
     const token = user.generateAuthToken();
-    res.send({token, user});
+    const populatedUser = await Technician.findById(user._id).populate('department', 'name')
+    res.send({token, populatedUser});
 };
 
 const updateTechnician = async (req, res) => {
@@ -51,10 +52,8 @@ const updateTechnician = async (req, res) => {
         {
             new: true,
         }
-    );
+    ).populate('department', 'name');
     if (!user) return res.status(404).send("User not Found!");
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
     res.send(user);
 };
 
