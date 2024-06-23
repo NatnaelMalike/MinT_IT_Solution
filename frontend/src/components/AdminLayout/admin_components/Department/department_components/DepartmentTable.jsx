@@ -23,18 +23,9 @@ import DepartmentEditForm from "./DepartmentEditForm";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import EditDialog from "@/components/EditDialog";
+import { useDepartmentContext } from "@/hooks/useDepartmentContext";
 export default function DepartmentTable() {
-    const [departments, setDepartments] = useState([]);
-    useEffect(() => {
-        axios
-            .get("http://localhost:4000/api/department")
-            .then((response) => {
-                setDepartments(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+    const {departments} = useDepartmentContext()
     return (
         <Card className="max-h-screen overflow-y-scroll">
             <CardHeader>
@@ -50,7 +41,7 @@ export default function DepartmentTable() {
                         </TableRow>
                     </TableHeader>
                     <TableBody className="max-h-screen">
-                        {departments.map((department) => (
+                        {departments && departments.map((department) => (
                             <TableRow key={department._id}>
                                 <TableCell>{department.name}</TableCell>
                                 <TableCell className="flex gap-4">

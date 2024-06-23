@@ -32,9 +32,9 @@ const addTechnician = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
     await user.save();
-    const token = user.generateAuthToken();
+    // const token = user.generateAuthToken();
     const populatedUser = await Technician.findById(user._id).populate('department', 'name')
-    res.send({token, populatedUser});
+    res.send( populatedUser);
 };
 
 const updateTechnician = async (req, res) => {

@@ -8,7 +8,7 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 import { useTechnicianContext } from "@/hooks/useTechnicianContext";
 
 const TechnicianMain = () => {
-    const { technicians, dispatch } = useTechnicianContext();
+    const { dispatch } = useTechnicianContext();
     useEffect(() => {
         const fetchTechnicians = () => {
              axios
@@ -18,7 +18,6 @@ const TechnicianMain = () => {
                         type: "SET_TECHNICIANS",
                         payload: response.data,
                     });
-                    console.log(technicians)
                 })
                 .catch((error) => {
                     console.log(error);

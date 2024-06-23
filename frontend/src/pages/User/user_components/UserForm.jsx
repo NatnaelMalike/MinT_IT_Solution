@@ -230,7 +230,7 @@ export default function UserForm() {
                         </FormItem>
                     )}
                 />
-                <FormMessage className="text-center text-xl">
+                <FormMessage className="text-center text-base p-4">
                 {error && error}
                 </FormMessage>
                 <Button type="submit" className="self-end" disabled={isLoading}>
