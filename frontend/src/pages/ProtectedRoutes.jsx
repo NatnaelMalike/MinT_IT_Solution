@@ -1,12 +1,12 @@
 import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
-import {jwtDecode} from "jwt-decode"; // Correct import
+import { jwtDecode } from "jwt-decode"; // Correct import
 
 const ProtectedRoutes = ({ children, role }) => {
     const { token } = useAuthContext();
 
     if (!token) {
-        return <Navigate to="/"  />;
+        return <Navigate to="/" />;
     }
 
     let decoded;
@@ -14,11 +14,11 @@ const ProtectedRoutes = ({ children, role }) => {
         decoded = jwtDecode(token);
     } catch (e) {
         console.error("Invalid token:", e);
-        return <Navigate to="/"  />;
+        return <Navigate to="/" />;
     }
 
     if (decoded.role !== role) {
-        return <Navigate to="/unauthorized"  />;
+        return <Navigate to="/unauthorized" />;
     }
 
     return children;

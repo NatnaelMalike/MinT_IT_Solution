@@ -46,7 +46,7 @@ export default function TechnicianDeleteDialog({ id }) {
                         Are You Sure to delete this Technician User?
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex gap-4">
+                <div className="flex gap-4 mt-4">
                     <Button
                         onClick={deleteTechnicianUser}
                         className="grow"

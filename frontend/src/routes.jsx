@@ -22,6 +22,7 @@ import RequestPage from "./pages/User/user_components/RequestPage";
 import RequestTable from "./components/Helper_Admin/RequestTable";
 import UnAuthorized from "./pages/UnAuthorized";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
+import RoleBasedRedirect from "./pages/RoleBasedRedirect";
 
 const router = createBrowserRouter([
     // Login Page
@@ -29,15 +30,16 @@ const router = createBrowserRouter([
         path: "/",
         element: <LoginPage />,
     },
+    // Role Based Redirect
+    {
+        path: "/redirect",
+        element: <RoleBasedRedirect />,
+    },
 
     // User Dashboard
     {
         path: "/user",
-        element: (
-            <ProtectedRoutes role="normal">
-                <UserHomepage />
-            </ProtectedRoutes>
-        ),
+        element: <UserHomepage />,
         children: [{ path: "requests", element: <RequestPage /> }],
     },
 
@@ -61,7 +63,11 @@ const router = createBrowserRouter([
     // Helper Admin Dashboard
     {
         path: "/helper_desk",
-        element:  <ProtectedRoutes role={'admin'}><HelperHomepage /></ProtectedRoutes>,
+        element: (
+            <ProtectedRoutes role={"admin"}>
+                <HelperHomepage />
+            </ProtectedRoutes>
+        ),
         children: [
             { index: true, element: <RequestTable /> },
             { path: "profile", element: <RequestTable /> },
@@ -75,7 +81,7 @@ const router = createBrowserRouter([
     // Admin Dashboard
     {
         path: "/admin",
-        element:  <AdminHomepage />,
+        element: <AdminHomepage />,
         children: [
             { path: "dashboard", element: <Dashboard /> },
             { path: "requests", element: <RequestMain /> },
@@ -90,7 +96,11 @@ const router = createBrowserRouter([
     // Technician Dashboard
     {
         path: "/technician",
-        element:  <ProtectedRoutes role={'technician'}><TechnicianHomepage /></ProtectedRoutes>,
+        element: (
+            <ProtectedRoutes role={"technician"}>
+                <TechnicianHomepage />
+            </ProtectedRoutes>
+        ),
         children: [
             { index: true, element: <RequestTable /> },
             { path: "profile", element: <RequestTable /> },

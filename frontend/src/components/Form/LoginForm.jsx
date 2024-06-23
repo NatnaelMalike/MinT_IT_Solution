@@ -16,12 +16,14 @@ import { Input } from "@/components/ui/input";
 import { useLogin } from "@/hooks/useLogin";
 
 const formSchema = z.object({
-    email: z.string().email({message:"Invalid Email Address"}),
-    password: z.string().min(6, {message: "Password must be 6 or more characters long" }),
+    email: z.string().email({ message: "Invalid Email Address" }),
+    password: z
+        .string()
+        .min(6, { message: "Password must be 6 or more characters long" }),
 });
 
 export default function LoginForm() {
-    const {login, isLoading, error} = useLogin()
+    const { login, isLoading, error } = useLogin();
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -31,11 +33,11 @@ export default function LoginForm() {
     });
 
     function onSubmit(data) {
-        login(data)
+        login(data);
     }
 
     return (
-        <Form {...form} >
+        <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
                     control={form.control}
@@ -77,8 +79,13 @@ export default function LoginForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Log in</Button>
+                <Button type="submit" disabled={isLoading}>
+                    Log in
+                </Button>
             </form>
+            <FormMessage className="text-center p-4 text-base">
+                {error && error}
+            </FormMessage>
         </Form>
     );
 }

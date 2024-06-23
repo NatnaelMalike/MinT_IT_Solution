@@ -8,21 +8,21 @@ export const useSignup = () => {
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const { dispatch } = useAuthContext();
-    const {dispatch: techDispatch}= useTechnicianContext()
-    const signup =  (data, type, action) => {
+    // const {dispatch: techDispatch}= useTechnicianContext()
+    const signup =  async(data) => {
         setIsLoading(true);
-         axios
-            .post(`http://localhost:4000/api/${type}`, data)
+        await axios
+            .post(`http://localhost:4000/api/user`, data)
             .then((res) => {
                 console.log(res.data)
                 localStorage.setItem("user", JSON.stringify(res.data))
                 dispatch({ type: 'LOGIN', payload: res.data.token });
-                techDispatch({ type: action, payload: res.data.populatedUser });
+                // techDispatch({ type: action, payload: res.data.populatedUser });
                 setIsLoading(false)
             })
             .catch((error) => {
                 setIsLoading(false)
-                setError(error.response.data.message);
+                setError(error.response.data);
             });
     };
     return {signup, isLoading, error}

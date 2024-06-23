@@ -79,7 +79,7 @@ export default function UserForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className=" grid md:grid-cols-2 gap-8 w-96 md:min-w-[800px] items-start">
+                className="grid md:grid-cols-2 gap-8 w-96 md:min-w-[800px] items-start">
                 <FormField
                     control={form.control}
                     name="fullName"
@@ -230,7 +230,10 @@ export default function UserForm() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit" className="self-end">
+                <FormMessage className="text-center text-xl">
+                {error && error}
+                </FormMessage>
+                <Button type="submit" className="self-end" disabled={isLoading}>
                     Submit
                 </Button>
 
