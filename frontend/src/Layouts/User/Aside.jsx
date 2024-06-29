@@ -34,7 +34,7 @@ const Aside = () => {
             <div className="flex-1">
                 <nav className="grid items-start p-4  font-medium ">
                     <Link
-                        to={"/user"}
+                        to={"/user/profile"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <User className="h-4 w-4" />
                         Profile

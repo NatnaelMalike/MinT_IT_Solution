@@ -18,13 +18,19 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import RequestForm from "@/components/AdminLayout/admin_components/Request/request_components/RequestForm";
+import RequestForm from "@/components/Request/RequestForm";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const RequestPage = () => {
+    const {token} = useAuthContext()
     const [requests, setRequests] = useState([]);
     useEffect(() => {
         axios
-            .get("http://localhost:4000/api/request")
+            .get("http://localhost:4000/api/request", {
+                headers: {
+                    'Authorization' : `Bearer ${token}`
+                }
+            })
             .then((response) => {
                 setRequests(response.data);
             })
@@ -67,8 +73,10 @@ const RequestPage = () => {
                 </CardContent>
             </Card>
             <div className="w-[625px] mx-auto mt-8 space-y-8">
-                <h1 className="text-2xl font-medium">Want to report a problem</h1>
-            <RequestForm />
+                <h1 className="text-2xl font-medium">
+                    Want to report a problem
+                </h1>
+                <RequestForm />
             </div>
         </div>
     );

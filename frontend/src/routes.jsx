@@ -18,11 +18,12 @@ import UserMain from "./components/AdminLayout/admin_components/User/UserMain";
 import HelperHomepage from "./pages/HelperDesk/HelperHomepage";
 import RequestMain from "./components/AdminLayout/admin_components/Request/RequestMain";
 import ForgetPassword from "./pages/reset_password/ForgetPassword";
-import RequestPage from "./pages/User/user_components/RequestPage";
+import RequestPage from "./components/User/RequestPage";
 import RequestTable from "./components/Helper_Admin/RequestTable";
 import UnAuthorized from "./pages/UnAuthorized";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 import RoleBasedRedirect from "./pages/RoleBasedRedirect";
+import ProfilePage from "./components/User/ProfilePage";
 
 const router = createBrowserRouter([
     // Login Page
@@ -40,7 +41,10 @@ const router = createBrowserRouter([
     {
         path: "/user",
         element: <UserHomepage />,
-        children: [{ path: "requests", element: <RequestPage /> }],
+        children: [
+            { path: "requests", element: <RequestPage /> },
+            { path: "profile", element: <ProfilePage /> },
+        ],
     },
 
     // User Signup

@@ -49,7 +49,7 @@ const Header = () => {
                 <SheetContent side="left" className="flex flex-col">
                     <nav className="grid items-start p-4  font-medium">
                         <Link
-                            to={"/admin"}
+                            to={"/user"}
                             className="flex items-center gap-2 font-semibold mb-4">
                             <img
                                 src={logo}
@@ -59,13 +59,13 @@ const Header = () => {
                         </Link>
 
                         <Link
-                            to={"/admin/dashboard"}
+                            to={"/user/profile"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <User className="h-4 w-4" />
                             Profile
                         </Link>
                         <Link
-                            to={"/admin/users"}
+                            to={"/user/requests"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             Requests
@@ -73,7 +73,7 @@ const Header = () => {
                     </nav>
                     <div className="mt-auto p-4 font-medium">
                         <Link
-                            to={"/admin"}
+                            to={"/user/profile"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <Settings className="h-4 w-4" />
                             Settings

@@ -34,16 +34,17 @@ const formSchema = z.object({
 });
 
 export default function RequestForm() {
-    const {user} = useAuthContext()
+    const {token} = useAuthContext()
     const form = useForm({
         resolver: zodResolver(formSchema)
     });
 
     function onSubmit(data) {
+        console.log('User Req', token)
         axios
             .post("http://localhost:4000/api/request", data, {
                 headers: {
-                    'Authorization' : `Bearer ${user.token}`
+                    'Authorization' : `Bearer ${token}`
                 }
             })
             .then(() => {
