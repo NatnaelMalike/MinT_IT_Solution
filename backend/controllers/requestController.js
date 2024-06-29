@@ -2,12 +2,26 @@ import { Request, requestValidator } from "../models/request.js";
 import _ from "lodash";
 
 const getRequest = async (req, res) => {
-    const user_id = req.user_id;
-    const requests = await Request.find({ user_id }).populate(
-        "user_id",
-        "fullName department phone -_id"
-    );
-    res.send(requests);
+    try {
+        const {role, _id} = req.user
+        if(role === 'normal_user'){
+            const user_id = _id
+            const requests = await Request.find({user_id}).populate(
+                "user_id",
+                "fullName department phone -_id"
+            );
+            res.send(requests); 
+        }else if (role === "helper_admin" || role === "super_admin"){
+            const requests = await Request.find().populate(
+                "user_id",
+                "fullName department phone -_id"
+            );
+            res.send(requests); 
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+        
+    }  
 };
 const getById = async (req, res) => {
     const request = await Request.findOne(req.params.id);
@@ -17,7 +31,7 @@ const addRequest = async (req, res) => {
     const { error } = requestValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     const { issueType, description } = req.body;
-    const user_id = req.user_id;
+    const user_id = req.user._id;
     const request = new Request({
         issueType,
         description,
@@ -26,7 +40,6 @@ const addRequest = async (req, res) => {
     await request.save();
     res.send(request);
 };
-
 const updateRequest = async (req, res) => {
     const { error } = requestValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);

@@ -9,7 +9,7 @@ const RoleBasedRedirect = () => {
     const { token } = useAuthContext();
     const decoded = jwtDecode(token);
     const role = decoded.role;
-    console.log(role, "role")
+    console.log(decoded, "decoded user")
 
     useEffect(() => {
         if (!role) {

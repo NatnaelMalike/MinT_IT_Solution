@@ -68,9 +68,9 @@ const router = createBrowserRouter([
     {
         path: "/helper_desk",
         element: (
-            <ProtectedRoutes role={"admin"}>
+            // <ProtectedRoutes role={"helper_admin"}>
                 <HelperHomepage />
-            </ProtectedRoutes>
+            // </ProtectedRoutes>
         ),
         children: [
             { index: true, element: <RequestTable /> },
@@ -101,7 +101,7 @@ const router = createBrowserRouter([
     {
         path: "/technician",
         element: (
-            <ProtectedRoutes role={"technician"}>
+            <ProtectedRoutes role={"technician_user"}>
                 <TechnicianHomepage />
             </ProtectedRoutes>
         ),
