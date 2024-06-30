@@ -27,6 +27,6 @@ export default async (req, res, next) => {
     req.user = _.pick(user, ["_id", "role"]);
     next();
   } catch (error) {
-    res.status(400).send("Invalid Token");
+    res.status(400).send(`"Invalid Token", ${token}`);
   }
 };

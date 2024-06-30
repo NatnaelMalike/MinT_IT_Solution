@@ -6,30 +6,33 @@ import { useRequestContext } from "@/hooks/useRequestContext";
 import axios from "axios";
 import { useEffect } from "react";
 
-
 const UserHomepage = () => {
-    const {token} = useAuthContext()
-    const {dispatch} = useRequestContext()
+    const { token } = useAuthContext();
+    const { dispatch } = useRequestContext();
+
     useEffect(() => {
-        axios
-            .get("http://localhost:4000/api/request", {
-                headers: {
-                    'Authorization' : `Bearer ${token}`
-                }
-            })
-            .then((response) => {
-                dispatch({type: 'SET_REQUESTS', payload: response.data})
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+        if (token) {
+            axios
+                .get("http://localhost:4000/api/request", {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then((response) => {
+                    dispatch({ type: 'SET_REQUESTS', payload: response.data });
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    }, [token]);
+
     return (
         <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr] bg-background">
-        <Aside/>
-        <Main />
-        <Toaster/>
-    </div>
+            <Aside />
+            <Main />
+            <Toaster />
+        </div>
     );
 };
 
