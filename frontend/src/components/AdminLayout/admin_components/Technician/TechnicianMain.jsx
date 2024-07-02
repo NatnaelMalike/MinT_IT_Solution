@@ -6,9 +6,12 @@ import AddDialog from "@/components/AddDialog";
 import TechnicianForm from "./technician_components/TechnicianForm";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useTechnicianContext } from "@/hooks/useTechnicianContext";
+import EntityTable from "@/components/EntityTable";
+import { technicianConfig } from "@/config/tables";
 
 const TechnicianMain = () => {
-    const { dispatch } = useTechnicianContext();
+    const { technicians, dispatch } = useTechnicianContext();
+    
     useEffect(() => {
         const fetchTechnicians = () => {
              axios
@@ -24,16 +27,17 @@ const TechnicianMain = () => {
                 });
         };
         fetchTechnicians();
-    }, [dispatch]);
+    }, [technicians]);
     return (
-        <div className="flex flex-col grow gap-8">
+        <div className="flex flex-col gap-8">
             <Header title="Manage Technicians">
                 <AddDialog entity="Technician">
                     <TechnicianForm />
                 </AddDialog>
             </Header>
             <div className="grow" id="main">
-                <TechnicianTable />
+                {/* <TechnicianTable /> */}
+                <EntityTable entities={technicians} config={technicianConfig}/>
             </div>
         </div>
     );

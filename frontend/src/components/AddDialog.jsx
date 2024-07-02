@@ -25,7 +25,7 @@ export default function AddDialog({ entity, children }) {
                     <p>Add {entity}</p>
                 </Button>
             </DialogTrigger>
-            <DialogContent >
+            <DialogContent className="max-sm:w-11/12">
                 <DialogHeader>
                     <DialogTitle className="text-xl text-center mb-2">Add {entity}</DialogTitle>
                     <DialogDescription className="text-base text-center mb-2">

@@ -87,11 +87,11 @@ export default function TechnicianForm() {
     }
 
     return (
-        <Card className="max-sm:w-11/12 sm:w-5/6 mx-auto p-4">
+        <Card className="max-sm:w-11/12 max-lg:w-5/6 mx-auto lg:min-w-[800px] p-4">
             <CardContent>
 
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-12">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-12 max-md:flex-col ">
             <div className="flex-col space-y-4">
             <FormField
                     control={form.control}
@@ -105,7 +105,7 @@ export default function TechnicianForm() {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>
+                            <FormDescription className="hidden lg:block">
                                 This is your Full Name for The MinT_IT_Solution
                                 technician account.
                             </FormDescription>
@@ -125,7 +125,7 @@ export default function TechnicianForm() {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>
+                            <FormDescription className="hidden lg:block">
                                 This is your email address for The
                                 MinT_IT_Solution technician account.
                             </FormDescription>
@@ -145,7 +145,7 @@ export default function TechnicianForm() {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>
+                            <FormDescription className="hidden lg:block">
                                 This is the phone number for The
                                 MinT_IT_Solution technician account.
                             </FormDescription>
@@ -198,7 +198,7 @@ export default function TechnicianForm() {
                                     </SelectItem>
                                 </SelectContent>
                             </Select>
-                            <FormDescription>
+                            <FormDescription className="hidden lg:block">
                                 This is your profession for The MinT_IT_Solution
                                 technician account.
                             </FormDescription>
@@ -270,7 +270,7 @@ export default function TechnicianForm() {
                                     </Command>
                                 </PopoverContent>
                             </Popover>
-                            <FormDescription>
+                            <FormDescription className="hidden lg:block">
                                 This is the name of the Your Department.
                             </FormDescription>
                             <FormMessage />
@@ -289,7 +289,7 @@ export default function TechnicianForm() {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>
+                            <FormDescription className="hidden lg:block">
                                 This is your password for The technician
                                 account.
                             </FormDescription>
