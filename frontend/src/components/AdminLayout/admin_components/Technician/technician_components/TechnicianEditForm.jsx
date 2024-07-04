@@ -108,7 +108,7 @@ export default function TechnicianEditForm() {
     }
 
     return (
-        <Card>
+        <Card className="max-sm:w-11/12 max-lg:w-5/6 mx-auto lg:min-w-[800px] p-4">
             <CardContent>
             <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-12">

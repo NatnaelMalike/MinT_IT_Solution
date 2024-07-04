@@ -16,14 +16,14 @@ import TechnicianMain from "./components/AdminLayout/admin_components/Technician
 import DepartmentMain from "./components/AdminLayout/admin_components/Department/DepartmentMain";
 import UserMain from "./components/AdminLayout/admin_components/User/UserMain";
 import HelperHomepage from "./pages/HelperDesk/HelperHomepage";
-import RequestMain from "./components/AdminLayout/admin_components/Request/RequestMain";
 import ForgetPassword from "./pages/reset_password/ForgetPassword";
 import RequestPage from "./components/User/RequestPage";
-import RequestTable from "./components/Helper_Admin/RequestTable";
+import RequestTable from "./components/Request/RequestTable";
 import UnAuthorized from "./pages/UnAuthorized";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 import RoleBasedRedirect from "./pages/RoleBasedRedirect";
 import ProfilePage from "./components/User/ProfilePage";
+import TechnicianRequestTable from "./components/Technician/TechnicianRequestTable";
 
 const router = createBrowserRouter([
     // Login Page
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         path: "/user",
         element: <UserHomepage />,
         children: [
-            { path: "requests", element: <RequestPage /> },
+            { index: true, element: <RequestPage /> },
             { path: "profile", element: <ProfilePage /> },
         ],
     },
@@ -70,7 +70,7 @@ const router = createBrowserRouter([
         element: (
             // <ProtectedRoutes role={"helper_admin"}>
                 <HelperHomepage />
-            // </ProtectedRoutes>
+             /* </ProtectedRoutes> */
         ),
         children: [
             { index: true, element: <RequestTable /> },
@@ -88,7 +88,7 @@ const router = createBrowserRouter([
         element: <AdminHomepage />,
         children: [
             { path: "dashboard", element: <Dashboard /> },
-            { path: "requests", element: <RequestMain /> },
+            { path: "requests", element: <RequestTable /> },
             { path: "admin_users", element: <AdminMain /> },
             { path: "users", element: <UserMain /> },
             { path: "technicians", element: <TechnicianMain /> },
@@ -101,18 +101,18 @@ const router = createBrowserRouter([
     {
         path: "/technician",
         element: (
-            <ProtectedRoutes role={"technician_user"}>
+            // <ProtectedRoutes role={"technician_user"}>
                 <TechnicianHomepage />
-            </ProtectedRoutes>
+            /* </ProtectedRoutes> */
         ),
         children: [
-            { index: true, element: <RequestTable /> },
-            { path: "profile", element: <RequestTable /> },
-            { path: "requests", element: <RequestTable /> },
-            { path: "assign_request", element: <RequestTable /> },
-            { path: "escalated_requests", element: <RequestTable /> },
-            { path: "closed_requests", element: <RequestTable /> },
-            { path: "technicians", element: <RequestTable /> },
+            { index: true, element: <TechnicianRequestTable /> },
+            { path: "profile", element: <TechnicianRequestTable /> },
+            { path: "requests", element: <TechnicianRequestTable /> },
+            { path: "assign_request", element: <TechnicianRequestTable /> },
+            { path: "escalated_requests", element: <TechnicianRequestTable /> },
+            { path: "closed_requests", element: <TechnicianRequestTable /> },
+            { path: "technicians", element: <TechnicianRequestTable /> },
         ],
     },
     { path: "/technician/signup", element: <TechnicianSignup /> },

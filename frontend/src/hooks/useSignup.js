@@ -20,9 +20,8 @@ export const useSignup = () => {
                 localStorage.setItem("user", JSON.stringify(res.data))
                 dispatch({ type: 'LOGIN', payload: res.data.token });
                 techDispatch({ type: action, payload: res.data.populatedUser });
-
                 setIsLoading(false)
-                navigate('/user')
+                navigate('/')
             })
             .catch((error) => {
                 setIsLoading(false)

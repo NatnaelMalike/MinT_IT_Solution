@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
 import {
     Table,
     TableBody,
@@ -8,8 +10,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-
-
 import {
     Card,
     CardContent,
@@ -18,13 +18,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { useRequestContext } from "@/hooks/useRequestContext";
 
 
-export default function RequestTable({ requests }) {
-   
-
+const TechnicianRequestTable = () => {
+   const {requests} = useRequestContext()
     return (
-        <Card>
+        <div className="flex flex-col gap-8">
+            <Card>
             <CardHeader>
                 <CardTitle>Requests</CardTitle>
                 <CardDescription>A list of all  Issued Problems</CardDescription>
@@ -39,26 +40,27 @@ export default function RequestTable({ requests }) {
                             <TableHead>Issue Type</TableHead>
                             <TableHead>Description</TableHead>
                             <TableHead>Status</TableHead>
-                            <TableHead>Is Assigned</TableHead>
                             <TableHead>Requested At</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {requests.map((request) => (
+                        {requests && requests.map((request) => (
                             <TableRow key={request._id}>
-                                <TableCell>{request.user_id.fullName}</TableCell>
-                                <TableCell>{request.user_id.department}</TableCell>
-                                <TableCell>{request.user_id.phone}</TableCell>
-                                <TableCell>{request.issueType}</TableCell>
-                                <TableCell>{request.description}</TableCell>
-                                <TableCell>{request.status}</TableCell>
-                                <TableCell>{request.isAssigned}</TableCell>
-                                <TableCell>{request.createdAt}</TableCell>
+                                <TableCell>{request.request_id.user_id.fullName}</TableCell>
+                                <TableCell>{request.request_id.user_id.department.name}</TableCell>
+                                <TableCell>{request.request_id.user_id.phone}</TableCell>
+                                <TableCell>{request.request_id.issueType}</TableCell>
+                                <TableCell>{request.request_id.description}</TableCell>
+                                <TableCell>{request.request_id.status}</TableCell>
+                                <TableCell>{request.request_id.createdAt}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </CardContent>
         </Card>
+        </div>
     );
-}
+};
+
+export default TechnicianRequestTable;

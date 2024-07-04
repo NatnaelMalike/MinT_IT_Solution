@@ -18,19 +18,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { useRequestContext } from "@/hooks/useRequestContext";
+import { Button } from "../ui/button";
+import AssignmentDialog from "../Helper_Admin/AssignmentDialog";
 
 const RequestTable = () => {
-    const [requests, setRequests] = useState([]);
-    useEffect(() => {
-        axios
-            .get("http://localhost:4000/api/request")
-            .then((response) => {
-                setRequests(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, []);
+   const {requests} = useRequestContext()
+   console.log(requests)
+
     return (
         <div className="flex flex-col gap-8">
             <Card>
@@ -50,19 +45,25 @@ const RequestTable = () => {
                             <TableHead>Status</TableHead>
                             <TableHead>Is Assigned</TableHead>
                             <TableHead>Requested At</TableHead>
+                            <TableHead>Assign</TableHead>
+
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {requests.map((request) => (
+                        {requests && requests.map((request) => (
                             <TableRow key={request._id}>
                                 <TableCell>{request.user_id.fullName}</TableCell>
-                                <TableCell>{request.user_id.department}</TableCell>
+                                <TableCell>{request.user_id.department.name}</TableCell>
                                 <TableCell>{request.user_id.phone}</TableCell>
                                 <TableCell>{request.issueType}</TableCell>
                                 <TableCell>{request.description}</TableCell>
                                 <TableCell>{request.status}</TableCell>
-                                <TableCell>{request.isAssigned}</TableCell>
+                                <TableCell>{request.isAssigned? "Yes" : "No"}</TableCell>
                                 <TableCell>{request.createdAt}</TableCell>
+                               {
+                                request.isAssigned? null: <TableCell><AssignmentDialog request_id={request._id}/></TableCell>
+                               }
+
                             </TableRow>
                         ))}
                     </TableBody>

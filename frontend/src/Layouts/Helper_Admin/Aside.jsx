@@ -46,7 +46,7 @@ const Aside = () => {
                             Requests
                         </Link>
                         <Link
-                            to={"/helper_desk/requests"}
+                            to={"/helper_desk/assign_request"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             Assign a Request

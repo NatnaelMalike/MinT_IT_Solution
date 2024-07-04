@@ -8,7 +8,7 @@ import _ from "lodash";
 import Email from "../models/Email.js";
 
 const getAdmin = async (req, res) => {
-    const users = await Admin.find({}, { password: 0 });
+    const users = await Admin.find({}, { password: 0 }).populate("department", "name -_id").sort({ fullName: 1 });
     res.send(users);
 };
 

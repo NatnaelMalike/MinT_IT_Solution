@@ -13,6 +13,20 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
     Card,
     CardContent,
  
@@ -20,7 +34,7 @@ import {
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { DialogContext } from "@/contexts/Context";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSignup } from "@/hooks/useSignup";
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
@@ -28,12 +42,24 @@ const formSchema = z.object({
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
     fullName: z.string().min(1, { message: "Name is required" }),
+    department: z.string().min(1, { message: "Department must be selected" }),
     phone: z.string().refine((value) => /^(?:\+251)?0[1-9]\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
 });
 
 export default function AdminForm() {
+    const [departments, setDepartments] = useState([]);
+    useEffect(() => {
+        axios
+            .get("http://localhost:4000/api/department")
+            .then((response) => {
+                setDepartments(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
     const {signup, isLoading, error} = useSignup()
     const handleDialogChange = useContext(DialogContext);
     const form = useForm({
@@ -43,12 +69,23 @@ export default function AdminForm() {
             fullName: "",
             phone: "",
             password: "",
+            department: ""
+
         },
     });
 
     function onSubmit(data) {
         handleDialogChange();
-       signup(data, 'admin')
+        console.log(data)
+        axios
+        .post(`http://localhost:4000/api/admin`, data)
+        .then((res) => {
+            toast("Issue Requested Successfully!");
+
+        })
+        .catch((error) => {
+            console.log(error)
+        });
     }
 
     return (
@@ -118,6 +155,77 @@ export default function AdminForm() {
                                 </FormItem>
                             )}
                         />
+                          <FormField
+                    control={form.control}
+                    name="department"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Department</FormLabel>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <FormControl>
+                                        <Button
+                                            variant="outline"
+                                            role="combobox"
+                                            className={cn(
+                                                "w-full justify-between",
+                                                !field.value &&
+                                                    "text-muted-foreground"
+                                            )}>
+                                            {field.value
+                                                ? departments.find(
+                                                      (department) =>
+                                                          department._id ===
+                                                          field.value
+                                                  )?.name
+                                                : "Select Your Department"}
+                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                        </Button>
+                                    </FormControl>
+                                </PopoverTrigger>
+                                <PopoverContent className="p-0 max-h-80 overflow-y-scroll">
+                                    <Command>
+                                        <CommandInput
+                                            placeholder="Search Department..."
+                                            className="h-9"
+                                        />
+                                        <CommandEmpty>
+                                            No City found.
+                                        </CommandEmpty>
+                                        <CommandGroup>
+                                            {departments.map((department) => (
+                                                <CommandItem
+                                                    value={department._id}
+                                                    key={department._id}
+                                                    onSelect={() => {
+                                                        form.setValue(
+                                                            "department",
+                                                            department._id
+                                                        );
+                                                    }}>
+                                                    {department.name}
+                                                    <Check
+                                                        className={cn(
+                                                            "ml-auto h-4 w-4",
+                                                            department._id ===
+                                                                field.value
+                                                                ? "opacity-100"
+                                                                : "opacity-0"
+                                                        )}
+                                                    />
+                                                </CommandItem>
+                                            ))}
+                                        </CommandGroup>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
+                            <FormDescription className="hidden lg:block">
+                                This is the name of the Your Department.
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
                         <FormField
                             control={form.control}
                             name="password"

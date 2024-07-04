@@ -12,10 +12,14 @@ const getRequest = async (req, res) => {
             );
             res.send(requests); 
         }else if (role === "helper_admin" || role === "super_admin"){
-            const requests = await Request.find().populate(
-                "user_id",
-                "fullName department phone -_id"
-            );
+            const requests = await Request.find().populate({
+                path: 'user_id',
+                select: 'fullName department phone -_id',
+                populate: {
+                    path: 'department',
+                    select: 'departmentName' 
+                }
+            });
             res.send(requests); 
         }
     } catch (error) {

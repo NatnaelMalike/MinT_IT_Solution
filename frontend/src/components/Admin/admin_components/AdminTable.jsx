@@ -37,6 +37,7 @@ export default function AdminTable({ admins }) {
                             <TableHead>Full Name</TableHead>
                             <TableHead>Email Address</TableHead>
                             <TableHead>Phone Number</TableHead>
+                            <TableHead>Department</TableHead>
                             <TableHead>Operations</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -46,6 +47,7 @@ export default function AdminTable({ admins }) {
                                 <TableCell>{admin.fullName}</TableCell>
                                 <TableCell>{admin.email}</TableCell>
                                 <TableCell>{admin.phone}</TableCell>
+                                <TableCell>{admin.department["name"]}</TableCell>
                                 <TableCell className="flex gap-4">
                                     <IdContext.Provider value={admin._id}>
                                         <EditDialog entity="Admin">

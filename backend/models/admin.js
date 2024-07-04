@@ -52,6 +52,7 @@ function adminValidator(admin) {
         email: Joi.string().email().required().min(5).max(255),
         password: Joi.string().required().min(6).max(255),
         phone: Joi.string().required(),
+        department: Joi.string().required(),
     });
     return schema.validate(admin);
 }
