@@ -3,9 +3,8 @@ import express from "express"
 import authorization from '../middleware/authorization.js';
 
 const router = express.Router()
-
 router.use(authorization)
-router.post("/", assignTechnician)
 router.get("/",getAssignedRequests)
+router.post("/", assignTechnician)
 
 export default router

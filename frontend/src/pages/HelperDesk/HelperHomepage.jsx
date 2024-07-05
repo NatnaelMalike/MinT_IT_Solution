@@ -12,7 +12,7 @@ const HelperHomepage = () => {
 
     useEffect(() => {
         if (token) {
-            console.log("Token me", token)
+            console.log("Token_HElper", token)
             axios
                 .get("http://localhost:4000/api/request", {
                     headers: {
@@ -21,7 +21,6 @@ const HelperHomepage = () => {
                 })
                 .then((response) => {
                     dispatch({ type: 'SET_REQUESTS', payload: response.data });
-                    console.log(response.data)
                 })
                 .catch((error) => {
                     console.log(error);

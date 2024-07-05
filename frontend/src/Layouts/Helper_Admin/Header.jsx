@@ -65,35 +65,13 @@ const Header = () => {
                         Profile
                     </Link>
                     <Link
-                        to={"/helper_desk/requests"}
+                        to={"/helper_desk"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <GitPullRequestArrow className="h-4 w-4" />
                         Requests
                     </Link>
-                    <Link
-                        to={"/helper_desk/assign_request"}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                        <GitPullRequestArrow className="h-4 w-4" />
-                        Assign a Request
-                    </Link>
-                    <Link
-                        to={"/helper_desk/escalated_requests"}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                        <GitPullRequestArrow className="h-4 w-4" />
-                        Escalated Request
-                    </Link>
-                    <Link
-                        to={"/helper_desk/closed_requests"}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                        <GitPullRequestArrow className="h-4 w-4" />
-                        Closed Request
-                    </Link>
-                    <Link
-                        to={"/helper_desk/technicians"}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                        <Users className="h-4 w-4" />
-                        Technicians
-                    </Link>
+                    
+                  
                 </div>
             </nav>
                     <div className="mt-auto p-4 font-medium">

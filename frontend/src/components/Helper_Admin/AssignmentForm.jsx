@@ -21,6 +21,7 @@ import {
 import axios from "axios";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
+import { useAuthContext } from "@/hooks/useAuthContext";
 
 const formSchema = z.object({
     request_id: z.string().min(1, { message: "request must be selected!" }),
@@ -29,6 +30,8 @@ const formSchema = z.object({
 
 export default function RequestAssignmentForm({ request_id }) {
     const [technicians, setTechnicians] = useState([]);
+    const { token } = useAuthContext();
+
 
     useEffect(() => {
         axios
@@ -51,14 +54,20 @@ export default function RequestAssignmentForm({ request_id }) {
 
     const onSubmit = (data) => {
         console.log(data); // Ensure data is logged
-        axios
-            .post("http://localhost:4000/api/assign_technician", data)
-            .then(() => {
-                toast("Technician Assigned Successfully!");
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        if(token){
+            axios
+                .post("http://localhost:4000/api/assign_technician", data, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then(() => {
+                    toast("Technician Assigned Successfully!");
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     };
 
     return (

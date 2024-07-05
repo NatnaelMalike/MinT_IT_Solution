@@ -48,7 +48,7 @@ const Header = () => {
                 <nav className="grid items-start p-4  font-medium  space-y-8">
                 <div className="border-b">
                     <Link
-                        to={"/admin"}
+                        to={"/technician"}
                         className="flex items-center gap-2 font-semibold mb-4">
                         <img
                             src={logo}
@@ -59,40 +59,23 @@ const Header = () => {
                 </div>
                 <div>
                     <Link
-                        to={"/admin/dashboard"}
+                        to={"/technician/profile"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <User className="h-4 w-4" />
                         Profile
                     </Link>
                     <Link
-                        to={"/admin/users"}
+                        to={"/technician"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <GitPullRequestArrow className="h-4 w-4" />
                         Requests
                     </Link>
-                    <Link
-                        to={"/admin/users"}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                        <GitPullRequestArrow className="h-4 w-4" />
-                        In-Progress Requests
-                    </Link>
-                    <Link
-                        to={"/admin/users"}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                        <GitPullRequestArrow className="h-4 w-4" />
-                        Resolved Requests
-                    </Link>
-                    <Link
-                        to={"/admin/users"}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                        <GitPullRequestArrow className="h-4 w-4" />
-                        UnResolved Requests
-                    </Link>
+                
                 </div>
             </nav>
                     <div className="mt-auto p-4 font-medium">
                         <Link
-                            to={"/helper_desk"}
+                            to={"/technician/profile"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <Settings className="h-4 w-4" />
                             Settings

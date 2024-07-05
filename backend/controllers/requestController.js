@@ -17,7 +17,7 @@ const getRequest = async (req, res) => {
                 select: 'fullName department phone -_id',
                 populate: {
                     path: 'department',
-                    select: 'departmentName' 
+                    select: 'name' 
                 }
             });
             res.send(requests); 

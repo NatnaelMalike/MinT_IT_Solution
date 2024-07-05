@@ -23,6 +23,7 @@ import { useRequestContext } from "@/hooks/useRequestContext";
 
 const TechnicianRequestTable = () => {
    const {requests} = useRequestContext()
+   console.log(requests)
     return (
         <div className="flex flex-col gap-8">
             <Card>

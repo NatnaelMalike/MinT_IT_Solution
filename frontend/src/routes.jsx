@@ -70,22 +70,19 @@ const router = createBrowserRouter([
         element: (
             // <ProtectedRoutes role={"helper_admin"}>
                 <HelperHomepage />
-             /* </ProtectedRoutes> */
+            //  </ProtectedRoutes>
         ),
         children: [
             { index: true, element: <RequestTable /> },
-            { path: "profile", element: <RequestTable /> },
-            { path: "requests", element: <RequestTable /> },
-            { path: "assign_request", element: <RequestTable /> },
-            { path: "escalated_requests", element: <RequestTable /> },
-            { path: "closed_requests", element: <RequestTable /> },
-            { path: "technicians", element: <RequestTable /> },
+            { path: "profile", element: <ProfilePage /> },
         ],
     },
     // Admin Dashboard
     {
         path: "/admin",
-        element: <AdminHomepage />,
+        element: <ProtectedRoutes role={"super_admin"}>
+        <AdminHomepage />
+     </ProtectedRoutes>,
         children: [
             { path: "dashboard", element: <Dashboard /> },
             { path: "requests", element: <RequestTable /> },
@@ -95,24 +92,21 @@ const router = createBrowserRouter([
             { path: "departments", element: <DepartmentMain /> },
         ],
     },
+
     // Admin Signup
     { path: "/admin/signup", element: <AdminSignup /> },
+
     // Technician Dashboard
     {
         path: "/technician",
         element: (
             // <ProtectedRoutes role={"technician_user"}>
                 <TechnicianHomepage />
-            /* </ProtectedRoutes> */
+            // </ProtectedRoutes> 
         ),
         children: [
             { index: true, element: <TechnicianRequestTable /> },
-            { path: "profile", element: <TechnicianRequestTable /> },
-            { path: "requests", element: <TechnicianRequestTable /> },
-            { path: "assign_request", element: <TechnicianRequestTable /> },
-            { path: "escalated_requests", element: <TechnicianRequestTable /> },
-            { path: "closed_requests", element: <TechnicianRequestTable /> },
-            { path: "technicians", element: <TechnicianRequestTable /> },
+            { path: "profile", element: <ProfilePage /> },
         ],
     },
     { path: "/technician/signup", element: <TechnicianSignup /> },

@@ -13,6 +13,7 @@ const TechnicianHomepage = () => {
 
     useEffect(() => {
         if (token) {
+            console.log(token)
             axios
                 .get("http://localhost:4000/api/assign_technician",{
                     headers: {

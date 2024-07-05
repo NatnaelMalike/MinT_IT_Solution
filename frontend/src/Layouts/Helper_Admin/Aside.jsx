@@ -22,7 +22,7 @@ const Aside = () => {
             <div className="flex h-full max-h-screen flex-col gap-2">
                 <div className="border-b">
                     <Link
-                        to={"/admin"}
+                        to={"/helper_desk"}
                         className="flex items-center gap-2 font-semibold mb-4">
                         <img
                             src={logo}
@@ -34,40 +34,16 @@ const Aside = () => {
                 <div className="flex-1">
                     <nav className="grid items-start p-4 font-medium  ">
                         <Link
-                            to={"/helper_desk"}
+                            to={"/helper_desk/profile"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <User className="h-4 w-4" />
                             Profile
                         </Link>
                         <Link
-                            to={"/helper_desk/requests"}
+                            to={"/helper_desk"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                             <GitPullRequestArrow className="h-4 w-4" />
                             Requests
-                        </Link>
-                        <Link
-                            to={"/helper_desk/assign_request"}
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                            <GitPullRequestArrow className="h-4 w-4" />
-                            Assign a Request
-                        </Link>
-                        <Link
-                            to={"/helper_desk/requests"}
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                            <GitPullRequestArrow className="h-4 w-4" />
-                            Escalated Request
-                        </Link>
-                        <Link
-                            to={"/helper_desk/requests"}
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                            <GitPullRequestArrow className="h-4 w-4" />
-                            Closed Request
-                        </Link>
-                        <Link
-                            to={"/helper_desk/requests"}
-                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                            <Users className="h-4 w-4" />
-                            Technicians
                         </Link>
                     </nav>
                 </div>

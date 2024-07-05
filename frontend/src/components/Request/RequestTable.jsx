@@ -19,7 +19,6 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { useRequestContext } from "@/hooks/useRequestContext";
-import { Button } from "../ui/button";
 import AssignmentDialog from "../Helper_Admin/AssignmentDialog";
 
 const RequestTable = () => {
@@ -63,7 +62,6 @@ const RequestTable = () => {
                                {
                                 request.isAssigned? null: <TableCell><AssignmentDialog request_id={request._id}/></TableCell>
                                }
-
                             </TableRow>
                         ))}
                     </TableBody>
