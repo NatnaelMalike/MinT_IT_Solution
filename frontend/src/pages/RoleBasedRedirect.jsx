@@ -7,6 +7,7 @@ import { jwtDecode } from "jwt-decode";
 const RoleBasedRedirect = () => {
     const navigate = useNavigate();
     const { token } = useAuthContext();
+    if(!token) return navigate("/");
     const decoded = jwtDecode(token);
     const role = decoded.role;
     console.log(decoded, "decoded user")

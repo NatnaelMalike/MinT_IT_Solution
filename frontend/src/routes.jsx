@@ -24,6 +24,7 @@ import ProtectedRoutes from "./pages/ProtectedRoutes";
 import RoleBasedRedirect from "./pages/RoleBasedRedirect";
 import ProfilePage from "./components/User/ProfilePage";
 import TechnicianRequestTable from "./components/Technician/TechnicianRequestTable";
+import PasswordReset from "./pages/reset_password/PasswordReset";
 
 const router = createBrowserRouter([
     // Login Page
@@ -55,8 +56,12 @@ const router = createBrowserRouter([
 
     // Forgot Password
     {
-        path: "/forget-password",
+        path: "/forg0t-password",
         element: <ForgetPassword />,
+    },
+    {
+        path: "/reset-password",
+        element: <PasswordReset />,
     },
 
     // UnAuthorized
