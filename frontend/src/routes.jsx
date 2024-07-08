@@ -56,11 +56,11 @@ const router = createBrowserRouter([
 
     // Forgot Password
     {
-        path: "/forg0t-password",
+        path: "/forgot-password",
         element: <ForgetPassword />,
     },
     {
-        path: "/reset-password",
+        path: "/reset-password:token",
         element: <PasswordReset />,
     },
 
@@ -89,7 +89,7 @@ const router = createBrowserRouter([
         <AdminHomepage />
      </ProtectedRoutes>,
         children: [
-            { path: "dashboard", element: <Dashboard /> },
+            { index: true, element: <Dashboard /> },
             { path: "requests", element: <RequestTable /> },
             { path: "admin_users", element: <AdminMain /> },
             { path: "users", element: <UserMain /> },

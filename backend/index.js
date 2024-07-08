@@ -30,7 +30,7 @@ app.use(
 
 app.use(express.json());
 app.use("/api/login", login);
-app.use("/user", forgotPassword);
+app.use("/api", forgotPassword);
 app.use("/api/user", users);
 app.use("/api/admin", admins);
 app.use("/api/technician",  technicians);

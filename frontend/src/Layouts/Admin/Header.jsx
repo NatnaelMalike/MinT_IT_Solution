@@ -50,7 +50,7 @@ const Header = () => {
                 <nav className="grid items-start px-4  font-medium space-y-8">
                 <div className="border-b">
                     <Link
-                        to={"/helper_desk"}
+                        to={"/admin"}
                         className="flex items-center gap-2 font-semibold mb-4">
                         <img
                             src={logo}
@@ -61,7 +61,7 @@ const Header = () => {
                 </div>
                 <div>
                     <Link
-                        to={"/admin/dashboard"}
+                        to={"/admin"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <HomeIcon className="h-4 w-4" />
                         Dashboard

@@ -1,11 +1,12 @@
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { Admin } from "../models/admin";
-import { User } from "../models/user";
-import { Technician } from "../models/technician";
+import { Admin } from "../models/admin.js";
+import { User } from "../models/user.js";
+import { Technician } from "../models/technician.js";
 
 const forgotPassword = async (req, res) => {
+  try {
     const { email } = req.body;
     const admin = await Admin.findOne({ email });
     const normal = await User.findOne({ email });
@@ -18,8 +19,9 @@ const forgotPassword = async (req, res) => {
     } else if (technician) {
         user = technician;
     } else {
-        return res.status(400).send("Uset Does not Exist!");
+        return res.status(400).send("User Does not Exist!");
     }
+
     const token = jwt.sign({ userId: user._id }, process.env.ACCESS_JWT_PRIVATE_KEY, {
         expiresIn: "60m",
     });
@@ -27,19 +29,18 @@ const forgotPassword = async (req, res) => {
         service: "gmail",
         auth: {
             user: "natnaelmalike@gmail.com",
-            pass: "amen mk 110694",
+            pass: "kiwl fjwm bkvs dtgu",
         },
     });
 
     const mailOptions = {
         from: "natnaelmalike@gmail.com",
         to: email,
-        subject: "Sending Email using Node.js",
-        text: "That was easy!",
+        subject: "Reset Password Notification",
         html: `<h1>Reset Your Password</h1>
     <p>Click on the following link to reset your password:</p>
     <a href="http://localhost:5173/reset-password/${token}">http://localhost:5173/reset-password/${token}</a>
-    <p>The link will expire in 10 minutes.</p>
+    <p>The link will expire in 60 minutes.</p>
     <p>If you didn't request a password reset, please ignore this email.</p>`,
     };
 
@@ -50,6 +51,9 @@ const forgotPassword = async (req, res) => {
             console.log("Email sent: " + info.response);
         }
     });
+  } catch (error) {
+    res.status(500).send(error.message)
+  }
 };
 
 const resetPassword = async (req, res) => {

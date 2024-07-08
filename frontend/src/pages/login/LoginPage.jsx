@@ -15,7 +15,7 @@ const LoginPage = () => {
                 </h2>
                 <LoginForm />
                 <div className="flex justify-between items-center mt-4">
-                <Link to={'/forget-password'} className="hover:text-teal-500">Forget Password</Link>
+                <Link to={'/forgot-password'} className="hover:text-teal-500">Forget Password</Link>
                 <div>Need an Account? <Link className="text-teal-500 text-base hover:opacity-90 hover:underline" to={'/signup'}>Signup</Link></div>
 
                 </div>
