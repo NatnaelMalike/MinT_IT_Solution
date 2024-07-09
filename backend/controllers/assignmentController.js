@@ -24,7 +24,7 @@ const getAssignedRequests = async (req, res) => {
             const technician_id = _id
             const requests = await Assignment.find({technician_id}).populate({
                 path: 'request_id',
-                select: 'issueType description user_id status createdAt -_id',
+                select: 'issueType description user_id status createdAt _id',
                 populate: {
                     path: 'user_id',
                     select: 'fullName department phone -_id',

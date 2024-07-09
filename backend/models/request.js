@@ -31,7 +31,7 @@ const requestSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        status: { type: String, default: "Pending" },
+        status: { type: String, default: "Pending", enum: ["Pending", "inProgress", "Resolved", "UnResolved"] },
         isAssigned: { type: Boolean, default: false },
     },
     { timestamps: true }
@@ -43,5 +43,11 @@ function requestValidator(request) {
     });
     return schema.validate(request);
 }
+function requestStatusValidator(request) {
+    const schema = Joi.object({
+        status: Joi.required(),
+    });
+    return schema.validate(request);
+}
 const Request = mongoose.model("Request", requestSchema);
-export { Request, requestValidator };
+export { Request, requestValidator, requestStatusValidator };

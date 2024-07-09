@@ -19,11 +19,14 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { useRequestContext } from "@/hooks/useRequestContext";
+import StatusEditForm from "../Request/StatusEditForm";
+import EditDialog from "../EditDialog";
+import { IdContext } from "@/contexts/Context";
 
 
 const TechnicianRequestTable = () => {
    const {requests} = useRequestContext()
-   console.log(requests)
+   console.log("Tech",requests)
     return (
         <div className="flex flex-col gap-8">
             <Card>
@@ -42,6 +45,8 @@ const TechnicianRequestTable = () => {
                             <TableHead>Description</TableHead>
                             <TableHead>Status</TableHead>
                             <TableHead>Requested At</TableHead>
+                            <TableHead>Change Status</TableHead>
+
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -54,6 +59,13 @@ const TechnicianRequestTable = () => {
                                 <TableCell>{request.request_id.description}</TableCell>
                                 <TableCell>{request.request_id.status}</TableCell>
                                 <TableCell>{request.request_id.createdAt}</TableCell>
+                                <TableCell className="flex gap-4">
+                                <IdContext.Provider value={request.request_id._id}>
+                                        <EditDialog entity="Request Status">
+                                            <StatusEditForm />
+                                        </EditDialog>
+                                    </IdContext.Provider>
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
