@@ -6,6 +6,7 @@ import Email from "../models/Email.js";
 const getUser = async (req, res) => {
     const users = await User.find().populate("department", "name -_id").sort({ fullName: 1 });
     res.send(users);
+
 };
 
 const addUser = async (req, res) => {

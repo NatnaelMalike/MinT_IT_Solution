@@ -21,7 +21,7 @@ const RequestTable = () => {
     const {requests}  = useRequestContext()
   return (
     <div>
-        <Card className = "h-96 overflow-y-scroll">
+        <Card className = "max-h-96 overflow-y-scroll">
                 <CardHeader>
                     <CardTitle>Requests</CardTitle>
                     <CardDescription>

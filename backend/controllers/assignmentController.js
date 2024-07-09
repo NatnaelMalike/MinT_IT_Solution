@@ -48,11 +48,11 @@ const getAssignedRequests = async (req, res) => {
                     }
                 }
             });
-            res.send(requests); 
+            res.send(requests);
         }
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
-        
+    
     }  
 };
 export {assignTechnician, getAssignedRequests}

@@ -52,9 +52,9 @@ const TechnicianRequestTable = () => {
                     <TableBody>
                         {requests && requests.map((request) => (
                             <TableRow key={request._id}>
-                                <TableCell>{request.request_id.user_id.fullName}</TableCell>
-                                <TableCell>{request.request_id.user_id.department.name}</TableCell>
-                                <TableCell>{request.request_id.user_id.phone}</TableCell>
+                                <TableCell>{request.request_id.user_id?.fullName}</TableCell>
+                                <TableCell>{request.request_id.user_id?.department.name}</TableCell>
+                                <TableCell>{request.request_id.user_id?.phone}</TableCell>
                                 <TableCell>{request.request_id.issueType}</TableCell>
                                 <TableCell>{request.request_id.description}</TableCell>
                                 <TableCell>{request.request_id.status}</TableCell>

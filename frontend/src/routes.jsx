@@ -22,7 +22,7 @@ import RequestTable from "./components/Request/RequestTable";
 import UnAuthorized from "./pages/UnAuthorized";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
 import RoleBasedRedirect from "./pages/RoleBasedRedirect";
-import ProfilePage from "./components/User/ProfilePage";
+import ProfilePage from "./components/ProfilePage";
 import TechnicianRequestTable from "./components/Technician/TechnicianRequestTable";
 import PasswordReset from "./pages/reset_password/PasswordReset";
 
@@ -47,7 +47,7 @@ const router = createBrowserRouter([
             { path: "profile", element: <ProfilePage /> },
         ],
     },
-
+    
     // User Signup
     {
         path: "/signup",
@@ -74,7 +74,7 @@ const router = createBrowserRouter([
         path: "/helper_desk",
         element: (
             // <ProtectedRoutes role={"helper_admin"}>
-                <HelperHomepage />
+            <HelperHomepage />
             //  </ProtectedRoutes>
         ),
         children: [
@@ -85,11 +85,14 @@ const router = createBrowserRouter([
     // Admin Dashboard
     {
         path: "/admin",
-        element: <ProtectedRoutes role={"super_admin"}>
-        <AdminHomepage />
-     </ProtectedRoutes>,
+        element: (
+            <ProtectedRoutes role={"super_admin"}>
+                <AdminHomepage />
+            </ProtectedRoutes>
+        ),
         children: [
-            { index: true, element: <Dashboard /> },
+            { path: "", element: <Dashboard /> },
+            { path: "profile", element: <ProfilePage /> },
             { path: "requests", element: <RequestTable /> },
             { path: "admin_users", element: <AdminMain /> },
             { path: "users", element: <UserMain /> },
@@ -106,8 +109,8 @@ const router = createBrowserRouter([
         path: "/technician",
         element: (
             // <ProtectedRoutes role={"technician_user"}>
-                <TechnicianHomepage />
-            // </ProtectedRoutes> 
+            <TechnicianHomepage />
+            // </ProtectedRoutes>
         ),
         children: [
             { index: true, element: <TechnicianRequestTable /> },

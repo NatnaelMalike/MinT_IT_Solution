@@ -17,30 +17,36 @@ import {
     Wallet,
 } from "lucide-react";
 import logo from "../../assets/img/MinT-Logo.jpg";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const Aside = () => {
     return (
         <div className="hidden border-r md:block">
             <div className="flex h-full max-h-screen flex-col gap-2">
                 <div className="border-b">
-                    <NavLink
-                        to={"/helper_desk"}
+                    <Link
+                        to={"/admin"}
                         className="flex items-center gap-2 font-semibold mb-4">
                         <img
                             src={logo}
                             alt="Organization Logo"
                             className="rounded-md h-36 mx-auto"
                         />
-                    </NavLink>
+                    </Link>
                 </div>
             <div className="flex-1">
                 <nav className="grid items-start p-4  font-medium">
-                    {/* <NavLink
+                <NavLink
+                            to={"/admin/profile"}
+                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                            <User className="h-4 w-4" />
+                            Profile
+                        </NavLink>
+                    <NavLink
                         to={"/admin"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <HomeIcon className="h-4 w-4" />
                         Dashboard
-                    </NavLink> */}
+                    </NavLink>
                     <NavLink
                         to={"/admin/requests"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">

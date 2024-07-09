@@ -9,6 +9,7 @@ import request from "./routes/requestRoutes.js";
 import login from "./routes/auth.js";
 import assignTechnician from "./routes/assignmentRoutes.js";
 import forgotPassword from "./routes/forgotPassword.js"
+import profile from "./routes/profileRoute.js"
 
 import authorize from "./middleware/authorization.js";
 import cors from "cors";
@@ -37,6 +38,7 @@ app.use("/api/technician",  technicians);
 app.use("/api/department",  department);
 app.use("/api/request", request);
 app.use("/api/assign_technician",  assignTechnician);
+app.use("/api/profile",profile)
 
 mongoose
     .connect(`mongodb://localhost:27017/MinT_IT_Solution`)
