@@ -49,14 +49,14 @@ const Aside = () => {
                     </nav>
                 </div>
 
-                <div className="mt-auto p-4 font-medium">
+                {/* <div className="mt-auto p-4 font-medium">
                     <Link
                         to={"/technician/profile"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <Settings className="h-4 w-4" />
                         Settings
                     </Link>
-                </div>
+                </div> */}
             </div>
         </div>
     );

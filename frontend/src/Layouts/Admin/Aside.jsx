@@ -35,12 +35,12 @@ const Aside = () => {
                 </div>
             <div className="flex-1">
                 <nav className="grid items-start p-4  font-medium">
-                    <NavLink
+                    {/* <NavLink
                         to={"/admin"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <HomeIcon className="h-4 w-4" />
                         Dashboard
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink
                         to={"/admin/requests"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
@@ -53,13 +53,6 @@ const Aside = () => {
                         <Users className="h-4 w-4" />
                         Helper Admins
                     </NavLink>
-                    <NavLink
-                        to={"/admin/requests"}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                        <GitPullRequestArrow className="h-4 w-4" />
-                        Escalated Request
-                    </NavLink>
-
                     <NavLink
                         to={"/admin/technicians"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
@@ -80,14 +73,14 @@ const Aside = () => {
                     </NavLink>
                 </nav>
             </div>
-            <div className="mt-auto p-4 font-medium">
+            {/* <div className="mt-auto p-4 font-medium">
                 <NavLink
                     to={"/helper_desk"}
                     className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                     <Settings className="h-4 w-4" />
                     Settings
                 </NavLink>
-            </div>
+            </div> */}
             </div>
         </div>
     );
