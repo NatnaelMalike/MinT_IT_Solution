@@ -13,7 +13,7 @@ const ProtectedRoutes = ({ children, role }) => {
     try {
         decoded = jwtDecode(token);
     } catch (e) {
-        console.error("Invalid token:", e);
+        // console.error("Invalid token:", e);
         return <Navigate to="/" />;
     }
 

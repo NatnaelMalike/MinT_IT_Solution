@@ -6,4 +6,4 @@ const router = express.Router()
 router.use(authorization)
 router.get('/', getDashboardData)
 
-export default router
+export default router   

@@ -41,13 +41,17 @@ const router = createBrowserRouter([
     // User Dashboard
     {
         path: "/user",
-        element: <UserHomepage />,
+        element: (
+            <ProtectedRoutes role={"normal_user"}>
+                <UserHomepage />
+            </ProtectedRoutes>
+        ),
         children: [
             { index: true, element: <RequestPage /> },
             { path: "profile", element: <ProfilePage /> },
         ],
     },
-    
+
     // User Signup
     {
         path: "/signup",
@@ -73,9 +77,9 @@ const router = createBrowserRouter([
     {
         path: "/helper_desk",
         element: (
-            // <ProtectedRoutes role={"helper_admin"}>
-            <HelperHomepage />
-            //  </ProtectedRoutes>
+            <ProtectedRoutes role={"helper_admin"}>
+                <HelperHomepage />
+            </ProtectedRoutes>
         ),
         children: [
             { index: true, element: <RequestTable /> },
@@ -108,9 +112,9 @@ const router = createBrowserRouter([
     {
         path: "/technician",
         element: (
-            // <ProtectedRoutes role={"technician_user"}>
-            <TechnicianHomepage />
-            // </ProtectedRoutes>
+            <ProtectedRoutes role={"technician_user"}>
+                <TechnicianHomepage />
+            </ProtectedRoutes>
         ),
         children: [
             { index: true, element: <TechnicianRequestTable /> },

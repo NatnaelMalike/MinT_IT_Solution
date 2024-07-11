@@ -44,6 +44,7 @@ export default function DepartmentTable() {
                         {departments && departments.map((department) => (
                             <TableRow key={department._id}>
                                 <TableCell>{department.name}</TableCell>
+
                                 <TableCell className="flex gap-4">
                                 <IdContext.Provider value={department._id}>
                                         <EditDialog entity="Department">

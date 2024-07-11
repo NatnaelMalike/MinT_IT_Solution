@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Clock9, UsersIcon, BuildingIcon } from "lucide-react";
 
-const InfoCards = () => {
+const InfoCards = ({data}) => {
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <Card>
@@ -16,7 +16,7 @@ const InfoCards = () => {
                         <CardTitle>
                             <div className="flex items-center gap-2">
                                 <Clock9 className="h-6 w-6 text-primary" />
-                                <h3 className="text-2xl font-bold">124</h3>
+                                <h3 className="text-2xl font-bold">{data.pendingReq}</h3>
                             </div>
                         </CardTitle>
                     </CardHeader>
@@ -29,7 +29,7 @@ const InfoCards = () => {
                         <CardTitle>
                             <div className="flex items-center gap-2">
                                 <Clock9 className="h-6 w-6 text-primary" />
-                                <h3 className="text-2xl font-bold">124</h3>
+                                <h3 className="text-2xl font-bold">{data.resolvedReq}</h3>
                             </div>
                         </CardTitle>
                     </CardHeader>
@@ -42,7 +42,7 @@ const InfoCards = () => {
                         <CardTitle>
                             <div className="flex items-center gap-2">
                                 <Clock9 className="h-6 w-6 text-primary" />
-                                <h3 className="text-2xl font-bold">124</h3>
+                                <h3 className="text-2xl font-bold">{data.unresolvedReq}</h3>
                             </div>
                         </CardTitle>
                     </CardHeader>
@@ -55,7 +55,7 @@ const InfoCards = () => {
                         <CardTitle>
                             <div className="flex items-center gap-2">
                                 <UsersIcon className="h-6 w-6 text-primary" />
-                                <h3 className="text-2xl font-bold">124</h3>
+                                <h3 className="text-2xl font-bold">{data.userCount}</h3>
                             </div>
                         </CardTitle>
                     </CardHeader>
@@ -68,7 +68,7 @@ const InfoCards = () => {
                         <CardTitle>
                             <div className="flex items-center gap-2">
                                 <UsersIcon className="h-6 w-6 text-primary" />
-                                <h3 className="text-2xl font-bold">124</h3>
+                                <h3 className="text-2xl font-bold">{data.techCount}</h3>
                             </div>
                         </CardTitle>
                     </CardHeader>
@@ -81,7 +81,7 @@ const InfoCards = () => {
                         <CardTitle>
                             <div className="flex items-center gap-2">
                                 <BuildingIcon className="h-6 w-6 text-primary" />
-                                <h3 className="text-2xl font-bold">124</h3>
+                                <h3 className="text-2xl font-bold">{data.deptCount}</h3>
                             </div>
                         </CardTitle>
                     </CardHeader>

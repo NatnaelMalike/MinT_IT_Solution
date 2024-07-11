@@ -1,7 +1,7 @@
-import { User } from "../models/user"
-import {Technician} from "../models/technician"
-import { Department } from "../models/department"
-import { Request } from "../models/request"
+import { User } from "../models/user.js"
+import {Technician} from "../models/technician.js"
+import { Department } from "../models/department.js"
+import { Request } from "../models/request.js"
 
 const getDashboardData = async (req, res)=> {
     try {
