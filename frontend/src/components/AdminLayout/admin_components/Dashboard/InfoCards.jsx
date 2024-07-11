@@ -28,6 +28,32 @@ const InfoCards = () => {
                     <CardHeader>
                         <CardTitle>
                             <div className="flex items-center gap-2">
+                                <Clock9 className="h-6 w-6 text-primary" />
+                                <h3 className="text-2xl font-bold">124</h3>
+                            </div>
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                    <p className="text-gray-500 dark:text-gray-400 text-base">Resolved Requests</p>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>
+                            <div className="flex items-center gap-2">
+                                <Clock9 className="h-6 w-6 text-primary" />
+                                <h3 className="text-2xl font-bold">124</h3>
+                            </div>
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                    <p className="text-gray-500 dark:text-gray-400 text-base">UnResolved Requests</p>
+                    </CardContent>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle>
+                            <div className="flex items-center gap-2">
                                 <UsersIcon className="h-6 w-6 text-primary" />
                                 <h3 className="text-2xl font-bold">124</h3>
                             </div>

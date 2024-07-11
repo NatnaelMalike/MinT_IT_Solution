@@ -26,7 +26,7 @@ import { IdContext } from "@/contexts/Context";
 
 const TechnicianRequestTable = () => {
    const {requests} = useRequestContext()
-   console.log("Tech",requests)
+   console.log("Tech", requests)
     return (
         <div className="flex flex-col gap-8">
             <Card>
