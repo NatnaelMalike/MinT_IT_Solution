@@ -79,12 +79,14 @@ const RequestTable = () => {
                                         </TableCell>
                                         <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                             {request.isAssigned ? (
-                                                <Badge>Assigned</Badge>
+                                                (request.status === 'UnResolved')? <AssignmentDialog
+                                                request_id={request._id}
+                                            />:<Badge>Assigned</Badge>
                                             ) : (
                                                 <AssignmentDialog
                                                     request_id={request._id}
                                                 />
-                                            )}{" "}
+                                            )}
                                         </TableCell>
                                     </TableRow>
                                 ))}
