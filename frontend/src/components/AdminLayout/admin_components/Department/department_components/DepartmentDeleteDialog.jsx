@@ -27,7 +27,7 @@ export default function DepartmentDeleteDialog({ id }) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Trash2 className="cursor-pointer" />
+              <Trash2 className="cursor-pointer text-destructive" />
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader className='space-y-4'>

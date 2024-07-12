@@ -5,22 +5,25 @@ import { AuthContextProvider } from "./contexts/AuthContext";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes.jsx";
 import { TechnicianContextProvider } from "./contexts/TechnicianContext";
-import { HelperAdminContextProvider } from "./contexts/HelperAdminContext";
+import { AdminContextProvider } from "./contexts/AdminContext";
 import { DepartmentContextProvider } from "./contexts/DepartmentContext";
 import { RequestContextProvider } from "./contexts/RequestContext";
+import { UserContextProvider } from "./contexts/UserContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <AuthContextProvider>
-            <HelperAdminContextProvider>
+            <AdminContextProvider>
                 <TechnicianContextProvider>
                     <DepartmentContextProvider>
                         <RequestContextProvider>
-                            <RouterProvider router={router} />
+                            <UserContextProvider>
+                                <RouterProvider router={router} />
+                            </UserContextProvider>
                         </RequestContextProvider>
                     </DepartmentContextProvider>
                 </TechnicianContextProvider>
-            </HelperAdminContextProvider>
+            </AdminContextProvider>
         </AuthContextProvider>
     </React.StrictMode>
 );

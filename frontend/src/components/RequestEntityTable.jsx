@@ -18,10 +18,10 @@ import {
 } from "@/components/ui/card";
 import emptyPhoto from "@/assets/img/Empty.png";
 
-const EntityTable = ({ entities, config }) => {
+const RequestEntityTable = ({ entities, config }) => {
     return (
-        <div className="overflow-x-auto">
-            <Card> 
+        <div className="overflow-x-auto ">
+            <Card className="overflow-y-auto max-h-96"> 
                 <CardHeader>
                     <CardTitle className="text-2xl">{config.entity}</CardTitle>
                     <CardDescription className="text-base">
@@ -29,7 +29,7 @@ const EntityTable = ({ entities, config }) => {
                         <span className="lowercase">{config.entity}</span>
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="overflow-y-auto max-h-[65vh]">
+                <CardContent >
                     {entities ? (
                         <Table className="min-w-[840px] w-full border-collapse overflow-hidden">
                             <TableHeader className="bg-secondary">
@@ -79,4 +79,4 @@ const EntityTable = ({ entities, config }) => {
         </div>
     );
 };
-export default EntityTable;
+export default RequestEntityTable;

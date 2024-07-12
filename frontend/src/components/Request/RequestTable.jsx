@@ -21,6 +21,7 @@ import {
 import { useRequestContext } from "@/hooks/useRequestContext";
 import AssignmentDialog from "../Helper_Admin/AssignmentDialog";
 import { Badge } from "../ui/badge";
+import { formatter } from "@/utility/timeFormatter";
 
 const RequestTable = () => {
     const { requests } = useRequestContext();
@@ -31,53 +32,52 @@ const RequestTable = () => {
             <Card>
                 <CardHeader>
                     <CardTitle>Requests</CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-base">
                         A list of all Issued Problems
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <Table>
-                        <TableHeader>
+                        <TableHeader className="bg-secondary">
                             <TableRow>
-                                <TableHead>User Name</TableHead>
-                                <TableHead>User's Department</TableHead>
-                                <TableHead>User's Phone</TableHead>
-                                <TableHead>Issue Type</TableHead>
-                                <TableHead>Description</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead>Is Assigned</TableHead>
-                                <TableHead>Requested At</TableHead>
-                                <TableHead>Assign</TableHead>
+                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">User Name</TableHead>
+                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">User's Department</TableHead>
+                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">User's Phone</TableHead>
+                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Issue Type</TableHead>
+                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Description</TableHead>
+                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Status</TableHead>
+                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Is Assigned</TableHead>
+                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Requested At</TableHead>
+                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Assign</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {requests &&
                                 requests.map((request) => (
                                     <TableRow key={request._id}>
-                                        <TableCell>
+                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                             {request.user_id.fullName}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                             {request.user_id.department.name}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                             {request.user_id.phone}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                             {request.issueType}
                                         </TableCell>
-                                        <TableCell>
+                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                             {request.description}
                                         </TableCell>
-                                        <TableCell>{request.status}</TableCell>
-                                        <TableCell>
+                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">{request.status}</TableCell>
+                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                             {request.isAssigned ? "Yes" : "No"}
                                         </TableCell>
-                                        <TableCell>
-                                            {request.createdAt}
+                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
+                                            {formatter(request.createdAt)}
                                         </TableCell>
-
-                                        <TableCell>
+                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                             {request.isAssigned ? (
                                                 <Badge>Assigned</Badge>
                                             ) : (

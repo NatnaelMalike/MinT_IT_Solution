@@ -9,7 +9,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { DialogContext } from "@/contexts/Context";
-import { Pencil } from "lucide-react";
+import { SquarePen } from "lucide-react";
 import { useState } from "react";
 export default function EditDialog({entity, children}) {
     const [open, setOpen] = useState(false);
@@ -19,7 +19,7 @@ export default function EditDialog({entity, children}) {
     return (
         <Dialog open={open} onOpenChange={handleDialogChange}>
             <DialogTrigger asChild>
-                <Pencil className="cursor-pointer text-primary" />
+                <SquarePen className="cursor-pointer text-teal-800" />
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

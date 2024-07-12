@@ -1,17 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import AdminTable from "./admin_components/AdminTable";
 import Header from "../Header";
 import AddDialog from "../AddDialog";
 import AdminForm from "./admin_components/AdminForm";
+import { useAdminContext } from "@/hooks/useAdminContext";
+import EntityTable from "../EntityTable";
+import { adminConfig } from "@/config/tables";
 const AdminMain = () => {
-    const [admins, setAdmins] = useState([]);
-    useEffect(() => {
+    const {admins, dispatch} = useAdminContext()
+   !admins && useEffect(() => {
         axios
             .get("http://localhost:4000/api/admin")
             .then((response) => {
-                setAdmins(response.data);
-                console.log(response.data)
+               dispatch({type: "SET_ADMINS", payload: response.data})
             })
             .catch((error) => {
                 console.log(error);
@@ -25,7 +26,7 @@ const AdminMain = () => {
                 </AddDialog>
             </Header>
             <div className="grow" id="main">
-                <AdminTable admins={admins} />
+                <EntityTable entities={admins} config={adminConfig}/>
             </div>
         </div>
     );

@@ -22,7 +22,7 @@ export default function AddDialog({ entity, children }) {
             <DialogTrigger asChild>
                 <Button className="space-x-2" onClick={handleDialogChange}>
                     <SquarePlus />
-                    <p>Add {entity}</p>
+                    <p className="text-base">Add {entity}</p>
                 </Button>
             </DialogTrigger>
             <DialogContent className="max-sm:w-11/12">

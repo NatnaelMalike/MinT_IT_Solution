@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
-import DepartmentTable from "./department_components/DepartmentTable";
 import AddDialog from "@/components/AddDialog";
 import Header from "@/components/Header";
 import DepartmentForm from "./department_components/DepartmentForm";
 import { useDepartmentContext } from "@/hooks/useDepartmentContext";
+import EntityTable from "@/components/EntityTable";
+import { deptConfig } from "@/config/tables";
 
 const DepartmentMain = () => {
-    const { dispatch } = useDepartmentContext();
-    useEffect(() => {
+    const { departments,dispatch } = useDepartmentContext();
+   !departments && useEffect(() => {
          axios
             .get("http://localhost:4000/api/department")
             .then((response) => {
@@ -26,7 +27,7 @@ const DepartmentMain = () => {
                 </AddDialog>
             </Header>
             <div className="grow" id="main">
-                <DepartmentTable />
+                <EntityTable entities={departments} config={deptConfig}/>
             </div>
         </div>
     );

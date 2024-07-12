@@ -20,6 +20,7 @@ const getRequest = async (req, res) => {
                     select: 'name' 
                 }
             });
+            
             res.send(requests); 
         }
     } catch (error) {
@@ -28,8 +29,9 @@ const getRequest = async (req, res) => {
     }  
 };
 const getById = async (req, res) => {
-    const request = await Request.findOne(req.params.id);
+    const request = await Request.findById(req.params.id);
     if (!request) return res.status(404).send("Request not Found!!!");
+    res.send(request);
 };
 const addRequest = async (req, res) => {
     const { error } = requestValidator(req.body);

@@ -7,8 +7,6 @@ import LoginPage from "./pages/login/LoginPage";
 import AdminHomepage from "./pages/Admin/AdminHomepage";
 import UserHomepage from "./pages/User/UserHomepage";
 import TechnicianHomepage from "./pages/Technnician/TechnicianHomepage";
-import AdminSignup from "./pages/Admin/AdminSignupPage";
-import TechnicianSignup from "./pages/Technnician/TechnicianSignupPage";
 import UserSignup from "./pages/User/UserSignupPage";
 import AdminMain from "./components/Admin/AdminMain";
 import Dashboard from "./components/AdminLayout/admin_components/Dashboard/Dashboard";
@@ -25,6 +23,7 @@ import RoleBasedRedirect from "./pages/RoleBasedRedirect";
 import ProfilePage from "./components/ProfilePage";
 import TechnicianRequestTable from "./components/Technician/TechnicianRequestTable";
 import PasswordReset from "./pages/reset_password/PasswordReset";
+import AdminRequestTable from "./components/Request/AdminRequestTable";
 
 const router = createBrowserRouter([
     // Login Page
@@ -97,7 +96,7 @@ const router = createBrowserRouter([
         children: [
             { path: "", element: <Dashboard /> },
             { path: "profile", element: <ProfilePage /> },
-            { path: "requests", element: <RequestTable /> },
+            { path: "requests", element: <AdminRequestTable /> },
             { path: "admin_users", element: <AdminMain /> },
             { path: "users", element: <UserMain /> },
             { path: "technicians", element: <TechnicianMain /> },
@@ -105,8 +104,6 @@ const router = createBrowserRouter([
         ],
     },
 
-    // Admin Signup
-    { path: "/admin/signup", element: <AdminSignup /> },
 
     // Technician Dashboard
     {
@@ -121,7 +118,6 @@ const router = createBrowserRouter([
             { path: "profile", element: <ProfilePage /> },
         ],
     },
-    { path: "/technician/signup", element: <TechnicianSignup /> },
 ]);
 
 export default router;
