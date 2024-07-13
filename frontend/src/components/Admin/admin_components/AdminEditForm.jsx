@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {
     Form,
     FormControl,
@@ -13,57 +13,79 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import { Card, CardContent } from "@/components/ui/card";
 import {
-    Card,
-    CardContent,
-  
-} from "@/components/ui/card";
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { DialogContext, IdContext } from "@/contexts/Context";
+import { TailSpin } from "react-loader-spinner";
+import { DialogClose } from "@/components/ui/dialog";
+import { useAdminContext } from "@/hooks/useAdminContext";
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
     fullName: z.string().min(1, { message: "Name is required" }),
+    department: z.string().min(1, { message: "Department must be selected" }),
+
     phone: z.string().refine((value) => /^(?:\+251)?0[1-9]\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
 });
 
 export default function AdminEditForm() {
+    const [loading, setLoading] = useState(false);
+    const [departments, setDepartments] = useState([]);
+    const {admins, dispatch } = useAdminContext();
     const id = useContext(IdContext);
     const handleDialogChange = useContext(DialogContext);
+
+    const user = admins.find((user)=> user._id === id)
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
             fullName: "",
             phone: "",
+            department: "",
         },
     });
 
     useEffect(() => {
         axios
-            .get(`http://localhost:4000/api/admin/${id}`)
+            .get("http://localhost:4000/api/department")
             .then((response) => {
-                form.setValue("email", response.data.email);
-                form.setValue("fullName", response.data.fullName);
-                form.setValue("phone", response.data.phone);
+                setDepartments(response.data);
             })
-            .catch((err) => {
-                console.log(err);
+            .catch((error) => {
+                console.log(error);
             });
+                form.setValue("email", user.email);
+                form.setValue("fullName", user.fullName);
+                form.setValue("phone", user.phone);
+                form.setValue("department", user.department._id);
     }, []);
 
     function onSubmit(data) {
-        handleDialogChange();
+        setLoading(true);
+        console.log(data)
         axios
             .put(`http://localhost:4000/api/admin/${id}`, data)
-            .then(() => {
-                toast.success("Admin Account updated Successfully");
+            .then((res) => {
+                setLoading(false);
+                handleDialogChange();
+                toast.success(
+                    "The admin account has been updated Successfully"
+                );
+                dispatch({ type: "UPDATE_ADMIN", payload: res.data });
             })
             .catch((err) => {
-                toast.error("Admin Account Updating Failed")
-                console.log(err);
+                toast.error("Failed to update the account, Please try again.");
+                setLoading(false);
             });
     }
 
@@ -134,7 +156,70 @@ export default function AdminEditForm() {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">Submit</Button>
+                        <FormField
+                            control={form.control}
+                            name="department"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Departments</FormLabel>
+                                    <Select onValueChange={field.onChange}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue
+                                                className="text-primary"
+                                                    placeholder={
+                                                        user
+                                                            ? user.department.name
+                                                            : "Select Department"
+                                                    }
+                                                />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent className="overflow-y-auto max-h-96">
+                                            {departments &&
+                                                departments.map(
+                                                    (department) => (
+                                                        <SelectItem
+                                                            key={department._id}
+                                                            value={
+                                                                department._id
+                                                            }
+                                                            className="border-b">
+                                                            {department.name}
+                                                        </SelectItem>
+                                                    )
+                                                )}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription className="hidden lg:block">
+                                        This is Your Department in the
+                                        Organization.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <div className="flex gap-8">
+                            <Button
+                                disabled={loading}
+                                type="submit"
+                                className="grow">
+                                {loading ? (
+                                    <TailSpin
+                                        color="#fff"
+                                        height={30}
+                                        width={30}
+                                    />
+                                ) : (
+                                    "Continue"
+                                )}
+                            </Button>
+                            <DialogClose asChild>
+                                <Button className="grow" variant="destructive">
+                                    Cancel
+                                </Button>
+                            </DialogClose>
+                        </div>
                     </form>
                 </Form>
             </CardContent>

@@ -81,7 +81,7 @@ const router = createBrowserRouter([
             </ProtectedRoutes>
         ),
         children: [
-            { index: true, element: <RequestTable /> },
+            { path: "request", element: <RequestTable /> },
             { path: "profile", element: <ProfilePage /> },
         ],
     },

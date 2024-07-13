@@ -13,29 +13,20 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-} from "@/components/ui/command";
-import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown } from "lucide-react";
-import {
-    Card,
-    CardContent,
- 
-} from "@/components/ui/card";
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { DialogContext } from "@/contexts/Context";
 import { useContext, useEffect, useState } from "react";
-import { useSignup } from "@/hooks/useSignup";
+import { DialogClose } from "@/components/ui/dialog";
+import { useAdminContext } from "@/hooks/useAdminContext";
+import { TailSpin } from "react-loader-spinner";
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
     password: z
@@ -49,7 +40,9 @@ const formSchema = z.object({
 });
 
 export default function AdminForm() {
+    const [loading, setLoading] = useState(false);
     const [departments, setDepartments] = useState([]);
+    const { dispatch } = useAdminContext();
     useEffect(() => {
         axios
             .get("http://localhost:4000/api/department")
@@ -60,7 +53,6 @@ export default function AdminForm() {
                 console.log(error);
             });
     }, []);
-    const {signup, isLoading, error} = useSignup()
     const handleDialogChange = useContext(DialogContext);
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -69,23 +61,24 @@ export default function AdminForm() {
             fullName: "",
             phone: "",
             password: "",
-            department: ""
-
+            department: "",
         },
     });
 
     function onSubmit(data) {
-        handleDialogChange();
-        console.log(data)
+        setLoading(true);
         axios
-        .post(`http://localhost:4000/api/admin`, data)
-        .then((res) => {
-            toast("Issue Requested Successfully!");
-
-        })
-        .catch((error) => {
-            console.log(error)
-        });
+            .post(`http://localhost:4000/api/admin`, data)
+            .then((res) => {
+                setLoading(false);
+                handleDialogChange();
+                toast.success("The Admin user has been created Successfully!");
+                dispatch({ type: "ADD_ADMIN", payload: res.data });
+            })
+            .catch((error) => {
+                toast.error("Failed to create the admin. Please try again.");
+                setLoading(false);
+            });
     }
 
     return (
@@ -155,77 +148,42 @@ export default function AdminForm() {
                                 </FormItem>
                             )}
                         />
-                          <FormField
-                    control={form.control}
-                    name="department"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Department</FormLabel>
-                            <Popover>
-                                <PopoverTrigger asChild>
-                                    <FormControl>
-                                        <Button
-                                            variant="outline"
-                                            role="combobox"
-                                            className={cn(
-                                                "w-full justify-between",
-                                                !field.value &&
-                                                    "text-muted-foreground"
-                                            )}>
-                                            {field.value
-                                                ? departments.find(
-                                                      (department) =>
-                                                          department._id ===
-                                                          field.value
-                                                  )?.name
-                                                : "Select Your Department"}
-                                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                                        </Button>
-                                    </FormControl>
-                                </PopoverTrigger>
-                                <PopoverContent className="p-0 max-h-80 overflow-y-scroll">
-                                    <Command>
-                                        <CommandInput
-                                            placeholder="Search Department..."
-                                            className="h-9"
-                                        />
-                                        <CommandEmpty>
-                                            No City found.
-                                        </CommandEmpty>
-                                        <CommandGroup>
-                                            {departments.map((department) => (
-                                                <CommandItem
-                                                    value={department._id}
-                                                    key={department._id}
-                                                    onSelect={() => {
-                                                        form.setValue(
-                                                            "department",
-                                                            department._id
-                                                        );
-                                                    }}>
-                                                    {department.name}
-                                                    <Check
-                                                        className={cn(
-                                                            "ml-auto h-4 w-4",
-                                                            department._id ===
-                                                                field.value
-                                                                ? "opacity-100"
-                                                                : "opacity-0"
-                                                        )}
-                                                    />
-                                                </CommandItem>
-                                            ))}
-                                        </CommandGroup>
-                                    </Command>
-                                </PopoverContent>
-                            </Popover>
-                            <FormDescription className="hidden lg:block">
-                                This is the name of the Your Department.
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+                        <FormField
+                            control={form.control}
+                            name="department"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Departments</FormLabel>
+                                    <Select onValueChange={field.onChange}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select Department" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent className="overflow-y-auto max-h-96">
+                                            {departments &&
+                                                departments.map(
+                                                    (department) => (
+                                                        <SelectItem
+                                                            key={department._id}
+                                                            value={
+                                                                department._id
+                                                            }
+                                                            className="border-b">
+                                                            {department.name}
+                                                        </SelectItem>
+                                                    )
+                                                )}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription className="hidden lg:block">
+                                        This is Your Department in the
+                                        Organization.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             control={form.control}
                             name="password"
@@ -246,7 +204,25 @@ export default function AdminForm() {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit">Submit</Button>
+                        <div className="flex gap-8">
+                            <Button
+                                disabled={loading}
+                                type="submit"
+                                className="grow">
+                                {loading ? (
+                                    <TailSpin
+                                        color="#fff"
+                                        height={30}
+                                        width={30}
+                                    />
+                                ) : (
+                                    "Continue"
+                                )}
+                            </Button>
+                            <DialogClose asChild>
+                                <Button className="grow" variant="destructive">Cancel</Button>
+                            </DialogClose>
+                        </div>
                     </form>
                 </Form>
             </CardContent>

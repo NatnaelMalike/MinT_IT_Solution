@@ -175,7 +175,7 @@ export default function UserForm() {
                                             className="h-9"
                                         />
                                         <CommandEmpty>
-                                            No City found.
+                                            No Department found.
                                         </CommandEmpty>
                                         <CommandGroup>
                                             {departments.map((department) => (

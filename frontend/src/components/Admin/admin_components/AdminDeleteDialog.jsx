@@ -13,23 +13,29 @@ import { Trash2 } from "lucide-react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useContext, useState } from "react";
+import { useAdminContext } from "@/hooks/useAdminContext";
+import { TailSpin } from "react-loader-spinner";
 
 export default function AdminDeleteDialog({ id }) {
     const [open, setOpen] = useState(false);
     function handleDialogChange() {
         setOpen(!open);
     }
+    const [loading, setLoading] = useState(false);
+    const { dispatch } = useAdminContext();
     const deleteAdminUser = () => {
-        handleDialogChange();
+        setLoading(true);
         axios
             .delete(`http://localhost:4000/api/admin/${id}`)
             .then(() => {
-                toast.success("Admin User Deleted Successfully!");
+                setLoading(false);
+                handleDialogChange();
+                toast.success("The user has been successfully deleted.");
+                dispatch({ type: "DELETE_ADMIN", payload: id });
             })
             .catch((err) => {
-                toast.error("Admin deletion Failed!")
-                console.log(err);
-
+                toast.error("Failed to delete the user. Please try again.");
+                setLoading(false);
             });
     };
     return (
@@ -37,22 +43,28 @@ export default function AdminDeleteDialog({ id }) {
             <DialogTrigger asChild>
                 <Trash2 className="cursor-pointer text-destructive" />
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader className="space-y-4">
-                    <DialogTitle>Delete This Admin User</DialogTitle>
+            <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+                <DialogHeader>
+                    <DialogTitle>Are You absolutely Sure?</DialogTitle>
                     <DialogDescription>
-                        Are You Sure to delete this Admin User?
+                        This action cannot be undone. This will permanently
+                        remove the user from our servers.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex gap-4">
+                <div className="flex gap-8">
                     <Button
+                        disabled={loading}
                         onClick={deleteAdminUser}
                         className="grow"
                         variant="destructive">
-                        Yes
+                        {loading ? (
+                            <TailSpin color="#fff" height={30} width={30} />
+                        ) : (
+                            "Continue"
+                        )}
                     </Button>
                     <DialogClose asChild>
-                        <Button className="grow">No</Button>
+                        <Button className="grow">Cancel</Button>
                     </DialogClose>
                 </div>
             </DialogContent>

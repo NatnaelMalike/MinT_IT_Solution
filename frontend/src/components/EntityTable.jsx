@@ -46,11 +46,11 @@ const EntityTable = ({ entities, config }) => {
                             <TableBody>
                                 {entities &&
                                     entities.map((entity) => (
-                                        <TableRow key={entity.id}>
+                                        <TableRow key={entity._id}>
                                             {config.fields.map(
                                                 (field, index) => (
                                                     <TableCell
-                                                        key={index}
+                                                        key={`${entity._id} - ${index}`}
                                                         className="max-w-prose overflow-x-auto whitespace-nowrap"
                                                         >
                                                         {typeof field ===

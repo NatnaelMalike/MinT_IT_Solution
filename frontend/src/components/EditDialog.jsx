@@ -21,7 +21,7 @@ export default function EditDialog({entity, children}) {
             <DialogTrigger asChild>
                 <SquarePen className="cursor-pointer text-teal-800" />
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent onInteractOutside={(e) => e.preventDefault()}>
                 <DialogHeader>
                     <DialogTitle>Update {entity}</DialogTitle>
                     <DialogDescription>

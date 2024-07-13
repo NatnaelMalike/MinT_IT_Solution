@@ -8,7 +8,7 @@ import _ from "lodash";
 import Email from "../models/Email.js";
 
 const getAdmin = async (req, res) => {
-    const users = await Admin.find({}, { password: 0 }).populate("department", "name -_id").sort({ fullName: 1 });
+    const users = await Admin.find({}, { password: 0 }).populate("department", "name _id").sort({ fullName: 1 });
     res.send(users);
 };
 
@@ -32,8 +32,8 @@ const addAdmin = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
     await user.save();
-    // const token = user.generateAuthToken();
-    // res.send(token);
+    const populatedUser = await Admin.findById(user._id).populate('department', 'name _id')
+    res.send(populatedUser);
 };
 
 const updateAdmin = async (req, res) => {
@@ -41,22 +41,23 @@ const updateAdmin = async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
     let user = await Admin.findByIdAndUpdate(
         req.params.id,
-        _.pick(req.body, ["fullName", "email", "phone"]),
+        _.pick(req.body, ["fullName", "email", "phone", "department"]),
         {
             new: true,
         }
     );
     if (!user) return res.status(404).send("User not Found!");
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
-    res.send(user);
+    const populatedUser = await Admin.findById(user._id).populate('department', 'name _id')
+    res.send(populatedUser);
+
 };
 
 const deleteAdmin = async (req, res) => {
     const user = await Admin.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).send("User not Found!");
     await Email.deleteOne({ email: user.email });
-    res.send(user);
+    res.send(user)
+   
 };
 
 const getById = async (req, res) => {

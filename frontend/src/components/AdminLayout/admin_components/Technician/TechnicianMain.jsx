@@ -12,7 +12,7 @@ import { technicianConfig } from "@/config/tables";
 const TechnicianMain = () => {
     const { technicians, dispatch } = useTechnicianContext();
     
-    useEffect(() => {
+    !technicians && useEffect(() => {
         const fetchTechnicians = () => {
              axios
                 .get("http://localhost:4000/api/technician")
@@ -27,7 +27,7 @@ const TechnicianMain = () => {
                 });
         };
         fetchTechnicians();
-    }, [technicians]);
+    }, []);
     return (
         <div className="flex flex-col gap-8">
             <Header title="Manage Technicians">

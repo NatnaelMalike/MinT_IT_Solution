@@ -4,6 +4,7 @@ import DepartmentDeleteDialog from "@/components/AdminLayout/admin_components/De
 import TechnicianDeleteDialog from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianDeleteDialog";
 import TechnicianEditForm from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianEditForm";
 import UserDeleteDialog from "@/components/AdminLayout/admin_components/User/user_components/UserDeleteDialog";
+import DeleteAlertDialog from "@/components/DeleteAlertDialog";
 import EditDialog from "@/components/EditDialog";
 import RequestDeleteDialog from "@/components/Request/RequestDeleteDialog";
 import RequestEditForm from "@/components/Request/RequestEditForm";
@@ -33,7 +34,8 @@ export const technicianConfig = {
                         <TechnicianEditForm />
                     </EditDialog>
                 </IdContext.Provider>
-                <TechnicianDeleteDialog id={entity._id} />
+                {/* <TechnicianDeleteDialog id={entity._id} /> */}
+                <DeleteAlertDialog id={entity._id} entity={'technician'} />
             </div>
         ),
     ],
@@ -51,6 +53,7 @@ export const deptConfig = {
                     </EditDialog>
                 </IdContext.Provider>
                 <DepartmentDeleteDialog id={entity._id} />
+                {/* <DeleteAlertDialog id={entity._id} entity={'department'} /> */}
             </div>
         ),
     ],
@@ -71,7 +74,8 @@ export const usersConfig = {
         (entity) => entity.department["name"],
         (entity) => (
             <div className="flex gap-4">
-                <UserDeleteDialog id={entity._id} />
+                <UserDeleteDialog id={entity._id}/>
+                {/* <DeleteAlertDialog id={entity._id} entity={'user'} /> */}
             </div>
         ),
     ],

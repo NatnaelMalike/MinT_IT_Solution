@@ -7,7 +7,7 @@ export const userReducer = (state, action) => {
                 return {users: action.payload}
         case 'DELETE_USER':
             return {
-                users : state.users.filter((user)=>user.id !== action.payload)
+                users : state.users.filter((user)=>user._id !== action.payload)
             }
         default:
             return state;

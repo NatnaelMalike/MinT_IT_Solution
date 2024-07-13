@@ -25,8 +25,6 @@ import { formatter } from "@/utility/timeFormatter";
 
 const AdminRequestTable = () => {
     const { requests } = useRequestContext();
-    console.log(requests);
-
     return (
         <div className="flex flex-col gap-8">
             <Card>

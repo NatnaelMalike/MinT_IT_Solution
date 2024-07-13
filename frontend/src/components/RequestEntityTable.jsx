@@ -50,7 +50,7 @@ const RequestEntityTable = ({ entities, config }) => {
                                             {config.fields.map(
                                                 (field, index) => (
                                                     <TableCell
-                                                        key={index}
+                                                        key={`${entity.id}-${index}`}
                                                         className="max-w-prose overflow-x-auto whitespace-nowrap"
                                                         >
                                                         {typeof field ===
