@@ -23,8 +23,8 @@ export default function EditDialog({entity, children}) {
             </DialogTrigger>
             <DialogContent onInteractOutside={(e) => e.preventDefault()}>
                 <DialogHeader>
-                    <DialogTitle>Update {entity}</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-xl text-center mb-2">Update {entity}</DialogTitle>
+                    <DialogDescription className="text-base text-center mb-2">
                         updating an existig {entity} in the system
                     </DialogDescription>
                 </DialogHeader>

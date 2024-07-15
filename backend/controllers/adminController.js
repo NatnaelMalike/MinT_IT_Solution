@@ -39,6 +39,13 @@ const addAdmin = async (req, res) => {
 const updateAdmin = async (req, res) => {
     const { error } = updateAdminValidator(req.body);
     if (error) return res.status(400).send(error.details[0].message);
+    const existingEmail = await Email.findOne({ email: req.body.email });
+    const oldUser = await Admin.findById(req.params.id);
+    if (existingEmail) {
+        if(existingEmail.email !== oldUser.email){
+            return res.status(400).send("User already registered !!!");
+        }
+    }
     let user = await Admin.findByIdAndUpdate(
         req.params.id,
         _.pick(req.body, ["fullName", "email", "phone", "department"]),

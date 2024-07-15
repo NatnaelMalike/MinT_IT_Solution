@@ -40,6 +40,7 @@ const formSchema = z.object({
 });
 
 export default function AdminForm() {
+    const [error, setError] = useState()
     const [loading, setLoading] = useState(false);
     const [departments, setDepartments] = useState([]);
     const { dispatch } = useAdminContext();
@@ -78,6 +79,7 @@ export default function AdminForm() {
             .catch((error) => {
                 toast.error("Failed to create the admin. Please try again.");
                 setLoading(false);
+                setError(error.response.data)
             });
     }
 
@@ -225,6 +227,7 @@ export default function AdminForm() {
                         </div>
                     </form>
                 </Form>
+                {<p className="text-center text-destructive mt-4 font-medium">{error && error}</p>}
             </CardContent>
         </Card>
     );

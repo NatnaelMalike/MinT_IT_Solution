@@ -55,6 +55,10 @@ const ProfilePage = () => {
                                 <span className="font-medium">Department</span>
                                 <span>{user.department.name}</span>
                             </p>
+                            <p className="flex justify-between">
+                                <span className="font-medium">Role</span>
+                                <span>{user.role}</span>
+                            </p>
                         </div>
                     ) : null}
                 </CardContent>

@@ -14,47 +14,58 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useTechnicianContext } from "@/hooks/useTechnicianContext";
 import { useState } from "react";
+import { TailSpin } from "react-loader-spinner";
 
 export default function TechnicianDeleteDialog({ id }) {
+    const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     function handleDialogChange() {
         setOpen(!open);
     }
     const {dispatch} = useTechnicianContext()
     const deleteTechnicianUser = () => {
-        handleDialogChange()
+        setLoading(true)
         axios
-            .delete(`http://localhost:4000/api/technician/${id}`)
-            .then(() => {
+        .delete(`http://localhost:4000/api/technician/${id}`)
+        .then(() => {
+            setLoading(false)
+                handleDialogChange()
+                toast.success("The user has been successfully deleted.");
                 dispatch({type: 'DELETE_TECHNICIAN', payload: id})
-                toast("Technician User Deleted Successfully!");
 
             })
             .catch((err) => {
-                console.log(err);
+                toast.error("Failed to delete the user. Please try again.");
+                setLoading(false);
             });
     };
     return (
         <Dialog open={open} onOpenChange={handleDialogChange}>
             <DialogTrigger asChild>
-                <Trash2 className="cursor-pointer" />
+                <Trash2 className="cursor-pointer text-destructive" />
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent onInteractOutside={(e) => e.preventDefault()}>
                 <DialogHeader className='space-y-4'>
-                    <DialogTitle>Delete This Technician User</DialogTitle>
-                    <DialogDescription>
-                        Are You Sure to delete this Technician User?
+                <DialogTitle className="text-xl text-center mb-2">Are You absolutely Sure?</DialogTitle>
+                    <DialogDescription className="text-base text-center mb-2">
+                        This action cannot be undone. This will permanently
+                        remove the user from our servers.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex gap-4 mt-4">
+                <div className="flex gap-8 px-12">
                     <Button
+                        disabled={loading}
                         onClick={deleteTechnicianUser}
                         className="grow"
                         variant="destructive">
-                        Yes
+                        {loading ? (
+                            <TailSpin color="#fff" height={30} width={30} />
+                        ) : (
+                            "Continue"
+                        )}
                     </Button>
                     <DialogClose asChild>
-                        <Button className="grow">No</Button>
+                        <Button className="grow">Cancel</Button>
                     </DialogClose>
                 </div>
             </DialogContent>

@@ -9,8 +9,6 @@ import axios from "axios";
 const AdminHomepage = () => {
     const { token } = useAuthContext();
     const { dispatch } = useRequestContext();
-    
-
     useEffect(() => {
         if (token) {
             axios
@@ -21,7 +19,7 @@ const AdminHomepage = () => {
                 })
                 .then((response) => {
                     dispatch({ type: 'SET_REQUESTS', payload: response.data });
-                    console.log(response.data)
+                    console.log("req",response.data)
                 })
                 .catch((error) => {
                     console.log(error);

@@ -31,13 +31,13 @@ const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
     fullName: z.string().min(1, { message: "Name is required" }),
     department: z.string().min(1, { message: "Department must be selected" }),
-
     phone: z.string().refine((value) => /^(?:\+251)?0[1-9]\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
 });
 
 export default function AdminEditForm() {
+    const [error, setError] = useState()
     const [loading, setLoading] = useState(false);
     const [departments, setDepartments] = useState([]);
     const {admins, dispatch } = useAdminContext();
@@ -72,7 +72,6 @@ export default function AdminEditForm() {
 
     function onSubmit(data) {
         setLoading(true);
-        console.log(data)
         axios
             .put(`http://localhost:4000/api/admin/${id}`, data)
             .then((res) => {
@@ -86,6 +85,7 @@ export default function AdminEditForm() {
             .catch((err) => {
                 toast.error("Failed to update the account, Please try again.");
                 setLoading(false);
+                setError(err.response.data)
             });
     }
 
@@ -222,6 +222,7 @@ export default function AdminEditForm() {
                         </div>
                     </form>
                 </Form>
+                {<p className="text-center text-destructive mt-4 font-medium">{error && error}</p>}
             </CardContent>
         </Card>
     );

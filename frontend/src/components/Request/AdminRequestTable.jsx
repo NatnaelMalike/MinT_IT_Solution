@@ -19,12 +19,11 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { useRequestContext } from "@/hooks/useRequestContext";
-import AssignmentDialog from "../Helper_Admin/AssignmentDialog";
-import { Badge } from "../ui/badge";
 import { formatter } from "@/utility/timeFormatter";
-
+import emptyPhoto from "@/assets/img/Empty.png";
 const AdminRequestTable = () => {
     const { requests } = useRequestContext();
+    console.log('add',requests)
     return (
         <div className="flex flex-col gap-8">
             <Card>
@@ -35,6 +34,9 @@ const AdminRequestTable = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
+                    {
+                        requests.length > 0?(
+
                     <Table className="min-w-[840px] w-full border-collapse overflow-hidden">
                         <TableHeader className="bg-secondary">
                             <TableRow>
@@ -78,6 +80,16 @@ const AdminRequestTable = () => {
                                 ))}
                         </TableBody>
                     </Table>
+                        ):
+                        <div className="w-full flex flex-col justify-center items-center gap-8">
+                            <img
+                                src={emptyPhoto}
+                                alt="No Data Illustrator"
+                                className="max-w-lg"
+                            />
+                            <p className="text-2xl text-destructive"> Oops, No Requests!</p>
+                        </div>
+                    }
                 </CardContent>
             </Card>
         </div>
