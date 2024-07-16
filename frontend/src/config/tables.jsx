@@ -5,8 +5,10 @@ import DepartmentEditForm from "@/components/AdminLayout/admin_components/Depart
 import TechnicianDeleteDialog from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianDeleteDialog";
 import TechnicianEditForm from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianEditForm";
 import UserDeleteDialog from "@/components/AdminLayout/admin_components/User/user_components/UserDeleteDialog";
+import UserEditForm from "@/components/AdminLayout/admin_components/User/user_components/UserEditForm";
 import DeleteAlertDialog from "@/components/DeleteAlertDialog";
 import EditDialog from "@/components/EditDialog";
+import PasswordDialog from "@/components/PasswordDialog";
 import RequestDeleteDialog from "@/components/Request/RequestDeleteDialog";
 import RequestEditForm from "@/components/Request/RequestEditForm";
 import { IdContext } from "@/contexts/Context";
@@ -73,6 +75,11 @@ export const usersConfig = {
         (entity) => entity.department["name"],
         (entity) => (
             <div className="flex gap-4">
+                {/* <IdContext.Provider value={entity._id}>
+                    <PasswordDialog>
+                        <UserEditForm />
+                    </PasswordDialog>
+                </IdContext.Provider> */}
                 <UserDeleteDialog id={entity._id}/>
             </div>
         ),

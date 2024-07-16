@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useLogin } from "@/hooks/useLogin";
+import { TailSpin } from "react-loader-spinner";
+import { useState } from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
@@ -23,6 +26,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+    const [isvisible, setVisible] = useState(false);
     const { login, isLoading, error } = useLogin();
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -31,7 +35,9 @@ export default function LoginForm() {
             password: "",
         },
     });
-
+    const togglePasswordVisibility = () => {
+        setVisible(!isvisible);
+    };
     function onSubmit(data) {
         login(data);
     }
@@ -51,10 +57,10 @@ export default function LoginForm() {
                                     {...field}
                                 />
                             </FormControl>
-                            <FormDescription>
+                            {/* <FormDescription>
                                 This is your email address for The
                                 MinT_IT_Solution account.
-                            </FormDescription>
+                            </FormDescription> */}
                             <FormMessage />
                         </FormItem>
                     )}
@@ -66,21 +72,38 @@ export default function LoginForm() {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
+                                <div
+                                    
+                                    className="relative ">
                                 <Input
-                                    placeholder="Enter Your Password"
+                                    type={isvisible ? "text" : "password"}
+                                    placeholder={"Enter Your Password"}
+                                    
                                     {...field}
                                 />
+                                <span className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4" onClick={togglePasswordVisibility}>
+                                    {isvisible ? (
+                                        <EyeOffIcon className="w-5 h-5" />
+                                    ) : (
+                                        <EyeIcon className="w-5 h-5" />
+                                    )}
+                                </span>
+                                </div>
                             </FormControl>
-                            <FormDescription>
+                            {/* <FormDescription>
                                 This is your password for The MinT_IT_Solution
                                 account.
-                            </FormDescription>
+                            </FormDescription> */}
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-                <Button type="submit" disabled={isLoading}>
-                    Log in
+                <Button disabled={isLoading} type="submit" className="grow">
+                    {isLoading ? (
+                        <TailSpin color="#fff" height={30} width={30} />
+                    ) : (
+                        "Login"
+                    )}
                 </Button>
             </form>
             <FormMessage className="text-center p-4 text-base">

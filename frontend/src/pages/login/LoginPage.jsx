@@ -19,13 +19,13 @@ const LoginPage = () => {
                 <div className="flex items-center flex-col">
                     <img src={logo} alt="" />
                 </div>
-                <h2 className="my-10 text-xl text-center font-medium leading-9 tracking-tight text-gray-900">
+                <h2 className="my-10 text-2xl text-center font-medium leading-9 tracking-tight text-gray-900">
                     Sign in to your account
                 </h2>
                 <LoginForm />
-                <div className="flex justify-between items-center mt-4">
+                <div className="flex justify-between items-center mt-4 text-lg">
                 <Link to={'/forgot-password'} className="hover:text-teal-500">Forget Password</Link>
-                <div>Need an Account? <Link className="text-teal-500 text-base hover:opacity-90 hover:underline" to={'/signup'}>Signup</Link></div>
+                <div>Need an Account? <Link className="text-teal-500 text-lg hover:opacity-90 hover:underline" to={'/signup'}>Signup</Link></div>
 
                 </div>
             </div>

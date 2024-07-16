@@ -38,7 +38,7 @@ const formSchema = z.object({
     password: z
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
-    fullName: z.string().min(1, { message: "Name is required" }),
+    fullName: z.string().min(6, { message: "Name must be 6 or more characters long" }),
     department: z.string().min(1, {
         message: "Please select a department.",
     }),

@@ -51,11 +51,6 @@ export default function ForgetPassword() {
 
     return (
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-20">
-            <Toaster/>
-            <div>
-                <img src={logo} alt="" />
-            </div>
-            
             <Form {...form}>
             
                 <form

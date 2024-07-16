@@ -33,10 +33,10 @@ const ProfilePage = () => {
                 </CardHeader>
                 <CardContent>
                     <div>
-                        <img src={profile} alt="" className="w-1/2 mx-auto" />
+                        <img src={profile} alt="" className="w-[60%] mx-auto" />
                     </div>
                     {user ? (
-                        <div className="flex flex-col space-y-4 mt-8">
+                        <div className="flex flex-col space-y-4 mt-8 text-xl">
                             <p className="flex justify-between">
                                 <span className="font-medium">Full Name</span>
                                 <span>{user.fullName}</span>

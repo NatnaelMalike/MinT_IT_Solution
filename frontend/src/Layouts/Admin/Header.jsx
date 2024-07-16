@@ -124,11 +124,9 @@ const Header = () => {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuLabel className="text-xl">My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+                    <DropdownMenuItem onClick={logout} className="text-xl">Logout</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </header>

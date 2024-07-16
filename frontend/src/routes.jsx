@@ -24,6 +24,7 @@ import ProfilePage from "./components/ProfilePage";
 import TechnicianRequestTable from "./components/Technician/TechnicianRequestTable";
 import PasswordReset from "./pages/reset_password/PasswordReset";
 import AdminRequestTable from "./components/Request/AdminRequestTable";
+import HelpCenter from "./pages/HelpCenter";
 
 const router = createBrowserRouter([
     // Login Page
@@ -46,7 +47,7 @@ const router = createBrowserRouter([
             </ProtectedRoutes>
         ),
         children: [
-            { index: true, element: <RequestPage /> },
+            { path: "requests", element: <RequestPage /> },
             { path: "profile", element: <ProfilePage /> },
         ],
     },
@@ -60,12 +61,9 @@ const router = createBrowserRouter([
     // Forgot Password
     {
         path: "/forgot-password",
-        element: <ForgetPassword />,
+        element: <HelpCenter />,
     },
-    {
-        path: "/reset-password:token",
-        element: <PasswordReset />,
-    },
+   
 
     // UnAuthorized
     {
@@ -81,7 +79,7 @@ const router = createBrowserRouter([
             </ProtectedRoutes>
         ),
         children: [
-            { path: "", element: <RequestTable /> },
+            { path: "requests", element: <RequestTable /> },
             { path: "profile", element: <ProfilePage /> },
         ],
     },
@@ -94,13 +92,15 @@ const router = createBrowserRouter([
             </ProtectedRoutes>
         ),
         children: [
-            { path: "", element: <Dashboard /> },
+            { path: "dashboard", element: <Dashboard /> },
             { path: "profile", element: <ProfilePage /> },
             { path: "requests", element: <AdminRequestTable /> },
             { path: "admin_users", element: <AdminMain /> },
             { path: "users", element: <UserMain /> },
             { path: "technicians", element: <TechnicianMain /> },
             { path: "departments", element: <DepartmentMain /> },
+            { path: "forgot-password", element:  <ForgetPassword /> },
+            { path: "reset-password", element:  <PasswordReset /> },
         ],
     },
 
@@ -114,7 +114,7 @@ const router = createBrowserRouter([
             </ProtectedRoutes>
         ),
         children: [
-            { index: true, element: <TechnicianRequestTable /> },
+            { path: "requests", element: <TechnicianRequestTable /> },
             { path: "profile", element: <ProfilePage /> },
         ],
     },

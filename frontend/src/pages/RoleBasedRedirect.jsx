@@ -27,16 +27,16 @@ const RoleBasedRedirect = () => {
 
         switch (role) {
             case "helper_admin":
-                navigate("/helper_desk");
+                navigate("/helper_desk/requests");
                 break;
             case "normal_user":
-                navigate("/user");
+                navigate("/user/requests");
                 break;
             case "technician_user":
-                navigate("/technician");
+                navigate("/technician/requests");
                 break;
             case "super_admin":
-                navigate("/admin");
+                navigate("/admin/dashboard");
                 break;
             default:
                 navigate("/unauthorized");

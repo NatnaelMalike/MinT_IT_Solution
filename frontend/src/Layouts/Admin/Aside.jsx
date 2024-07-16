@@ -24,7 +24,7 @@ const Aside = () => {
             <div className="flex h-full max-h-screen flex-col gap-2">
                 <div className="border-b">
                     <Link
-                        to={"/admin"}
+                        to={"/admin/dashboard"}
                         className="flex items-center gap-2 font-semibold mb-4">
                         <img
                             src={logo}
@@ -34,7 +34,7 @@ const Aside = () => {
                     </Link>
                 </div>
             <div className="flex-1">
-                <nav className="grid items-start p-4  font-medium">
+                <nav className="grid items-start p-4  font-medium text-xl">
                 <NavLink
                             to={"/admin/profile"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
@@ -42,7 +42,7 @@ const Aside = () => {
                             Profile
                         </NavLink>
                     <NavLink
-                        to={"/admin"}
+                        to={"/admin/dashboard"}
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <HomeIcon className="h-4 w-4" />
                         Dashboard
@@ -77,15 +77,22 @@ const Aside = () => {
                         <BuildingIcon className="h-4 w-4" />
                         Departments
                     </NavLink>
+                    {/* <NavLink
+                        to={"/admin/forgot-password"}
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                        <Users className="h-4 w-4" />
+                        Forgot Password
+                    </NavLink> */}
+
                 </nav>
             </div>
             {/* <div className="mt-auto p-4 font-medium">
-                <NavLink
-                    to={"/helper_desk"}
+                <Link
+                    to={"/helper_desk/profile"}
                     className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                     <Settings className="h-4 w-4" />
                     Settings
-                </NavLink>
+                </Link>
             </div> */}
             </div>
         </div>
