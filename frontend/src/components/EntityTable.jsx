@@ -30,7 +30,7 @@ const EntityTable = ({ entities, config }) => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="overflow-y-auto max-h-[65vh]">
-                    {entities ? (
+                    {entities && entities.length > 0 ? (
                         <Table className="min-w-[840px] w-full border-collapse overflow-hidden">
                             <TableHeader className="bg-secondary">
                                 <TableRow>

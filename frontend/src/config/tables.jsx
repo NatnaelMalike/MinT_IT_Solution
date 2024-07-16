@@ -1,6 +1,7 @@
 import AdminDeleteDialog from "@/components/Admin/admin_components/AdminDeleteDialog";
 import AdminEditForm from "@/components/Admin/admin_components/AdminEditForm";
 import DepartmentDeleteDialog from "@/components/AdminLayout/admin_components/Department/department_components/DepartmentDeleteDialog";
+import DepartmentEditForm from "@/components/AdminLayout/admin_components/Department/department_components/DepartmentEditForm";
 import TechnicianDeleteDialog from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianDeleteDialog";
 import TechnicianEditForm from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianEditForm";
 import UserDeleteDialog from "@/components/AdminLayout/admin_components/User/user_components/UserDeleteDialog";
@@ -48,7 +49,7 @@ export const deptConfig = {
             <div className="flex gap-4">
                 <IdContext.Provider value={entity._id}>
                     <EditDialog entity="Technician">
-                        <TechnicianEditForm />
+                        <DepartmentEditForm />
                     </EditDialog>
                 </IdContext.Provider>
                 <DepartmentDeleteDialog id={entity._id} />

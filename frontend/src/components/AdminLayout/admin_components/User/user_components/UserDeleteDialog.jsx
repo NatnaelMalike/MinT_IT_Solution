@@ -15,7 +15,6 @@ import { toast } from "sonner";
 import { useContext, useState } from "react";
 import { useUsersContext } from "@/hooks/useUsersContext";
 import { TailSpin } from "react-loader-spinner";
-import { DialogContext } from "@/contexts/Context";
 
 export default function UserDeleteDialog({ id }) {
     const [open, setOpen] = useState(false);
@@ -46,13 +45,13 @@ export default function UserDeleteDialog({ id }) {
             </DialogTrigger>
             <DialogContent onInteractOutside={(e) => e.preventDefault()}>
                 <DialogHeader>
-                    <DialogTitle>Are You absolutely Sure?</DialogTitle>
-                    <DialogDescription>
+                <DialogTitle className="text-xl text-center mb-2">Are You absolutely Sure?</DialogTitle>
+                    <DialogDescription className="text-base text-center mb-2">
                         This action cannot be undone. This will permanently
                         remove the user from our servers.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex gap-8">
+                <div className="flex gap-8 px-12">
                     <Button
                         disabled={loading}
                         onClick={deleteUser}

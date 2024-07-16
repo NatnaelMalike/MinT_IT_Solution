@@ -35,7 +35,7 @@ const AdminRequestTable = () => {
                 </CardHeader>
                 <CardContent>
                     {
-                        requests.length > 0?(
+                        requests && requests.length > 0?(
 
                     <Table className="min-w-[840px] w-full border-collapse overflow-hidden">
                         <TableHeader className="bg-secondary">

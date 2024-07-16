@@ -36,7 +36,7 @@ const RequestTable = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    {requests.lenght > 0 ? (
+                    {requests && requests.lenght > 0 ? (
                         <Table>
                             <TableHeader className="bg-secondary">
                                 <TableRow>

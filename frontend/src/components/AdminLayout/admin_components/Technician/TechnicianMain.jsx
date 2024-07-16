@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import TechnicianTable from "./technician_components/TechnicianTable";
 import Header from "@/components/Header";
 import AddDialog from "@/components/AddDialog";
 import TechnicianForm from "./technician_components/TechnicianForm";
-import { useAuthContext } from "@/hooks/useAuthContext";
 import { useTechnicianContext } from "@/hooks/useTechnicianContext";
 import EntityTable from "@/components/EntityTable";
 import { technicianConfig } from "@/config/tables";

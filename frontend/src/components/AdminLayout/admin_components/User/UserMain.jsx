@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import UserTable from "./user_components/UserTable";
 import axios from "axios";
 import { useUsersContext } from "@/hooks/useUsersContext";
 import EntityTable from "@/components/EntityTable";
