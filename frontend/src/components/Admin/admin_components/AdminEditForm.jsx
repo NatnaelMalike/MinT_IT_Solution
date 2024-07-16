@@ -82,10 +82,10 @@ export default function AdminEditForm() {
                 );
                 dispatch({ type: "UPDATE_ADMIN", payload: res.data });
             })
-            .catch((err) => {
+            .catch((error) => {
                 toast.error("Failed to update the account, Please try again.");
                 setLoading(false);
-                setError(err.response.data)
+                setError(error.response.data)
             });
     }
 

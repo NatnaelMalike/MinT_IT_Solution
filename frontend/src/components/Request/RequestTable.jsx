@@ -36,7 +36,7 @@ const RequestTable = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    {requests && requests.lenght > 0 ? (
+                    {requests && requests.length > 0 ? (
                         <Table>
                             <TableHeader className="bg-secondary">
                                 <TableRow>
@@ -133,7 +133,7 @@ const RequestTable = () => {
                             />
                             <p className="text-2xl text-destructive">
                                 {" "}
-                                Oops, No {config.entity}!
+                                Oops, No Requests!
                             </p>
                         </div>
                     )}

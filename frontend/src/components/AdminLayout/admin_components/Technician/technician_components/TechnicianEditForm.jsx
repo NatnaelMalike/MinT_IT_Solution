@@ -89,10 +89,10 @@ console.log("user",user)
                     "The Technician account has been updated Successfully"
                 );
             })
-            .catch((err) => {
+            .catch((error) => {
                 toast.error("Failed to update the account, Please try again.");
                 setLoading(false);
-                setError(err.response.data);
+                setError(error.response.data);
             });
     }
 

@@ -16,13 +16,17 @@ import { Input } from "@/components/ui/input";
 import logo from "../../assets/img/MinT-Logo.jpg";
 import { toast } from "sonner";
 import axios from "axios";
+import { useState } from "react";
+import { TailSpin } from "react-loader-spinner";
+import { Toaster } from "@/components/ui/sonner";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
 });
 
 export default function ForgetPassword() {
-
+    const [error, setError] = useState();
+    const [loading, setLoading] = useState(false);
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -31,19 +35,23 @@ export default function ForgetPassword() {
     });
 
     function onSubmit(data) {
-        
+        setLoading(true);
         axios.post('http://localhost:4000/api/forgot-password', data)
             .then(()=>{
-                console.log('success');
+                setLoading(false)
                 toast.success('Email Sent Successfully')
-            }).catch((err)=>{
-                console.log(err)
-                toast.error('Email Not Found')
+            }).catch((error)=>{
+                toast.error(
+                    "Failed to send the email, Please try again."
+                );
+                setLoading(false);
+                setError(error.response.data);
             })
     }
 
     return (
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-20">
+            <Toaster/>
             <div>
                 <img src={logo} alt="" />
             </div>
@@ -70,9 +78,23 @@ export default function ForgetPassword() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit">Submit</Button>
+                    <Button
+                                    disabled={loading}
+                                    type="submit"
+                                    className="grow">
+                                    {loading ? (
+                                        <TailSpin
+                                            color="#fff"
+                                            height={30}
+                                            width={30}
+                                        />
+                                    ) : (
+                                        "Continue"
+                                    )}
+                                </Button>
                 </form>
             </Form>
+            {<p className="text-center text-destructive mt-4 font-medium">{error && error}</p>}
         </div>
     );
 }

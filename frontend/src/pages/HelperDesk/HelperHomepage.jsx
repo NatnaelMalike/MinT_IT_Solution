@@ -12,7 +12,6 @@ const HelperHomepage = () => {
 
     useEffect(() => {
         if (token) {
-            console.log("Token_HElper", token)
             axios
                 .get("http://localhost:4000/api/request", {
                     headers: {

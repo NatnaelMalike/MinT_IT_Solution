@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import RequestAssignmentForm from "./AssignmentForm";
+import { DialogContext } from "@/contexts/Context";
 export default function AssignmentDialog({request_id}) {
     const [open, setOpen] = useState(false);
     function handleDialogChange() {
@@ -19,7 +20,7 @@ export default function AssignmentDialog({request_id}) {
     return (
         <Dialog open={open} onOpenChange={handleDialogChange}>
             <DialogTrigger asChild>
-            <Button className="h-8" variant="secondary" onClick={handleDialogChange}>Assign</Button>
+            <Button className="h-8 hover:bg-teal-700 hover:text-white" variant="secondary" onClick={handleDialogChange}>Assign</Button>
             </DialogTrigger>
             <DialogContent className="w-1/3 mx-auto">
                 <DialogHeader>
@@ -28,7 +29,9 @@ export default function AssignmentDialog({request_id}) {
                         Adding a request to A technician
                     </DialogDescription>
                 </DialogHeader>
+                <DialogContext.Provider value={handleDialogChange}>
                     <RequestAssignmentForm request_id={request_id}/>
+                </DialogContext.Provider>
             </DialogContent>
         </Dialog>
     );

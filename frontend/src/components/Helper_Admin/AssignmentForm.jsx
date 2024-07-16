@@ -20,8 +20,12 @@ import {
 } from "@/components/ui/select";
 import axios from "axios";
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { DialogContext } from "@/contexts/Context";
+import { TailSpin } from "react-loader-spinner";
+import { DialogClose } from "../ui/dialog";
+import { useRequestContext } from "@/hooks/useRequestContext";
 
 const formSchema = z.object({
     request_id: z.string().min(1, { message: "request must be selected!" }),
@@ -31,8 +35,10 @@ const formSchema = z.object({
 export default function RequestAssignmentForm({ request_id }) {
     const [technicians, setTechnicians] = useState([]);
     const { token } = useAuthContext();
-
-
+    const [error, setError] = useState();
+    const [loading, setLoading] = useState(false);
+    const handleDialogChange = useContext(DialogContext);
+    const { dispatch } = useRequestContext();
     useEffect(() => {
         axios
             .get("http://localhost:4000/api/technician")
@@ -44,6 +50,7 @@ export default function RequestAssignmentForm({ request_id }) {
             });
     }, []);
 
+
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -53,7 +60,7 @@ export default function RequestAssignmentForm({ request_id }) {
     });
 
     const onSubmit = (data) => {
-        console.log(data); // Ensure data is logged
+        setLoading(true);
         if(token){
             axios
                 .post("http://localhost:4000/api/assign_technician", data, {
@@ -62,10 +69,30 @@ export default function RequestAssignmentForm({ request_id }) {
                     }
                 })
                 .then(() => {
-                    toast("Technician Assigned Successfully!");
+                setLoading(false);
+                handleDialogChange();
+                toast.success(
+                    "The Technician user has been assigned Successfully!"
+                );
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch((error) => {
+                    toast.error(
+                        "Failed to create the technician. Please try again."
+                    );
+                    setLoading(false);
+                    setError(error.response.data);
+                });
+                axios
+                .get("http://localhost:4000/api/request", {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                .then((response) => {
+                    dispatch({ type: 'SET_REQUESTS', payload: response.data });
+                })
+                .catch((error) => {
+                    console.log(error);
                 });
         }
     };
@@ -103,8 +130,35 @@ export default function RequestAssignmentForm({ request_id }) {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Assign</Button>
+               <div className="flex gap-8">
+                                <Button
+                                    disabled={loading}
+                                    type="submit"
+                                    className="grow">
+                                    {loading ? (
+                                        <TailSpin
+                                            color="#fff"
+                                            height={30}
+                                            width={30}
+                                        />
+                                    ) : (
+                                        "Continue"
+                                    )}
+                                </Button>
+                                <DialogClose asChild>
+                                    <Button
+                                        className="grow"
+                                        variant="destructive">
+                                        Cancel
+                                    </Button>
+                                </DialogClose>
+                            </div>
             </form>
+            <p className="text-center text-destructive mt-4 font-medium">
+                {error && error}
+            </p>
         </Form>
+        
+        
     );
 }

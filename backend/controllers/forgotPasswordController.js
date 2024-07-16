@@ -22,9 +22,10 @@ const forgotPassword = async (req, res) => {
         return res.status(400).send("User Does not Exist!");
     }
 
-    const token = jwt.sign({ userId: user._id }, process.env.ACCESS_JWT_PRIVATE_KEY, {
+    let token = jwt.sign({ userId: user._id }, process.env.ACCESS_JWT_PRIVATE_KEY, {
         expiresIn: "60m",
     });
+    token = encodeURIComponent(token);
     const transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -34,7 +35,7 @@ const forgotPassword = async (req, res) => {
     });
 
     const mailOptions = {
-        from: "natnaelmalike@gmail.com",
+        from: "MinT IT Solution",
         to: email,
         subject: "Reset Password Notification",
         html: `<h1>Reset Your Password</h1>
@@ -51,6 +52,7 @@ const forgotPassword = async (req, res) => {
             console.log("Email sent: " + info.response);
         }
     });
+    res.status(200).send("Email Sent")
   } catch (error) {
     res.status(500).send(error.message)
   }
@@ -58,8 +60,8 @@ const forgotPassword = async (req, res) => {
 
 const resetPassword = async (req, res) => {
   try {
-    
-    const decodedToken = jwt.verify(req.params.token, process.env.ACCESS_JWT_PRIVATE_KEY);
+    let decodedToken = decodeURIComponent(req.params.token);
+     decodedToken = jwt.verify(req.params.token, process.env.ACCESS_JWT_PRIVATE_KEY);
     if (!decodedToken) {
       return res.status(401).send("Invalid token");
     }

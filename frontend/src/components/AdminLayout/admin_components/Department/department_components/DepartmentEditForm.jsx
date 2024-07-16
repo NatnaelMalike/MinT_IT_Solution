@@ -39,7 +39,8 @@ export default function DepartmentEditForm() {
         },
     });
     useEffect(() => {
-    form.setValue("name", dept.name)},[])
+        form.setValue("name", dept.name);
+    }, []);
 
     function onSubmit(data) {
         setLoading(true);
@@ -51,12 +52,12 @@ export default function DepartmentEditForm() {
                 toast.success("The department has been updated Successfully");
                 dispatch({ type: "UPDATE_DEPARTMENT", payload: res.data });
             })
-            .catch((err) => {
+            .catch((error) => {
                 toast.error(
                     "Failed to update the department, Please try again."
                 );
                 setLoading(false);
-                setError(err.response.data);
+                setError(error.response.data);
             });
     }
 

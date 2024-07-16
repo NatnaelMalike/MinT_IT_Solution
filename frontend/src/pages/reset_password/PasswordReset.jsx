@@ -17,12 +17,17 @@ import logo from "../../assets/img/MinT-Logo.jpg";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useParams, useLocation } from 'react-router-dom';
+import { useState } from "react";
+import { toast } from "sonner";
+import { TailSpin } from "react-loader-spinner";
 const formSchema = z.object({
     password: z.string().min(6, {message: "Password must be 6 or more characters long" }),
     password_confirmation: z.string().min(6, {message: "Password must be 6 or more characters long" }),
 });
 
 export default function PasswordReset() {
+    const [error, setError] = useState();
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
     const {token} = useParams()
     const location = useLocation();
@@ -35,13 +40,15 @@ export default function PasswordReset() {
     });
 
     function onSubmit(data) {
+        setLoading(true)
         axios.post(`http://localhost:8000/api/reset-password/${token}/${email}`, data)
             .then(() => {
-                console.log('success');
+                toast.success("Password Reset successfully")
                 navigate('/');
             })
-            .catch((err) => {
-                console.log(err.response.data); 
+            .catch((error) => {
+                toast.error("Failed to reset the password, Please try again.")
+                setError(error.response.data)
             })
     }
 
@@ -72,9 +79,24 @@ export default function PasswordReset() {
                     )}
                 />
 
-               <Button type='submit'>Submit</Button>
+<Button
+                                    disabled={loading}
+                                    type="submit"
+                                    className="grow">
+                                    {loading ? (
+                                        <TailSpin
+                                            color="#fff"
+                                            height={30}
+                                            width={30}
+                                        />
+                                    ) : (
+                                        "Continue"
+                                    )}
+                                </Button>
             </form>
         </Form>
+        {<p className="text-center text-destructive mt-4 font-medium">{error && error}</p>}
+
         </div>
     );
 }
