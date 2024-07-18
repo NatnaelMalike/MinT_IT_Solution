@@ -19,6 +19,7 @@ const LoginPage = () => {
                 <div className="flex items-center flex-col">
                     <img src={logo} alt="" />
                 </div>
+                <h2 className="text-center font-extrabold text-teal-700 text-3xl mt-4">IT Support System</h2>
                 <h2 className="my-10 text-2xl text-center font-medium leading-9 tracking-tight text-gray-900">
                     Sign in to your account
                 </h2>

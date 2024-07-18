@@ -12,7 +12,7 @@ const getProfile = async (req, res) => {
                 "department",
                 "name -_id"
             );
-            user = _.pick(user, ["fullName", "email", "department", "phone"]);
+            user = _.pick(user, ["fullName", "email", "department", "phone","role"]);
             res.send(user);
         } else if (role === "super_admin") {
             const user_id = _id;
