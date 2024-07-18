@@ -75,11 +75,6 @@ export const usersConfig = {
         (entity) => entity.department["name"],
         (entity) => (
             <div className="flex gap-4">
-                {/* <IdContext.Provider value={entity._id}>
-                    <PasswordDialog>
-                        <UserEditForm />
-                    </PasswordDialog>
-                </IdContext.Provider> */}
                 <UserDeleteDialog id={entity._id}/>
             </div>
         ),

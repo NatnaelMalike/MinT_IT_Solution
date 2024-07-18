@@ -25,6 +25,7 @@ import TechnicianRequestTable from "./components/Technician/TechnicianRequestTab
 import PasswordReset from "./pages/reset_password/PasswordReset";
 import AdminRequestTable from "./components/Request/AdminRequestTable";
 import HelpCenter from "./pages/HelpCenter";
+import AssignedRequests from "./components/Request/AssignedRequests";
 
 const router = createBrowserRouter([
     // Login Page
@@ -81,6 +82,7 @@ const router = createBrowserRouter([
         children: [
             { path: "requests", element: <RequestTable /> },
             { path: "profile", element: <ProfilePage /> },
+            { path: "assignments", element: <AssignedRequests /> },
         ],
     },
     // Admin Dashboard

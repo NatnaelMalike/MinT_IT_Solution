@@ -49,18 +49,23 @@ const getAssignedRequests = async (req, res) => {
             });
             res.send(requests);
         } else if (role === "helper_admin" || role === "super_admin") {
-            const requests = await Assignment.find().populate({
-                path: "request_id",
-                select: "issueType description user_id status -_id",
-                populate: {
-                    path: "user_id",
-                    select: "fullName department phone -_id",
+            const requests = await Assignment.find()
+                .populate({
+                    path: "request_id",
+                    select: "issueType description user_id status -_id",
                     populate: {
-                        path: "department",
-                        select: "name -_id",
+                        path: "user_id",
+                        select: "fullName department phone -_id",
+                        populate: {
+                            path: "department",
+                            select: "name -_id",
+                        },
                     },
-                },
-            });
+                })
+                .populate({
+                    path: "technician_id",
+                    select: "fullName profession phone",
+                });
             res.send(requests);
         }
     } catch (error) {

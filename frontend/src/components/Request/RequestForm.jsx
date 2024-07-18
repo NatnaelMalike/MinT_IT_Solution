@@ -48,7 +48,7 @@ export default function RequestForm() {
                 }
             })
             .then(() => {
-                toast("Issue Requested Successfully!");
+                toast.success("Issue Requested Successfully!");
                 window.location.reload();
             })
             .catch((err) => {

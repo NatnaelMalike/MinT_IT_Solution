@@ -27,16 +27,22 @@ import { useContext, useEffect, useState } from "react";
 import { DialogClose } from "@/components/ui/dialog";
 import { useAdminContext } from "@/hooks/useAdminContext";
 import { TailSpin } from "react-loader-spinner";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
     password: z
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
+        confirmPassword: z.string().min(6, { message: "Password must be 6 or more characters long" }),
+
     fullName: z.string().min(1, { message: "Name is required" }),
     department: z.string().min(1, { message: "Department must be selected" }),
     phone: z.string().refine((value) => /^(?:\+251)?0[1-9]\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"], // set the path of the error
 });
 
 export default function AdminForm() {
@@ -44,6 +50,11 @@ export default function AdminForm() {
     const [loading, setLoading] = useState(false);
     const [departments, setDepartments] = useState([]);
     const { dispatch } = useAdminContext();
+    const [isvisible, setVisible] = useState(false);
+    const togglePasswordVisibility = () => {
+        setVisible(!isvisible);
+    };
+
     useEffect(() => {
         axios
             .get("http://localhost:4000/api/department")
@@ -84,12 +95,13 @@ export default function AdminForm() {
     }
 
     return (
-        <Card>
+        <Card className="max-sm:w-11/12 max-lg:w-5/6 mx-auto lg:min-w-[800px] p-4">
             <CardContent>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-8 pt-4">
+                        className="pt-4 flex gap-12">
+                             <div className="flex-col flex space-y-4">
                         <FormField
                             control={form.control}
                             name="fullName"
@@ -150,6 +162,8 @@ export default function AdminForm() {
                                 </FormItem>
                             )}
                         />
+                             </div>
+                         <div className="flex flex-col space-y-4">
                         <FormField
                             control={form.control}
                             name="department"
@@ -193,19 +207,64 @@ export default function AdminForm() {
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>
                                     <FormControl>
-                                        <Input
-                                            placeholder="Enter Your Password"
-                                            {...field}
-                                        />
+                                    <div
+                                    
+                                    className="relative ">
+                                <Input
+                                    type={isvisible ? "text" : "password"}
+                                    placeholder={"Enter Your Password"}
+                                    
+                                    {...field}
+                                />
+                                <span className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4" onClick={togglePasswordVisibility}>
+                                    {isvisible ? (
+                                        <EyeOffIcon className="w-5 h-5" />
+                                    ) : (
+                                        <EyeIcon className="w-5 h-5" />
+                                    )}
+                                </span>
+                                </div>
                                     </FormControl>
                                     <FormDescription>
-                                        This is your password for The admin
+                                        This is your password for The MinT_IT_Solution admin
                                         account.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+                         <FormField
+                                control={form.control}
+                                name="confirmPassword"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Confirm Password</FormLabel>
+                                        <FormControl>
+                                        <div
+                                    
+                                    className="relative ">
+                                <Input
+                                    type={isvisible ? "text" : "password"}
+                                    placeholder={"Enter Your Password"}
+                                    
+                                    {...field}
+                                />
+                                <span className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4" onClick={togglePasswordVisibility}>
+                                    {isvisible ? (
+                                        <EyeOffIcon className="w-5 h-5" />
+                                    ) : (
+                                        <EyeIcon className="w-5 h-5" />
+                                    )}
+                                </span>
+                                </div>
+                                        </FormControl>
+                                        <FormDescription className="hidden lg:block">
+                                            Please confirm your password.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                         <div className="flex gap-8">
                             <Button
                                 disabled={loading}
@@ -225,6 +284,7 @@ export default function AdminForm() {
                                 <Button className="grow" variant="destructive">Cancel</Button>
                             </DialogClose>
                         </div>
+                         </div>
                     </form>
                 </Form>
                 {<p className="text-center text-destructive mt-4 font-medium">{error && error}</p>}

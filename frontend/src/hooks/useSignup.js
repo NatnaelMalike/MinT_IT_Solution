@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 
 export const useSignup = () => {
@@ -17,6 +18,7 @@ export const useSignup = () => {
                 localStorage.setItem("user", JSON.stringify(res.data))
                 dispatch({ type: 'LOGIN', payload: res.data.token });
                 setIsLoading(false)
+                toast.success("User Registered Successfully!")
                 navigate('/')
             })
             .catch((error) => {

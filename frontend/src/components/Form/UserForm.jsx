@@ -27,11 +27,12 @@ import {
     CommandInput,
     CommandItem,
 } from "@/components/ui/command";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, EyeIcon, EyeOffIcon } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { useSignup } from "@/hooks/useSignup";
+import { TailSpin } from "react-loader-spinner";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
@@ -39,18 +40,26 @@ const formSchema = z.object({
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
     fullName: z.string().min(6, { message: "Name must be 6 or more characters long" }),
+    confirmPassword: z.string().min(6, { message: "Password must be 6 or more characters long" }),
+
     department: z.string().min(1, {
         message: "Please select a department.",
     }),
     phone: z.string().refine((value) => /^(?:\+251)?0[1-9]\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"], // set the path of the error
 });
 
 export default function UserForm() {
     const {signup, isLoading, error} = useSignup()
     const [departments, setDepartments] = useState([]);
-   
+    const [isvisible, setVisible] = useState(false);
+    const togglePasswordVisibility = () => {
+        setVisible(!isvisible);
+    };
     useEffect(() => {
         axios
             .get("http://localhost:4000/api/department")
@@ -79,7 +88,7 @@ export default function UserForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="grid md:grid-cols-2 gap-8 w-96 md:min-w-[800px] items-start">
+                className="grid md:grid-cols-2 gap-4 w-96 md:min-w-[800px] items-start">
                 <FormField
                     control={form.control}
                     name="fullName"
@@ -218,10 +227,23 @@ export default function UserForm() {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
+                            <div
+                                    
+                                    className="relative ">
                                 <Input
-                                    placeholder="Enter Your Password"
+                                    type={isvisible ? "text" : "password"}
+                                    placeholder={"Enter Your Password"}
+                                    
                                     {...field}
                                 />
+                                <span className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4" onClick={togglePasswordVisibility}>
+                                    {isvisible ? (
+                                        <EyeOffIcon className="w-5 h-5" />
+                                    ) : (
+                                        <EyeIcon className="w-5 h-5" />
+                                    )}
+                                </span>
+                                </div>
                             </FormControl>
                             <FormDescription>
                                 This is your password for The user account.
@@ -230,11 +252,47 @@ export default function UserForm() {
                         </FormItem>
                     )}
                 />
+                       <FormField
+                                control={form.control}
+                                name="confirmPassword"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Confirm Password</FormLabel>
+                                        <FormControl>
+                                        <div
+                                    
+                                    className="relative ">
+                                <Input
+                                    type={isvisible ? "text" : "password"}
+                                    placeholder={"Enter Your Password"}
+                                    
+                                    {...field}
+                                />
+                                <span className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4" onClick={togglePasswordVisibility}>
+                                    {isvisible ? (
+                                        <EyeOffIcon className="w-5 h-5" />
+                                    ) : (
+                                        <EyeIcon className="w-5 h-5" />
+                                    )}
+                                </span>
+                                </div>
+                                        </FormControl>
+                                        <FormDescription className="hidden lg:block">
+                                            Please confirm your password.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                 <FormMessage className="text-center text-base p-4">
                 {error && error}
                 </FormMessage>
-                <Button type="submit" className="self-end" disabled={isLoading}>
-                    Submit
+                <Button disabled={isLoading} type="submit" className="grow">
+                    {isLoading ? (
+                        <TailSpin color="#fff" height={30} width={30} />
+                    ) : (
+                        "Register"
+                    )}
                 </Button>
 
             </form>

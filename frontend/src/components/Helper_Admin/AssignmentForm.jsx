@@ -68,20 +68,13 @@ export default function RequestAssignmentForm({ request_id }) {
                         'Authorization': `Bearer ${token}`
                     }
                 })
-                .then(() => {
+                .then((res) => {
+
                 setLoading(false);
                 handleDialogChange();
                 toast.success(
                     "The Technician user has been assigned Successfully!"
                 );
-                })
-                .catch((error) => {
-                    toast.error(
-                        "Failed to create the technician. Please try again."
-                    );
-                    setLoading(false);
-                    setError(error.response.data);
-                });
                 axios
                 .get("http://localhost:4000/api/request", {
                     headers: {
@@ -94,6 +87,16 @@ export default function RequestAssignmentForm({ request_id }) {
                 .catch((error) => {
                     console.log(error);
                 });
+
+                })
+                .catch((error) => {
+                    toast.error(
+                        "Failed to create the technician. Please try again."
+                    );
+                    setLoading(false);
+                    setError(error.response.data);
+                });
+              
         }
     };
 

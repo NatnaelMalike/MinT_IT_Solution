@@ -45,6 +45,12 @@ const Aside = () => {
                             <GitPullRequestArrow className="h-4 w-4" />
                             Requests
                         </NavLink>
+                        <NavLink
+                            to={"/helper_desk/assignments"}
+                            className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                            <GitPullRequestArrow className="h-4 w-4" />
+                            Assignments
+                        </NavLink>
                     </nav>
                 </div>
                 {/* <div className="mt-auto p-4 font-medium">

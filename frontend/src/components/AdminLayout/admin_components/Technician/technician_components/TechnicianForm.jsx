@@ -29,26 +29,37 @@ import { useTechnicianContext } from "@/hooks/useTechnicianContext";
 import { DialogContext } from "@/contexts/Context";
 import { TailSpin } from "react-loader-spinner";
 import { DialogClose } from "@/components/ui/dialog";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
     password: z
         .string()
         .min(6, { message: "Password must be 6 or more characters long" }),
+    confirmPassword: z.string().min(6, { message: "Password must be 6 or more characters long" }),
     fullName: z.string().min(1, { message: "Name is required" }),
     department: z.string().min(1, { message: "Department must be selected" }),
     profession: z.string().min(1, { message: "Profession must be selected" }),
     phone: z.string().refine((value) => /^(?:\+251)?09\d{8}$/.test(value), {
         message: "Invalid phone number format",
     }),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"], // set the path of the error
 });
+
 
 export default function TechnicianForm() {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
+    const [isvisible, setVisible] = useState(false);
+
     const [departments, setDepartments] = useState([]);
     const { dispatch } = useTechnicianContext();
     const handleDialogChange = useContext(DialogContext);
+    const togglePasswordVisibility = () => {
+        setVisible(!isvisible);
+    };
 
     useEffect(() => {
         axios
@@ -60,6 +71,7 @@ export default function TechnicianForm() {
                 console.log(error);
             });
     }, []);
+    
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -67,6 +79,7 @@ export default function TechnicianForm() {
             fullName: "",
             phone: "",
             password: "",
+            confirmPassword: "",
             department: "",
             profession: "",
         },
@@ -260,14 +273,59 @@ export default function TechnicianForm() {
                                     <FormItem>
                                         <FormLabel>Password</FormLabel>
                                         <FormControl>
-                                            <Input
-                                                placeholder="Enter Your Password"
-                                                {...field}
-                                            />
+                                        <div
+                                    
+                                    className="relative ">
+                                <Input
+                                    type={isvisible ? "text" : "password"}
+                                    placeholder={"Enter Your Password"}
+                                    
+                                    {...field}
+                                />
+                                <span className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4" onClick={togglePasswordVisibility}>
+                                    {isvisible ? (
+                                        <EyeOffIcon className="w-5 h-5" />
+                                    ) : (
+                                        <EyeIcon className="w-5 h-5" />
+                                    )}
+                                </span>
+                                </div>
                                         </FormControl>
                                         <FormDescription className="hidden lg:block">
                                             This is your password for The
                                             technician account.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="confirmPassword"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Confirm Password</FormLabel>
+                                        <FormControl>
+                                        <div
+                                    
+                                    className="relative ">
+                                <Input
+                                    type={isvisible ? "text" : "password"}
+                                    placeholder={"Enter Your Password"}
+                                    
+                                    {...field}
+                                />
+                                <span className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4" onClick={togglePasswordVisibility}>
+                                    {isvisible ? (
+                                        <EyeOffIcon className="w-5 h-5" />
+                                    ) : (
+                                        <EyeIcon className="w-5 h-5" />
+                                    )}
+                                </span>
+                                </div>
+                                        </FormControl>
+                                        <FormDescription className="hidden lg:block">
+                                            Please confirm your password.
                                         </FormDescription>
                                         <FormMessage />
                                     </FormItem>
@@ -308,3 +366,4 @@ export default function TechnicianForm() {
         </Card>
     );
 }
+

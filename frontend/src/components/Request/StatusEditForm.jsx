@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
     Form,
@@ -22,8 +22,11 @@ import {
 } from "@/components/ui/select";
 import axios from "axios";
 import { toast } from "sonner";
-import { IdContext } from "@/contexts/Context";
+import { DialogContext, IdContext } from "@/contexts/Context";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { TailSpin } from "react-loader-spinner";
+import { DialogClose } from "../ui/dialog";
+import { useRequestContext } from "@/hooks/useRequestContext";
 
 const formSchema = z.object({
     status: z.string().min(1, { message: "Department is required" }),
@@ -31,6 +34,10 @@ const formSchema = z.object({
 
 export default function StatusEditForm() {
     const id = useContext(IdContext);
+    const [loading, setLoading] = useState(false);
+    const handleDialogChange = useContext(DialogContext);
+    const { dispatch } = useRequestContext();
+
     const { token } = useAuthContext();
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -39,17 +46,39 @@ export default function StatusEditForm() {
         },
     });
     function onSubmit(data) {
+        setLoading(true)
         axios
             .put(`http://localhost:4000/api/request/status/${id}`, data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            .then(() => {
-                toast("Request Status updated Successfully!");
+            .then((res) => {
+                setLoading(false);
+                handleDialogChange();
+                toast.success("Request Status updated Successfully!");
+                
+                    axios
+                        .get("http://localhost:4000/api/assign_technician",{
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            }
+                        })
+                        .then((response) => {
+                            dispatch({ type: 'SET_REQUESTS', payload: response.data });
+                            console.log(response.data)
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                        });
+                
+                
+
             })
             .catch((err) => {
                 console.log(err);
+                toast.error("Request Status updating Failed!");
+
             });
     }
 
@@ -96,7 +125,23 @@ export default function StatusEditForm() {
                             )}
                         />
 
-                        <Button type="submit">Submit</Button>
+<div className="flex gap-8 grow items-end">
+                        <Button
+                            disabled={loading}
+                            type="submit"
+                            className="grow">
+                            {loading ? (
+                                <TailSpin color="#fff" height={30} width={30} />
+                            ) : (
+                                "Continue"
+                            )}
+                        </Button>
+                        <DialogClose asChild>
+                            <Button className="grow" variant="destructive">
+                                Cancel
+                            </Button>
+                        </DialogClose>
+                    </div>
                     </form>
                 </Form>
             </CardContent>
