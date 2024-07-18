@@ -1,86 +1,77 @@
 import nodemailer from "nodemailer";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Admin } from "../models/admin.js";
 import { User } from "../models/user.js";
 import { Technician } from "../models/technician.js";
+import Email from "../models/Email.js";
 
 const forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.body;
-    const admin = await Admin.findOne({ email });
-    const normal = await User.findOne({ email });
-    const technician = await Technician.findOne({ email });
-    let user;
-    if (admin) {
-        user = admin;
-    } else if (normal) {
-        user = normal;
-    } else if (technician) {
-        user = technician;
-    } else {
-        return res.status(400).send("User Does not Exist!");
-    }
+    try {
+        const { email } = req.body;
+        let userEmail = await Email.findOne({ email });
 
-    let token = jwt.sign({ userId: user._id }, process.env.ACCESS_JWT_PRIVATE_KEY, {
-        expiresIn: "60m",
-    });
-    token = encodeURIComponent(token);
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: "natnaelmalike@gmail.com",
-            pass: "kiwl fjwm bkvs dtgu",
-        },
-    });
-
-    const mailOptions = {
-        from: "MinT IT Solution",
-        to: email,
-        subject: "Reset Password Notification",
-        html: `<h1>Reset Your Password</h1>
-    <p>Click on the following link to reset your password:</p>
-    <a href="http://localhost:5173/reset-password/${token}">http://localhost:5173/reset-password/${token}</a>
-    <p>The link will expire in 60 minutes.</p>
-    <p>If you didn't request a password reset, please ignore this email.</p>`,
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log("Email sent: " + info.response);
+        if (!userEmail) {
+            return res.status(400).send("User Does not Exist!");
         }
-    });
-    res.status(200).send("Email Sent")
-  } catch (error) {
-    res.status(500).send(error.message)
-  }
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: "natnaelmalike@gmail.com",
+                pass: "kiwl fjwm bkvs dtgu",
+            },
+        });
+
+        const mailOptions = {
+            from: "MinT IT Solution",
+            to: email,
+            subject: "Reset Password Notification",
+            html: `<h1>Reset Your Password</h1>
+    <p>Click on the following link to reset your password:</p>
+    <a href="http://localhost:5173/reset-password/${email}">http://localhost:5173/reset-password/${email}</a>
+    <p>If you didn't request a password reset, please ignore this email.</p>`,
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("Email sent: " + info.response);
+            }
+        });
+        res.status(200).send("Email Sent");
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 };
 
 const resetPassword = async (req, res) => {
-  try {
-    let decodedToken = decodeURIComponent(req.params.token);
-     decodedToken = jwt.verify(req.params.token, process.env.ACCESS_JWT_PRIVATE_KEY);
-    if (!decodedToken) {
-      return res.status(401).send("Invalid token");
+    try {
+        let email = req.params.email;
+        if (!email) {
+            return res.status(401).send("Email required");
+        }
+
+        let user = await Admin.findOne({ email });
+
+        if (!user) {
+            user = await User.findOne({ email });
+        }
+
+        if (!user) {
+            user = await Technician.findOne({ email });
+        }
+        if (!user) {
+            return res.status(400).send("User Not Found!");
+        }
+        const salt = await bcrypt.genSalt(10);
+
+        user.password = await bcrypt.hash(req.body.password, salt);
+
+        await user.save();
+
+        res.status(200).send("Password updated");
+    } catch (error) {
+        res.status(500).send(error.message);
     }
-    let user = await Admin.findById(decodedToken.userId);
-    if (!user) {
-      user = await User.findById(decodedToken.userId);
-    }
-    if (!user) {
-      user = await Technician.findById(decodedToken.userId);
-    }
-    if (!user) {
-      return res.status(400).send("User Not Found!");
-    }
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
-    await user.save();
-    res.status(200).send( "Password updated" );
-  } catch (error) {
-    res.status(500).send(error.message)
-  }
-}
-export {forgotPassword, resetPassword}
+};
+export { forgotPassword, resetPassword };

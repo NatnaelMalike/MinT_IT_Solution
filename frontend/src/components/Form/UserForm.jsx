@@ -78,6 +78,7 @@ export default function UserForm() {
             phone: "",
             department: "",
             password: "",
+            confirmPassword: ""
         },
     });
 
@@ -88,7 +89,7 @@ export default function UserForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="grid md:grid-cols-2 gap-4 w-96 md:min-w-[800px] items-start">
+                className="grid md:grid-cols-2 gap-x-8 gap-4 w-96 md:min-w-[800px] items-start">
                 <FormField
                     control={form.control}
                     name="fullName"

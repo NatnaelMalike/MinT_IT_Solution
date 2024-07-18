@@ -27,6 +27,7 @@ const formSchema = z.object({
 export default function ForgetPassword() {
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
+    const [sent, setSent] = useState(false)
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -40,6 +41,7 @@ export default function ForgetPassword() {
             .then(()=>{
                 setLoading(false)
                 toast.success('Email Sent Successfully')
+                setSent(true)
             }).catch((error)=>{
                 toast.error(
                     "Failed to send the email, Please try again."
@@ -51,6 +53,21 @@ export default function ForgetPassword() {
 
     return (
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-20">
+           <Toaster/>
+           <div>
+                <img src={logo} alt="" />
+            </div>
+            {
+                sent? <main className="grid min-h-full place-items-center  bg-white px-6  sm:py-32 lg:px-8">
+                <div className="text-center">
+                    <p className="text-3xl font-bold text-teal-600">
+                       Email Sent!
+                    </p>
+                    <h1 className="mt-4 text-2xl font-bold tracking-tight text-primary">
+                    Check Your Email and if you don't get it check your Spam Folder also!
+                    </h1> 
+                </div>
+            </main>: 
             <Form {...form}>
             
                 <form
@@ -89,6 +106,7 @@ export default function ForgetPassword() {
                                 </Button>
                 </form>
             </Form>
+            }
             {<p className="text-center text-destructive mt-4 font-medium">{error && error}</p>}
         </div>
     );

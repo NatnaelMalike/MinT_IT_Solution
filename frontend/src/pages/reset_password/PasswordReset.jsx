@@ -20,40 +20,52 @@ import { useParams, useLocation } from 'react-router-dom';
 import { useState } from "react";
 import { toast } from "sonner";
 import { TailSpin } from "react-loader-spinner";
+import { Toaster } from "@/components/ui/sonner";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 const formSchema = z.object({
     password: z.string().min(6, {message: "Password must be 6 or more characters long" }),
-    password_confirmation: z.string().min(6, {message: "Password must be 6 or more characters long" }),
+    confirmPassword: z.string().min(6, { message: "Password must be 6 or more characters long" }),
+
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"], // set the path of the error
 });
 
 export default function PasswordReset() {
     const [error, setError] = useState();
+    const [isvisible, setVisible] = useState(false);
+    const togglePasswordVisibility = () => {
+        setVisible(!isvisible);
+    };
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
-    const {token} = useParams()
-    const location = useLocation();
-
-    const queryParams = new URLSearchParams(location.search);
-    const email = queryParams.get('email');
-
+    const {email} = useParams()
     const form = useForm({
         resolver: zodResolver(formSchema),
+        defaultValues: {
+            password: "",
+            confirmPassword: "",}
     });
 
     function onSubmit(data) {
         setLoading(true)
-        axios.post(`http://localhost:8000/api/reset-password/${token}/${email}`, data)
+        axios.post(`http://localhost:4000/api/reset-password/${email}`, data)
             .then(() => {
+                setLoading(false)
                 toast.success("Password Reset successfully")
                 navigate('/');
             })
             .catch((error) => {
                 toast.error("Failed to reset the password, Please try again.")
-                setError(error.response.data)
+                setLoading(false)
+                console.log(error)
+               error && setError(error.response.data)
             })
     }
 
     return (
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-20">
+           <Toaster/>
             <div>
                 <img src={logo} alt="" />
             </div>
@@ -69,15 +81,60 @@ export default function PasswordReset() {
                         <FormItem>
                             <FormLabel>New Password</FormLabel>
                             <FormControl>
+                            <div
+                                    
+                                    className="relative ">
                                 <Input
-                                    placeholder="password"
+                                    type={isvisible ? "text" : "password"}
+                                    placeholder={"Enter Your Password"}
+                                    
                                     {...field}
                                 />
+                                <span className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4" onClick={togglePasswordVisibility}>
+                                    {isvisible ? (
+                                        <EyeOffIcon className="w-5 h-5" />
+                                    ) : (
+                                        <EyeIcon className="w-5 h-5" />
+                                    )}
+                                </span>
+                                </div>
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                  <FormField
+                                control={form.control}
+                                name="confirmPassword"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Confirm Password</FormLabel>
+                                        <FormControl>
+                                        <div
+                                    
+                                    className="relative ">
+                                <Input
+                                    type={isvisible ? "text" : "password"}
+                                    placeholder={"Enter Your Password"}
+                                    
+                                    {...field}
+                                />
+                                <span className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4" onClick={togglePasswordVisibility}>
+                                    {isvisible ? (
+                                        <EyeOffIcon className="w-5 h-5" />
+                                    ) : (
+                                        <EyeIcon className="w-5 h-5" />
+                                    )}
+                                </span>
+                                </div>
+                                        </FormControl>
+                                        <FormDescription className="hidden lg:block">
+                                            Please confirm your password.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
 <Button
                                     disabled={loading}
