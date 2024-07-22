@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import InfoCards from "./InfoCards";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import axios from "axios";
+import { ChartDemo } from "./ChartDemo";
 const Dashboard = () => {
     const { token } = useAuthContext();
     const [data, setData] = useState(null)
@@ -23,9 +24,15 @@ const Dashboard = () => {
         }
     }, [token]);
     return (
+        <>
         <div className="space-y-8">
             {data && <InfoCards data={data}/>}
         </div>
+        <div className="flex gap-8 mt-8">
+        <ChartDemo/>
+        </div>
+        </>
+
     );
 };
 

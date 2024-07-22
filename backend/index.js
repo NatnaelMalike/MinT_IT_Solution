@@ -11,12 +11,13 @@ import assignTechnician from "./routes/assignmentRoutes.js";
 import forgotPassword from "./routes/forgotPassword.js"
 import profile from "./routes/profileRoute.js"
 import dashboard from './routes/dashboardRoutes.js'
-
+import visitors from './routes/visitors.js'
 import authorize from "./middleware/authorization.js";
 import cors from "cors";
 
 import Joi from "joi";
 import joiObjectid from "joi-objectid";
+import cookieParser from "cookie-parser";
 
 Joi.objectId = joiObjectid(Joi);
 
@@ -29,7 +30,7 @@ app.use(
         allowedHeaders: ["Content-Type", "Authorization"],
     })
 );
-
+app.use(cookieParser());
 app.use(express.json());
 app.use("/api/login", login);
 app.use("/api", forgotPassword);
@@ -41,6 +42,7 @@ app.use("/api/request", request);
 app.use("/api/assign_technician",  assignTechnician);
 app.use("/api/profile",profile)
 app.use("/api/dashboard",dashboard)
+app.use("/",visitors )
 
 mongoose
     .connect(`mongodb://localhost:27017/MinT_IT_Solution`)
