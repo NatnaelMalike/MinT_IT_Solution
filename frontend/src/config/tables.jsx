@@ -37,7 +37,7 @@ export const technicianConfig = {
                         <TechnicianEditForm />
                     </EditDialog>
                 </IdContext.Provider>
-                <TechnicianDeleteDialog id={entity._id} />
+                { entity.isActive && <TechnicianDeleteDialog id={entity._id} />}
             </div>
         ),
     ],
@@ -54,7 +54,7 @@ export const deptConfig = {
                         <DepartmentEditForm />
                     </EditDialog>
                 </IdContext.Provider>
-                <DepartmentDeleteDialog id={entity._id} />
+                { entity.isActive && <DepartmentDeleteDialog id={entity._id} />}
             </div>
         ),
     ],
@@ -75,7 +75,7 @@ export const usersConfig = {
         (entity) => entity.department["name"],
         (entity) => (
             <div className="flex gap-4">
-                <UserDeleteDialog id={entity._id}/>
+                { entity.isActive && <UserDeleteDialog id={entity._id}/>}
             </div>
         ),
     ],
@@ -103,7 +103,7 @@ export const adminConfig = {
                         <AdminEditForm />
                     </EditDialog>
                 </IdContext.Provider>
-                {entity.role === 'helper_admin' &&<AdminDeleteDialog id={entity._id} />}
+                {entity.role === 'helper_admin' && entity.isActive && <AdminDeleteDialog id={entity._id} />}
             </div>
         ),
     ],

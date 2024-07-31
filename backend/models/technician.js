@@ -53,6 +53,10 @@ const technicianSchema = mongoose.Schema(
             type: String,
             default: "technician_user",
         },
+        isActive: {
+            type: Boolean,
+            default: true
+        }
     },
     { timestamps: true }
 );

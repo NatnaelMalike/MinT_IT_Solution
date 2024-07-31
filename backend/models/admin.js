@@ -34,6 +34,10 @@ const adminSchema = mongoose.Schema(
             type: String,
             default: "helper_admin",
         },
+        isActive: {
+            type: Boolean,
+            default: true
+        }
     },
     { timestamps: true }
 );

@@ -26,7 +26,7 @@ const updateDepartment = async (req, res) => {
     res.send(department);
 };
 const deleteDepartment = async (req, res) => {
-    const department = await Department.findByIdAndDelete(req.params.id);
+    const department = await Department.findByIdAndUpdate(req.params.id, {isActive: false});
     if (!department) return res.status(404).send("Department not Found");
     res.send(department);
 };

@@ -41,35 +41,59 @@ const addTechnician = async (req, res) => {
 };
 
 const updateTechnician = async (req, res) => {
-    const { error } = UpdateTechValidator(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    const existingEmail = await Email.findOne({ email: req.body.email });
-    const oldUser = await Technician.findById(req.params.id);
-    if (existingEmail) {
-        if(existingEmail.email !== oldUser.email){
-            return res.status(400).send("User already registered !!!");
+    try {
+        // Validate the request body
+        const { error } = UpdateTechValidator(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        // Find the existing technician user
+        const oldUser = await Technician.findById(req.params.id);
+        if (!oldUser) return res.status(404).send("Technician not found!");
+
+        // Check if the new email already exists in the emails collection
+        const existingEmailByNewEmail = await Email.findOne({ email: req.body.email });
+
+        if (existingEmailByNewEmail && existingEmailByNewEmail.email !== oldUser.email) {
+            return res.status(400).send("Email already registered!");
         }
+
+        // Update the email in the emails collection
+        if (existingEmailByNewEmail) {
+            existingEmailByNewEmail.email = req.body.email;
+            await existingEmailByNewEmail.save();
+        } else {
+            const existingEmailByOldEmail = await Email.findOne({ email: oldUser.email });
+            if (existingEmailByOldEmail) {
+                existingEmailByOldEmail.email = req.body.email;
+                await existingEmailByOldEmail.save();
+            }
+        }
+
+        // Update the technician user document
+        let updatedTechnician = await Technician.findByIdAndUpdate(
+            req.params.id,
+            _.pick(req.body, [
+                "fullName",
+                "email",
+                "department",
+                "profession",
+                "phone",
+            ]),
+            { new: true }
+        ).populate("department", "name");
+
+        if (!updatedTechnician) return res.status(404).send("Technician not found!");
+
+        res.send(updatedTechnician);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server error");
     }
-    const user = await Technician.findByIdAndUpdate(
-        req.params.id,
-        _.pick(req.body, [
-            "fullName",
-            "email",
-            "department",
-            "profession",
-            "phone",
-        ]),
-        {
-            new: true,
-        }
-    ).populate("department", "name");
-    if (!user) return res.status(404).send("User not Found!");
-    res.send(user);
 };
 
-const deleteTechnician = async (req, res) => {
-    const user = await Technician.findByIdAndDelete(req.params.id);
 
+const deleteTechnician = async (req, res) => {
+    const user = await Technician.findByIdAndUpdate(req.params.id, {isActive: false});
     if (!user) return res.status(404).send("User not Found!");
     await Email.deleteOne({ email: user.email });
     res.send(user);

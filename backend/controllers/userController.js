@@ -36,13 +36,16 @@ const updateUser = async (req, res) => {
         }
     );
     if (!user) return res.status(404).send("User not Found!");
+    const existingEmail = await Email.findOne({ email: req.body.email });
+    existingEmail.email = req.body.email
+    await newEmail.save();
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(user.password, salt);
     res.send(user);
 };
 
 const deleteUser = async (req, res) => {
-    const user = await User.findByIdAndDelete(req.params.id);
+    const user = await User.findByIdAndUpdate(req.params.id, {isActive: false});
     if (!user) return res.status(404).send("User not Found!");
     await Email.deleteOne({ email: user.email });
     res.send(user);

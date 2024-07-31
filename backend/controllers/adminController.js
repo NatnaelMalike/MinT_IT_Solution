@@ -37,30 +37,56 @@ const addAdmin = async (req, res) => {
 };
 
 const updateAdmin = async (req, res) => {
-    const { error } = updateAdminValidator(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    const existingEmail = await Email.findOne({ email: req.body.email });
-    const oldUser = await Admin.findById(req.params.id);
-    if (existingEmail) {
-        if(existingEmail.email !== oldUser.email){
-            return res.status(400).send("User already registered !!!");
-        }
-    }
-    let user = await Admin.findByIdAndUpdate(
-        req.params.id,
-        _.pick(req.body, ["fullName", "email", "phone", "department"]),
-        {
-            new: true,
-        }
-    );
-    if (!user) return res.status(404).send("User not Found!");
-    const populatedUser = await Admin.findById(user._id).populate('department', 'name _id')
-    res.send(populatedUser);
+    try {
+        
+        const { error } = updateAdminValidator(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
 
+        // Find the existing admin user
+        const oldUser = await Admin.findById(req.params.id);
+        if (!oldUser) return res.status(404).send("Admin user not found!");
+
+        // Check if the new email already exists in the emails collection
+        const existingEmailByNewEmail = await Email.findOne({ email: req.body.email });
+        
+        if (existingEmailByNewEmail && existingEmailByNewEmail.email !== oldUser.email) {
+            return res.status(400).send("Email already registered!");
+        }
+
+        // Update the email in the emails collection
+        if (existingEmailByNewEmail) {
+            existingEmailByNewEmail.email = req.body.email;
+            await existingEmailByNewEmail.save();
+        } else {
+            const existingEmailByOldEmail = await Email.findOne({ email: oldUser.email });
+            if (existingEmailByOldEmail) {
+                existingEmailByOldEmail.email = req.body.email;
+                await existingEmailByOldEmail.save();
+            }
+        }
+
+        // Update the admin user document
+        let updatedAdmin = await Admin.findByIdAndUpdate(
+            req.params.id,
+            _.pick(req.body, ["fullName", "email", "phone", "department"]),
+            { new: true }
+        );
+
+        if (!updatedAdmin) return res.status(404).send("Admin user not found!");
+
+        // Populate the department field and send the response
+        const populatedAdmin = await Admin.findById(updatedAdmin._id).populate('department', 'name _id');
+        res.send(populatedAdmin);
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server error");
+    }
 };
 
+
 const deleteAdmin = async (req, res) => {
-    const user = await Admin.findByIdAndDelete(req.params.id);
+    const user = await Admin.findByIdAndUpdate(req.params.id, {isActive: false});
     if (!user) return res.status(404).send("User not Found!");
     await Email.deleteOne({ email: user.email });
     res.send(user)
