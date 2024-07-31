@@ -24,15 +24,11 @@ const Dashboard = () => {
         }
     }, [token]);
     return (
-        <>
+        
         <div className="space-y-8">
             {data && <InfoCards data={data}/>}
         </div>
-        <div className="flex gap-8 mt-8">
-        <ChartDemo/>
-        </div>
-        </>
-
+        
     );
 };
 
