@@ -12,7 +12,7 @@ const getRequest = async (req, res) => {
             );
             res.send(requests); 
         }else if (role === "helper_admin" || role === "super_admin"){
-            const requests = await Request.find().populate({
+            const requests = await Request.find().sort({updatedAt: -1}).populate({
                 path: 'user_id',
                 select: 'fullName department phone -_id',
                 populate: {
@@ -20,7 +20,6 @@ const getRequest = async (req, res) => {
                     select: 'name' 
                 }
             });
-            
             res.send(requests); 
         }
     } catch (error) {
