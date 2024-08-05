@@ -52,13 +52,13 @@ export default function ForgetPassword() {
     }
 
     return (
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-20">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col py-10 gap-20">
            <Toaster/>
-           <div>
+           <div className="w-3/4 mx-auto">
                 <img src={logo} alt="" />
             </div>
             {
-                sent? <main className="grid min-h-full place-items-center  bg-white px-6  sm:py-32 lg:px-8">
+                sent? <main className="grid place-items-center bg-white px-6 lg:px-8">
                 <div className="text-center">
                     <p className="text-3xl font-bold text-teal-600">
                        Email Sent!
@@ -69,7 +69,6 @@ export default function ForgetPassword() {
                 </div>
             </main>: 
             <Form {...form}>
-            
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="space-y-4 text-base">

@@ -89,7 +89,7 @@ export default function UserForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="grid md:grid-cols-2 gap-x-8 gap-4 w-96 md:min-w-[800px] items-start">
+                className="grid md:grid-cols-2 lg:gap-x-[10%] gap-4 w-3/4 mx-auto items-start">
                 <FormField
                     control={form.control}
                     name="fullName"
@@ -163,7 +163,7 @@ export default function UserForm() {
                                             variant="outline"
                                             role="combobox"
                                             className={cn(
-                                                "w-full justify-between",
+                                                "w-full justify-between text-base",
                                                 !field.value &&
                                                     "text-muted-foreground"
                                             )}>
@@ -288,7 +288,7 @@ export default function UserForm() {
                 <FormMessage className="text-center text-base p-4">
                 {error && error}
                 </FormMessage>
-                <Button disabled={isLoading} type="submit" className="grow">
+                <Button disabled={isLoading} type="submit" className="mt-4 col-span-2 place-self-center w-1/2">
                     {isLoading ? (
                         <TailSpin color="#fff" height={30} width={30} />
                     ) : (
