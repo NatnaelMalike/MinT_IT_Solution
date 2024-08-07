@@ -27,38 +27,39 @@ const ProfilePage = () => {
     }, [token]);
     return (
         <div>
-            <Card className="w-96 mx-auto">
+            <Card className="mx-auto bg-slate-50">
                 <CardHeader>
-                    <CardTitle className="text-center">Profile</CardTitle>
+                    <CardTitle className="text-center">
+                        Account Details
+                    </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <div>
-                        <img src={profile} alt="" className="w-[60%] mx-auto" />
-                    </div>
                     {user ? (
-                        <div className="flex flex-col space-y-4 mt-8 text-xl">
-                            <p className="flex justify-between">
-                                <span className="font-medium">Full Name</span>
-                                <span>{user.fullName}</span>
-                            </p>
-                            <p className="flex justify-between">
-                                <span className="font-medium">Email</span>
-                                <span>{user.email} </span>
-                            </p>
-                            <p className="flex justify-between">
-                                <span className="font-medium">
-                                    Phone Number
-                                </span>
-                                <span>{user.phone} </span>
-                            </p>
-                            <p className="flex justify-between">
-                                <span className="font-medium">Department</span>
-                                <span>{user.department.name}</span>
-                            </p>
-                            <p className="flex justify-between">
-                                <span className="font-medium">Role</span>
-                                <span>{user.role}</span>
-                            </p>
+                        <div className="flex gap-10 justify-center mt-8 text-lg">
+                            <div className="space-y-2">
+                            <p className="font-semibold">
+                                    Full Name:
+                                </p>
+                            <p className="font-semibold">
+                                    Email:
+                                </p>
+                            <p className="font-semibold">
+                                    Phone Number:
+                                </p>
+                            <p className="font-semibold">
+                                    Department:
+                                </p>
+                            <p className="font-semibold">
+                                    Role:
+                                </p>
+                            </div>
+                            <div className="space-y-2">
+                            <p>{user.fullName}</p>
+                            <p>{user.email}</p>
+                            <p>{user.phone}</p>
+                            <p>{user.department.name}</p>
+                            <p>{user.role}</p>
+                            </div>
                         </div>
                     ) : null}
                 </CardContent>

@@ -32,7 +32,7 @@ const Aside = () => {
                     </Link>
                 </div>
                 <div className="flex-1">
-                    <nav className="grid items-start p-4  font-medium text-xl">
+                    <nav className="grid items-start p-4  font-medium">
                         <NavLink
                             to={"/technician/profile"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">

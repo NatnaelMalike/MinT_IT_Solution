@@ -20,8 +20,8 @@ import emptyPhoto from "@/assets/img/Empty.png";
 
 const RequestEntityTable = ({ entities, config }) => {
     return (
-        <div className="overflow-x-auto ">
-            <Card className="overflow-y-auto max-h-96"> 
+        <div className=" ">
+            <Card className="overflow-y-auto max-h-[65vh]"> 
                 <CardHeader>
                     <CardTitle className="text-2xl">{config.entity}</CardTitle>
                     <CardDescription className="text-base">
@@ -31,7 +31,7 @@ const RequestEntityTable = ({ entities, config }) => {
                 </CardHeader>
                 <CardContent >
                     {entities ? (
-                        <Table className="min-w-[840px] w-full border-collapse overflow-hidden">
+                        <Table className="">
                             <TableHeader className="bg-secondary">
                                 <TableRow>
                                     {config.headers.map((header) => (
@@ -51,7 +51,7 @@ const RequestEntityTable = ({ entities, config }) => {
                                                 (field, index) => (
                                                     <TableCell
                                                         key={`${entity.id}-${index}`}
-                                                        className="max-w-prose overflow-x-auto whitespace-nowrap"
+                                                        className="whitespace-normal"
                                                         >
                                                         {typeof field ===
                                                         "function"

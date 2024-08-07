@@ -19,11 +19,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import axios from "axios";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
+import { useRequestContext } from "@/hooks/useRequestContext";
+import { useState } from "react";
 
 const formSchema = z.object({
     // user_id: z.string().min(1, { message: "User have to Logged in!" }),
@@ -34,24 +36,35 @@ const formSchema = z.object({
 });
 
 export default function RequestForm() {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
     const {token} = useAuthContext()
+    const { dispatch } = useRequestContext();
+
     const form = useForm({
         resolver: zodResolver(formSchema)
     });
 
     function onSubmit(data) {
-        console.log('User Req', token)
+        setLoading(true)
         axios
             .post("http://localhost:4000/api/request", data, {
                 headers: {
                     'Authorization' : `Bearer ${token}`
                 }
             })
-            .then(() => {
+            .then((res) => {
+                setLoading(false);
+
                 toast.success("Issue Requested Successfully!");
-                window.location.reload();
+                // window.location.reload();
+                dispatch({type: 'ADD_REQUEST', payload: res.data})
+                navigate('/user/requests')
+                
             })
             .catch((err) => {
+                toast.error("Issue Reporting Failed!");
+                setLoading(false);
                 console.log(err);
             });
     }
@@ -143,7 +156,16 @@ export default function RequestForm() {
                     )}
                 />
                 
-                <Button type="submit">Submit</Button>
+                <Button
+                            disabled={loading}
+                            type="submit"
+                            className="w-full">
+                            {loading ? (
+                                <TailSpin color="#fff" height={30} width={30} />
+                            ) : (
+                                "Report"
+                            )}
+                        </Button>
             </form>
         </Form>
     );

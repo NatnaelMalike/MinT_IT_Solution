@@ -39,13 +39,15 @@ export default function UserDeleteDialog({ id }) {
             });
     };
     return (
-        <Dialog  open={open} onOpenChange={handleDialogChange}>
+        <Dialog open={open} onOpenChange={handleDialogChange}>
             <DialogTrigger asChild>
                 <Trash2 className="cursor-pointer text-destructive" />
             </DialogTrigger>
             <DialogContent onInteractOutside={(e) => e.preventDefault()}>
                 <DialogHeader>
-                <DialogTitle className="text-xl text-center mb-2">Are You absolutely Sure?</DialogTitle>
+                    <DialogTitle className="text-xl text-center mb-2">
+                        Are You absolutely Sure?
+                    </DialogTitle>
                     <DialogDescription className="text-base text-center mb-2">
                         This action cannot be undone. This will permanently
                         remove the user from our servers.
@@ -58,8 +60,7 @@ export default function UserDeleteDialog({ id }) {
                         className="grow"
                         variant="destructive">
                         {loading ? (
-                                <TailSpin color="#fff" height={30} width={30} />
-                               
+                            <TailSpin color="#fff" height={30} width={30} />
                         ) : (
                             "Continue"
                         )}

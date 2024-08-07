@@ -19,7 +19,7 @@ import { Link, NavLink } from "react-router-dom";
 const Aside = () => {
     return (
         <div className="hidden border-r md:block">
-            <div className="flex h-full max-h-screen flex-col gap-2 text-xl">
+            <div className="flex h-full max-h-screen flex-col gap-2">
                 <div className="border-b">
                     <Link
                         to={"/helper_desk/requests"}

@@ -19,7 +19,7 @@ import { Link, NavLink } from "react-router-dom";
 const Aside = () => {
     return (
         <div className="hidden border-r md:block">
-            <div className="flex h-full max-h-screen flex-col gap-2 text-xl">
+            <div className="flex h-full max-h-screen flex-col gap-2 ">
             <div className="border-b">
                 <Link
                     to={"/user/requests"}
@@ -35,13 +35,19 @@ const Aside = () => {
                 <nav className="grid items-start p-4  font-medium ">
                     <NavLink
                         to={"/user/profile"}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary text-xl">
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <User className="h-4 w-4" />
                         Profile
                     </NavLink>
                     <NavLink
+                        to={"/user/add_request"}
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                        <GitPullRequestArrow className="h-4 w-4" />
+                        Report
+                    </NavLink>
+                    <NavLink
                         to={"/user/requests"}
-                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary text-xl">
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <GitPullRequestArrow className="h-4 w-4" />
                         Requests
                     </NavLink>

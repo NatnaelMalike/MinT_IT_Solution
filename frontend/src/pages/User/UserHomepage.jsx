@@ -9,7 +9,6 @@ import { useEffect } from "react";
 const UserHomepage = () => {
     const { token } = useAuthContext();
     const { dispatch } = useRequestContext();
-
     useEffect(() => {
         if (token) {
             axios

@@ -95,7 +95,7 @@ export default function AdminEditForm() {
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-8 pt-4">
+                        className="space-y-4 pt-4">
                         <FormField
                             control={form.control}
                             name="fullName"

@@ -5,10 +5,7 @@ import DepartmentEditForm from "@/components/AdminLayout/admin_components/Depart
 import TechnicianDeleteDialog from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianDeleteDialog";
 import TechnicianEditForm from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianEditForm";
 import UserDeleteDialog from "@/components/AdminLayout/admin_components/User/user_components/UserDeleteDialog";
-import UserEditForm from "@/components/AdminLayout/admin_components/User/user_components/UserEditForm";
-import DeleteAlertDialog from "@/components/DeleteAlertDialog";
 import EditDialog from "@/components/EditDialog";
-import PasswordDialog from "@/components/PasswordDialog";
 import RequestDeleteDialog from "@/components/Request/RequestDeleteDialog";
 import RequestEditForm from "@/components/Request/RequestEditForm";
 import { IdContext } from "@/contexts/Context";
@@ -129,7 +126,7 @@ export const userReqConfig = {
             (entity.status === 'Resolved' || entity.status === 'UnResolved')? null : 
             (<div className="flex gap-4">
                 <IdContext.Provider value={entity._id}>
-                    <EditDialog entity="Requests">
+                    <EditDialog entity="Report">
                         <RequestEditForm />
                     </EditDialog>
                 </IdContext.Provider>

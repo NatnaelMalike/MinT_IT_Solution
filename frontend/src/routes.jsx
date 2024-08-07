@@ -24,8 +24,8 @@ import ProfilePage from "./components/ProfilePage";
 import TechnicianRequestTable from "./components/Technician/TechnicianRequestTable";
 import PasswordReset from "./pages/reset_password/PasswordReset";
 import AdminRequestTable from "./components/Request/AdminRequestTable";
-import HelpCenter from "./pages/HelpCenter";
 import AssignedRequests from "./components/Request/AssignedRequests";
+import RequestList from "./components/User/RequestsList";
 
 const router = createBrowserRouter([
     // Login Page
@@ -48,7 +48,8 @@ const router = createBrowserRouter([
             </ProtectedRoutes>
         ),
         children: [
-            { path: "requests", element: <RequestPage /> },
+            { path: "add_request", element: <RequestPage /> },
+            { path: "requests", element: <RequestList /> },
             { path: "profile", element: <ProfilePage /> },
         ],
     },

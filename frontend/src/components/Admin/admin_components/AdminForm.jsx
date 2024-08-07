@@ -95,13 +95,12 @@ export default function AdminForm() {
     }
 
     return (
-        <Card className="max-sm:w-11/12 max-lg:w-5/6 mx-auto lg:min-w-[800px] p-4">
+        <Card className="max-sm:w-11/12 max-lg:w-5/6 w-full mx-auto lg:min-w-[800px] p-4">
             <CardContent>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
-                        className="pt-4 flex gap-12">
-                             <div className="flex-col flex space-y-4">
+                        className="pt-4 grid grid-cols-2 gap-x-12 gap-y-8 ">
                         <FormField
                             control={form.control}
                             name="fullName"
@@ -150,7 +149,7 @@ export default function AdminForm() {
                                     <FormLabel>Phone Number</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Enter Your Phone Number"
+                                            placeholder="Enter Your Phone (09-12-13-14-15)"
                                             {...field}
                                         />
                                     </FormControl>
@@ -162,8 +161,6 @@ export default function AdminForm() {
                                 </FormItem>
                             )}
                         />
-                             </div>
-                         <div className="flex flex-col space-y-4">
                         <FormField
                             control={form.control}
                             name="department"
@@ -173,7 +170,7 @@ export default function AdminForm() {
                                     <Select onValueChange={field.onChange}>
                                         <FormControl>
                                             <SelectTrigger>
-                                                <SelectValue placeholder="Select Department" />
+                                                <SelectValue placeholder="Select Department" className="text-base text-slate-500" />
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent className="overflow-y-auto max-h-96">
@@ -265,7 +262,7 @@ export default function AdminForm() {
                                     </FormItem>
                                 )}
                             />
-                        <div className="flex gap-8">
+                        <div className="flex gap-8 col-span-2">
                             <Button
                                 disabled={loading}
                                 type="submit"
@@ -284,7 +281,6 @@ export default function AdminForm() {
                                 <Button className="grow" variant="destructive">Cancel</Button>
                             </DialogClose>
                         </div>
-                         </div>
                     </form>
                 </Form>
                 {<p className="text-center text-destructive mt-4 font-medium">{error && error}</p>}

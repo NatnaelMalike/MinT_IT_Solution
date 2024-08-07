@@ -169,7 +169,7 @@ export default function TechnicianForm() {
                                         <FormLabel>Phone Number</FormLabel>
                                         <FormControl>
                                             <Input
-                                                placeholder="Enter Your Phone Number"
+                                                placeholder="Enter Your Phone (09-12-13-14-15)"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -181,8 +181,48 @@ export default function TechnicianForm() {
                                     </FormItem>
                                 )}
                             />
+                            <FormField
+                                control={form.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Password</FormLabel>
+                                        <FormControl>
+                                            <div className="relative ">
+                                                <Input
+                                                    type={
+                                                        isvisible
+                                                            ? "text"
+                                                            : "password"
+                                                    }
+                                                    placeholder={
+                                                        "Enter Your Password"
+                                                    }
+                                                    {...field}
+                                                />
+                                                <span
+                                                    className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4"
+                                                    onClick={
+                                                        togglePasswordVisibility
+                                                    }>
+                                                    {isvisible ? (
+                                                        <EyeOffIcon className="w-5 h-5" />
+                                                    ) : (
+                                                        <EyeIcon className="w-5 h-5" />
+                                                    )}
+                                                </span>
+                                            </div>
+                                        </FormControl>
+                                        <FormDescription className="hidden lg:block">
+                                            This is your password for The
+                                            technician account.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                         </div>
-                        <div className="flex-col space-y-4">
+                        <div className=" flex flex-col space-y-4">
                             <FormField
                                 control={form.control}
                                 name="profession"
@@ -285,46 +325,7 @@ export default function TechnicianForm() {
                                     </FormItem>
                                 )}
                             />
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Password</FormLabel>
-                                        <FormControl>
-                                            <div className="relative ">
-                                                <Input
-                                                    type={
-                                                        isvisible
-                                                            ? "text"
-                                                            : "password"
-                                                    }
-                                                    placeholder={
-                                                        "Enter Your Password"
-                                                    }
-                                                    {...field}
-                                                />
-                                                <span
-                                                    className="absolute top-1/2 -translate-y-1/2 items-center cursor-pointer right-0 mr-4"
-                                                    onClick={
-                                                        togglePasswordVisibility
-                                                    }>
-                                                    {isvisible ? (
-                                                        <EyeOffIcon className="w-5 h-5" />
-                                                    ) : (
-                                                        <EyeIcon className="w-5 h-5" />
-                                                    )}
-                                                </span>
-                                            </div>
-                                        </FormControl>
-                                        <FormDescription className="hidden lg:block">
-                                            This is your password for The
-                                            technician account.
-                                        </FormDescription>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
+                            
                             <FormField
                                 control={form.control}
                                 name="confirmPassword"
@@ -364,7 +365,7 @@ export default function TechnicianForm() {
                                     </FormItem>
                                 )}
                             />
-                            <div className="flex gap-8">
+                            <div className="flex grow gap-8 items-end">
                                 <Button
                                     disabled={loading}
                                     type="submit"

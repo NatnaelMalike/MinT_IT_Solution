@@ -5,6 +5,7 @@ import {
     CircleUser,
     User,
     GitPullRequestArrow,
+    LogOut,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
@@ -31,9 +32,7 @@ import { useLogout } from "@/hooks/useLogout";
 
 const Header = () => {
     const {logout} = useLogout()
-    const handleLogoutClick = ()=>{
-        logout()
-    }
+  
     return (
         <header className="flex h-14 items-center gap-4 border-b bg-background/90 px-4 lg:h-[60px] lg:px-6">
             <Sheet>
@@ -95,9 +94,10 @@ const Header = () => {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                    <DropdownMenuLabel className="text-xl">My Account</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleLogoutClick} className="text-xl">Logout</DropdownMenuItem>
+                    <DropdownMenuItem onClick={logout} className="text-base">
+                        <LogOut className="mr-4 text-destructive"/>
+                        Logout
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>
         </header>

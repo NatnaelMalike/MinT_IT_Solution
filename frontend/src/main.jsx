@@ -9,6 +9,7 @@ import { AdminContextProvider } from "./contexts/AdminContext";
 import { DepartmentContextProvider } from "./contexts/DepartmentContext";
 import { RequestContextProvider } from "./contexts/RequestContext";
 import { UserContextProvider } from "./contexts/UserContext";
+import { TailSpin } from "react-loader-spinner";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>

@@ -14,15 +14,19 @@ import axios from "axios";
 import { toast } from "sonner";
 import { useContext, useState } from "react";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { useRequestContext } from "@/hooks/useRequestContext";
+import { TailSpin } from "react-loader-spinner";
 
 export default function RequestDeleteDialog({ id }) {
     const {token} = useAuthContext();
+    const { dispatch } = useRequestContext();
+    const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     function handleDialogChange() {
         setOpen(!open);
     }
     const deleteRequest = () => {
-        
+        setLoading(true)
         axios
             .delete(`http://localhost:4000/api/request/${id}`, {
                 headers: {
@@ -30,10 +34,13 @@ export default function RequestDeleteDialog({ id }) {
                 }
             })
             .then(() => {
+                setLoading(false);
                 handleDialogChange();
+                dispatch({ type: "DELETE_REQUEST", payload: id });
                 toast.success("Request Deleted Successfully!");
             })
             .catch((err) => {
+                setLoading(false);
                 toast.error("Request deletion Failed!")
                 console.log(err);
 
@@ -44,22 +51,30 @@ export default function RequestDeleteDialog({ id }) {
             <DialogTrigger asChild>
                 <Trash2 className="cursor-pointer text-destructive" />
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader className="space-y-4">
-                    <DialogTitle>Delete This Request</DialogTitle>
-                    <DialogDescription>
-                        Are You Sure to delete this Request?
+            <DialogContent onInteractOutside={(e) => e.preventDefault()}>
+            <DialogHeader>
+                    <DialogTitle className="text-xl text-center mb-2">
+                        Are You absolutely Sure?
+                    </DialogTitle>
+                    <DialogDescription className="text-base text-center mb-2">
+                        This action cannot be undone. This will permanently
+                        remove the user from our servers.
                     </DialogDescription>
                 </DialogHeader>
-                <div className="flex gap-4">
+                <div className="flex gap-8 px-12">
                     <Button
+                        disabled={loading}
                         onClick={deleteRequest}
                         className="grow"
                         variant="destructive">
-                        Yes
+                        {loading ? (
+                            <TailSpin color="#fff" height={30} width={30} />
+                        ) : (
+                            "Continue"
+                        )}
                     </Button>
                     <DialogClose asChild>
-                        <Button className="grow">No</Button>
+                        <Button className="grow">Cancel</Button>
                     </DialogClose>
                 </div>
             </DialogContent>
