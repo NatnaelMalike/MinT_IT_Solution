@@ -26,6 +26,7 @@ import PasswordReset from "./pages/reset_password/PasswordReset";
 import AdminRequestTable from "./components/Request/AdminRequestTable";
 import AssignedRequests from "./components/Request/AssignedRequests";
 import RequestList from "./components/User/RequestsList";
+import HelpCenter from "./pages/HelpCenter";
 
 const router = createBrowserRouter([
     // Login Page
@@ -63,7 +64,7 @@ const router = createBrowserRouter([
     // Forgot Password
     {
         path: "/forgot-password",
-        element: <ForgetPassword />,
+        element: <HelpCenter />,
     },
     {
         path: "/reset-password/:email",
@@ -107,7 +108,7 @@ const router = createBrowserRouter([
             { path: "technicians", element: <TechnicianMain /> },
             { path: "departments", element: <DepartmentMain /> },
             { path: "forgot-password", element:  <ForgetPassword /> },
-            { path: "reset-password", element:  <PasswordReset /> },
+            { path: "reset-password/:email", element:  <PasswordReset /> },
         ],
     },
 

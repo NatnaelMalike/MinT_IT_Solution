@@ -53,7 +53,9 @@ export default function PasswordReset() {
             .then(() => {
                 setLoading(false)
                 toast.success("Password Reset successfully")
-                navigate('/');
+                setTimeout(() => {
+                    navigate('/');
+                }, 1000);
             })
             .catch((error) => {
                 toast.error("Failed to reset the password, Please try again.")
@@ -65,15 +67,9 @@ export default function PasswordReset() {
 
     return (
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-20">
-           <Toaster/>
-            <div>
-                <img src={logo} alt="" />
-            </div>
-
         <Form {...form} >
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <h1 className="text-xl text-center">Reset Password</h1>
-
                 <FormField
                     control={form.control}
                     name="password"

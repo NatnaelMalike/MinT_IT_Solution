@@ -19,15 +19,16 @@ import axios from "axios";
 import { useState } from "react";
 import { TailSpin } from "react-loader-spinner";
 import { Toaster } from "@/components/ui/sonner";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
     email: z.string().email({ message: "Invalid Email Address" }),
 });
 
 export default function ForgetPassword() {
+    const navigate = useNavigate()
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
-    const [sent, setSent] = useState(false)
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -38,36 +39,17 @@ export default function ForgetPassword() {
     function onSubmit(data) {
         setLoading(true);
         axios.post('http://localhost:4000/api/forgot-password', data)
-            .then(()=>{
+            .then((res)=>{
                 setLoading(false)
-                toast.success('Email Sent Successfully')
-                setSent(true)
+                navigate(`/admin/reset-password/${res.data}`)
             }).catch((error)=>{
-                toast.error(
-                    "Failed to send the email, Please try again."
-                );
+               
                 setLoading(false);
                 setError(error.response.data);
             })
     }
-
     return (
         <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col py-10 gap-20">
-           <Toaster/>
-           <div className="w-3/4 mx-auto">
-                <img src={logo} alt="" />
-            </div>
-            {
-                sent? <main className="grid place-items-center bg-white px-6 lg:px-8">
-                <div className="text-center">
-                    <p className="text-3xl font-bold text-teal-600">
-                       Email Sent!
-                    </p>
-                    <h1 className="mt-4 text-2xl font-bold tracking-tight text-primary">
-                    Check Your Email and if you don't get it check your Spam Folder also!
-                    </h1> 
-                </div>
-            </main>: 
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -105,7 +87,7 @@ export default function ForgetPassword() {
                                 </Button>
                 </form>
             </Form>
-            }
+            
             {<p className="text-center text-destructive mt-4 font-medium">{error && error}</p>}
         </div>
     );

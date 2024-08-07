@@ -8,9 +8,9 @@ export default function HelpCenter() {
                        Have You Got a Problem?
                     </p>
                     <h1 className="mt-4 text-4xl font-bold tracking-tight text-teal-600 sm:text-5xl">
-                    Contact Help Center
+                    Contact MinT ICT Center 
                     </h1>
-                    <p className="mt-6 text-2xl leading-7 text-secondary-foreground max-w-96 leading-loose">
+                    <p className="mt-6 text-2xl mx-auto text-secondary-foreground max-w-96 leading-loose">
                     If you encounter any issues with your account, please visit the office for prompt assistance. We're here to help!
                     </p>
                     

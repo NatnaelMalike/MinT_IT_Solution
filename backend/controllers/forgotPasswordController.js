@@ -13,32 +13,32 @@ const forgotPassword = async (req, res) => {
         if (!userEmail) {
             return res.status(400).send("User Does not Exist!");
         }
-        const transporter = nodemailer.createTransport({
-            service: "gmail",
-            auth: {
-                user: "natnaelmalike@gmail.com",
-                pass: "kiwl fjwm bkvs dtgu",
-            },
-        });
+    //     const transporter = nodemailer.createTransport({
+    //         service: "gmail",
+    //         auth: {
+    //             user: "natnaelmalike@gmail.com",
+    //             pass: "kiwl fjwm bkvs dtgu",
+    //         },
+    //     });
 
-        const mailOptions = {
-            from: "MinT IT Solution",
-            to: email,
-            subject: "Reset Password Notification",
-            html: `<h1>Reset Your Password</h1>
-    <p>Click on the following link to reset your password:</p>
-    <a href="http://localhost:5173/reset-password/${email}">http://localhost:5173/reset-password/${email}</a>
-    <p>If you didn't request a password reset, please ignore this email.</p>`,
-        };
+    //     const mailOptions = {
+    //         from: "MinT IT Solution",
+    //         to: email,
+    //         subject: "Reset Password Notification",
+    //         html: `<h1>Reset Your Password</h1>
+    // <p>Click on the following link to reset your password:</p>
+    // <a href="http://localhost:5173/reset-password/${email}">http://localhost:5173/reset-password/${email}</a>
+    // <p>If you didn't request a password reset, please ignore this email.</p>`,
+    //     };
 
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log("Email sent: " + info.response);
-            }
-        });
-        res.status(200).send("Email Sent");
+    //     transporter.sendMail(mailOptions, function (error, info) {
+    //         if (error) {
+    //             console.log(error);
+    //         } else {
+    //             console.log("Email sent: " + info.response);
+    //         }
+    //     });
+        res.status(200).send(email);
     } catch (error) {
         res.status(500).send(error.message);
     }

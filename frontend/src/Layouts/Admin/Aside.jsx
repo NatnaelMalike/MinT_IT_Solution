@@ -8,6 +8,7 @@ import {
     GitPullRequestArrow,
     Home,
     HomeIcon,
+    KeyRound,
     MapPin,
     Settings,
     Ticket,
@@ -76,6 +77,12 @@ const Aside = () => {
                         className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
                         <BuildingIcon className="h-4 w-4" />
                         Departments
+                    </NavLink>
+                    <NavLink
+                        to={"/admin/forgot-password"}
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                        <KeyRound className="h-4 w-4" />
+                        Reset Password 
                     </NavLink>
                     {/* <NavLink
                         to={"/admin/forgot-password"}
