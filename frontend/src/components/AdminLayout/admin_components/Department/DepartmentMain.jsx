@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import AddDialog from "@/components/AddDialog";
 import Header from "@/components/Header";
@@ -9,13 +9,18 @@ import { deptConfig } from "@/config/tables";
 
 const DepartmentMain = () => {
     const { departments,dispatch } = useDepartmentContext();
-   !departments && useEffect(() => {
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true)
          axios
             .get("http://localhost:4000/api/department")
             .then((response) => {
                 dispatch({ type: "SET_DEPARTMENTS", payload: response.data });
+                setLoading(false)
             })
             .catch((error) => {
+                setLoading(false)
                 console.log(error);
             });
     }, []);
@@ -27,7 +32,7 @@ const DepartmentMain = () => {
                 </AddDialog>
             </Header>
             <div className="grow" id="main">
-                <EntityTable entities={departments} config={deptConfig}/>
+                <EntityTable entities={departments} loading={loading} config={deptConfig}/>
             </div>
         </div>
     );

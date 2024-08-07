@@ -8,24 +8,26 @@ import EntityTable from "@/components/EntityTable";
 import { technicianConfig } from "@/config/tables";
 
 const TechnicianMain = () => {
+    const [loading, setLoading] = useState(false);
     const { technicians, dispatch } = useTechnicianContext();
     
-    !technicians && useEffect(() => {
-        const fetchTechnicians = () => {
-             axios
-                .get("http://localhost:4000/api/technician")
-                .then((response) => {
-                    dispatch({
-                        type: "SET_TECHNICIANS",
-                        payload: response.data,
+        useEffect(() => {
+                setLoading(true);
+                axios
+                    .get("http://localhost:4000/api/technician")
+                    .then((response) => {
+                        dispatch({
+                            type: "SET_TECHNICIANS",
+                            payload: response.data,
+                        });
+                        setLoading(false);
+                    })
+                    .catch((error) => {
+                        setLoading(false);
+                        console.log(error);
                     });
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        };
-        fetchTechnicians();
-    }, []);
+            
+        }, []);
     return (
         <div className="flex flex-col gap-8">
             <Header title="Manage Technicians">
@@ -35,7 +37,11 @@ const TechnicianMain = () => {
             </Header>
             <div className="grow" id="main">
                 {/* <TechnicianTable /> */}
-                <EntityTable entities={technicians} config={technicianConfig}/>
+                <EntityTable
+                    entities={technicians}
+                    loading={loading}
+                    config={technicianConfig}
+                />
             </div>
         </div>
     );

@@ -21,7 +21,7 @@ import emptyPhoto from "@/assets/img/Empty.png";
 const RequestEntityTable = ({ entities, config }) => {
     return (
         <div className=" ">
-            <Card className="overflow-y-auto max-h-[65vh]"> 
+            <Card className="overflow-y-auto "> 
                 <CardHeader>
                     <CardTitle className="text-2xl">{config.entity}</CardTitle>
                     <CardDescription className="text-base">
@@ -30,7 +30,7 @@ const RequestEntityTable = ({ entities, config }) => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent >
-                    {entities ? (
+                    {entities && entities.length > 0 ? (
                         <Table className="">
                             <TableHeader className="bg-secondary">
                                 <TableRow>

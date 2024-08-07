@@ -17,11 +17,13 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import emptyPhoto from "@/assets/img/Empty.png";
+import { ThreeDots } from "react-loader-spinner";
 
-const EntityTable = ({ entities, config }) => {
+const EntityTable = ({ loading, entities, config }) => {
+    const hasEntities = entities && entities.length > 0;
     return (
         <div className="overflow-x-auto">
-            <Card> 
+            <Card>
                 <CardHeader>
                     <CardTitle className="text-2xl">{config.entity}</CardTitle>
                     <CardDescription className="text-base">
@@ -30,7 +32,17 @@ const EntityTable = ({ entities, config }) => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="overflow-y-auto max-h-[65vh]">
-                    {entities && entities.length > 0 ? (
+                    {loading ? (
+                        <div className="w-full flex justify-center items-center">
+                            <ThreeDots
+                                height="80"
+                                width="80"
+                                color="#4fa94d"
+                                radius="9"
+                            />{" "}
+                            {/* Display a spinner or loading message */}
+                        </div>
+                    ) : hasEntities ? (
                         <Table className="min-w-[840px] w-full border-collapse overflow-hidden">
                             <TableHeader className="bg-secondary">
                                 <TableRow>
@@ -44,24 +56,19 @@ const EntityTable = ({ entities, config }) => {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {entities &&
-                                    entities.map((entity) => (
-                                        <TableRow key={entity._id}>
-                                            {config.fields.map(
-                                                (field, index) => (
-                                                    <TableCell
-                                                        key={`${entity._id} - ${index}`}
-                                                        className="max-w-prose overflow-x-auto whitespace-nowrap"
-                                                        >
-                                                        {typeof field ===
-                                                        "function"
-                                                            ? field(entity)
-                                                            : entity[field]}
-                                                    </TableCell>
-                                                )
-                                            )}
-                                        </TableRow>
-                                    ))}
+                                {entities.map((entity) => (
+                                    <TableRow key={entity._id}>
+                                        {config.fields.map((field, index) => (
+                                            <TableCell
+                                                key={`${entity._id}-${index}`}
+                                                className="whitespace-normal">
+                                                {typeof field === "function"
+                                                    ? field(entity)
+                                                    : entity[field]}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ))}
                             </TableBody>
                         </Table>
                     ) : (
@@ -71,7 +78,9 @@ const EntityTable = ({ entities, config }) => {
                                 alt="No Data Illustrator"
                                 className="max-w-lg"
                             />
-                            <p className="text-2xl text-destructive"> Oops, No {config.entity}!</p>
+                            <p className="text-2xl text-destructive">
+                                Oops, No {config.entity}!
+                            </p>
                         </div>
                     )}
                 </CardContent>
