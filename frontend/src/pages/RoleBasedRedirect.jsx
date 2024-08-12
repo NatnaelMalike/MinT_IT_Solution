@@ -30,7 +30,7 @@ const RoleBasedRedirect = () => {
                 navigate("/helper_desk/requests");
                 break;
             case "normal_user":
-                navigate("/user/requests");
+                navigate("/user/add_request");
                 break;
             case "technician_user":
                 navigate("/technician/requests");
