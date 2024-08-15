@@ -12,7 +12,6 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import logo from "../../assets/img/MinT-Logo.jpg";
 
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +19,6 @@ import { useParams, useLocation } from 'react-router-dom';
 import { useState } from "react";
 import { toast } from "sonner";
 import { TailSpin } from "react-loader-spinner";
-import { Toaster } from "@/components/ui/sonner";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 const formSchema = z.object({
     password: z.string().min(6, {message: "Password must be 6 or more characters long" }),

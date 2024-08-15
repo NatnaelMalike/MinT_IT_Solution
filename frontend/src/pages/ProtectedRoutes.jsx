@@ -4,7 +4,6 @@ import { jwtDecode } from "jwt-decode"; // Correct import
 
 const ProtectedRoutes = ({ children, role }) => {
     const { token } = useAuthContext();
-
     if (!token) {
         return <Navigate to="/" />;
     }
@@ -12,11 +11,13 @@ const ProtectedRoutes = ({ children, role }) => {
     let decoded;
     try {
         decoded = jwtDecode(token);
+        // { userId: 12, role: "normal_user"
+        // }
     } catch (e) {
         // console.error("Invalid token:", e);
         return <Navigate to="/" />;
     }
-
+    
     if (decoded.role !== role) {
         return <Navigate to="/unauthorized" />;
     }
