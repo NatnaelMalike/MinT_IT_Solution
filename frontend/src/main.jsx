@@ -9,9 +9,11 @@ import { AdminContextProvider } from "./contexts/AdminContext";
 import { DepartmentContextProvider } from "./contexts/DepartmentContext";
 import { RequestContextProvider } from "./contexts/RequestContext";
 import { UserContextProvider } from "./contexts/UserContext";
-
+import { Provider } from "react-redux";
+import { store } from "./app/store";
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
+        <Provider store={store}>
         <AuthContextProvider>
             <AdminContextProvider>
                 <TechnicianContextProvider>
@@ -25,5 +27,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                 </TechnicianContextProvider>
             </AdminContextProvider>
         </AuthContextProvider>
+        </Provider>
     </React.StrictMode>
 );
