@@ -43,6 +43,7 @@ const addRequest = async (req, res) => {
         user_id
     });
     await request.save();
+    
     res.send(request);
 };
 const updateRequest = async (req, res) => {
