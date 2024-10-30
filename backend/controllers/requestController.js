@@ -1,3 +1,4 @@
+import { Assignment } from "../models/assignment.js";
 import { Request, requestValidator, requestStatusValidator } from "../models/request.js";
 import _ from "lodash";
 
@@ -48,6 +49,7 @@ const addRequest = async (req, res) => {
 };
 const updateRequest = async (req, res) => {
     const { error } = requestValidator(req.body);
+    const {role, _id} = req.user
     if (error) return res.status(400).send(error.details[0].message);
     const request = await Request.findByIdAndUpdate(
         req.params.id,
@@ -66,6 +68,9 @@ const updateRequestStatus = async (req, res) => {
         { new: true }
     );
     if (!request) return res.status(404).send("Request Not Found!");
+    const assigned = await Assignment.find({request_id: req.params.id, technician_id:  req.user._id})
+    assigned.status = req.body.status
+    await assigned.save()
     res.send(request);
 };
 const deleteRequest = async (req, res) => {

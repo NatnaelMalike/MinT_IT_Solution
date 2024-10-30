@@ -74,6 +74,9 @@ const AssignedRequests = () => {
                                         Technician Phone
                                     </TableHead>
                                     <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">
+                                        Status
+                                    </TableHead>
+                                    <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">
                                         Assiged at
                                     </TableHead>
                                 </TableRow>
@@ -102,6 +105,9 @@ const AssignedRequests = () => {
                                             </TableCell>
                                             <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                                 {request.technician_id.phone}
+                                            </TableCell>
+                                            <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
+                                                {request.request_id.status}
                                             </TableCell>
                                             <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                                 {formatter(request.assignedAt)}

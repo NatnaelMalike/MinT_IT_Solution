@@ -12,6 +12,7 @@ const assignSchema = mongoose.Schema({
         ref: 'Technician users',
         required: true
     },
+    status: { type: String, default: "Pending", enum: ["Pending", "inProgress", "Resolved", "UnResolved"] },
     assignedAt: { type: Date, default: Date.now }
 })
 

@@ -142,7 +142,7 @@ export const userReqConfig = {
     (entity) => (entity.isAssigned ? "Yes" : "No"),
     (entity) => formatter(entity.createdAt),
     (entity) =>
-      entity.status === "Resolved" || entity.status === "UnResolved" ? null : (
+      entity.status === "Resolved" || entity.status === "UnResolved" ? <p>No Acion</p> : (
         <div className="flex gap-4">
           <IdContext.Provider value={entity._id}>
             <EditDialog entity="Report">
