@@ -18,25 +18,69 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import emptyPhoto from "@/assets/img/Empty.png";
+
 import { useRequestContext } from "@/hooks/useRequestContext";
 import StatusEditForm from "../Request/StatusEditForm";
 import EditDialog from "../EditDialog";
 import { IdContext } from "@/contexts/Context";
 import { formatter } from "@/utility/timeFormatter";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 
 const TechnicianRequestTable = () => {
-  const { requests } = useRequestContext();
-  console.log("Tech", requests);
+  const { requests = [] } = useRequestContext(); // Default to an empty array if requests is null or undefined
+  const [category, setCategory] = useState("all");
+
+  const handleCategoryChange = (value) => {
+    setCategory(value);
+  };
+
+  // Filter requests based on category
+  const filteredRequests = requests
+    ? requests.filter((request) => {
+        switch (category) {
+          case "resolved":
+            return request.request_id.status === "Resolved";
+          case "pending":
+            return request.request_id.status === "Pending";
+          case "inProgress":
+            return request.request_id.status === "inProgress";
+          case "unResolved":
+            return request.request_id.status === "UnResolved";
+          default:
+            return true; // Show all for "all"
+        }
+      })
+    : [];
   return (
     <div className="flex flex-col gap-8">
       <Card>
         <CardHeader>
-          <CardTitle>Requests</CardTitle>
-          <CardDescription className="text-base">
-            A list of all Issued Problems
-          </CardDescription>
+        <div className="flex justify-between items-center">
+            <div className="space-y-2">
+              <CardTitle>Requests</CardTitle>
+              <CardDescription className="text-base">
+                A list of all Issued Problems
+              </CardDescription>
+            </div>
+            <Select onValueChange={handleCategoryChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filter By" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="resolved">Resolved</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="inProgress">In Progress</SelectItem>
+                  <SelectItem value="unResolved">Un Resolved</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </CardHeader>
         <CardContent>
+        {filteredRequests.length > 0 ? (
           <Table>
             <TableHeader className="bg-secondary">
               <TableRow>
@@ -67,8 +111,7 @@ const TechnicianRequestTable = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {requests &&
-                requests.map((request) => (
+              {filteredRequests.map((request) => (
                   <TableRow key={request._id}>
                     <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                       {request.request_id.user_id.fullName}
@@ -104,7 +147,16 @@ const TechnicianRequestTable = () => {
                   </TableRow>
                 ))}
             </TableBody>
-          </Table>
+          </Table>):(
+             <div className="w-full flex flex-col justify-center items-center gap-8">
+             <img
+               src={emptyPhoto}
+               alt="No Data Illustrator"
+               className="max-w-lg"
+             />
+             <p className="text-2xl text-destructive"> Oops, No Requests!</p>
+           </div>
+          )}
         </CardContent>
       </Card>
     </div>
