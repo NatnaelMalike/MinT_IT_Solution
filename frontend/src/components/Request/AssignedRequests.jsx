@@ -107,7 +107,7 @@ const AssignedRequests = () => {
                                                 {request.technician_id.phone}
                                             </TableCell>
                                             <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
-                                                {request.request_id.status}
+                                                {request.status}
                                             </TableCell>
                                             <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                                 {formatter(request.assignedAt)}

@@ -15,7 +15,7 @@ export const useSignup = () => {
          axios
             .post(`http://localhost:4000/api/user`, data)
             .then((res) => {
-                localStorage.setItem("user", JSON.stringify(res.data))
+                localStorage.setItem("token", JSON.stringify(res.data))
                 dispatch({ type: 'LOGIN', payload: res.data.token });
                 setIsLoading(false)
                 toast.success("User Registered Successfully!")

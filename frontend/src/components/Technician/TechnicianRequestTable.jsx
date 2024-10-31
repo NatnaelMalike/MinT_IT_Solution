@@ -93,7 +93,7 @@ const TechnicianRequestTable = () => {
                     </TableCell>
                     <TableCell className="flex gap-4">
                       {request.request_id.status === "Resolved" ||
-                      request.request_id.status === "UnResolved" ? null : (
+                      request.request_id.status === "UnResolved" ? <p className="text-destructive">No Action</p> : (
                         <IdContext.Provider value={request.request_id._id}>
                           <EditDialog entity="Request Status">
                             <StatusEditForm />
