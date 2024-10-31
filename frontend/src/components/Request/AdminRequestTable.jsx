@@ -11,6 +11,15 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select";
+import {
     Card,
     CardContent,
     CardDescription,
@@ -22,20 +31,66 @@ import { useRequestContext } from "@/hooks/useRequestContext";
 import { formatter } from "@/utility/timeFormatter";
 import emptyPhoto from "@/assets/img/Empty.png";
 const AdminRequestTable = () => {
-    const { requests } = useRequestContext();
-    console.log('add',requests)
+    const { requests = [] } = useRequestContext(); // Default to an empty array if requests is null or undefined
+  const [category, setCategory] = useState("all");
+
+  const handleCategoryChange = (value) => {
+    setCategory(value);
+  };
+
+  // Filter requests based on category
+  const filteredRequests = requests
+    ? requests.filter((request) => {
+        switch (category) {
+          case "resolved":
+            return request.status === "Resolved";
+          case "pending":
+            return request.status === "Pending";
+          case "inProgress":
+            return request.status === "inProgress";
+          case "unResolved":
+            return request.status === "UnResolved";
+          case "assigned":
+            return request.isAssigned;
+          case "notAssigned":
+            return !request.isAssigned;
+          default:
+            return true; // Show all for "all"
+        }
+      })
+    : [];
     return (
         <div className="flex flex-col gap-8">
             <Card>
                 <CardHeader>
-                    <CardTitle>Requests</CardTitle>
-                    <CardDescription className="text-base">
-                        A list of all Issued Problems
-                    </CardDescription>
+                <div className="flex justify-between items-center">
+            <div className="space-y-2">
+              <CardTitle>Requests</CardTitle>
+              <CardDescription className="text-base">
+                A list of all Issued Problems
+              </CardDescription>
+            </div>
+            <Select onValueChange={handleCategoryChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filter By" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="resolved">Resolved</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="inProgress">In Progress</SelectItem>
+                  <SelectItem value="unResolved">Un Resolved</SelectItem>
+                  <SelectItem value="assigned">Assigned</SelectItem>
+                  <SelectItem value="notAssigned">Not Assigned</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
                 </CardHeader>
                 <CardContent>
                     {
-                        requests && requests.length > 0?(
+                        filteredRequests.length > 0?(
 
                     <Table className="min-w-[840px] w-full border-collapse overflow-hidden">
                         <TableHeader className="bg-secondary">
@@ -51,8 +106,7 @@ const AdminRequestTable = () => {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {requests &&
-                                requests.map((request) => (
+                            {filteredRequests.map((request) => (
                                     <TableRow key={request._id}>
                                         <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
                                             {request.user_id.fullName}
