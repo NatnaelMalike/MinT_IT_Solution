@@ -59,7 +59,16 @@ function userValidator(user) {
     });
     return schema.validate(user);
 }
+function updateUserValidator(user) {
+    const schema = Joi.object({
+        fullName: Joi.string().required().min(5).max(50),
+        email: Joi.string().email().required().min(5).max(255),
+        phone: Joi.string().required(),
+        department: Joi.string().required(),
+    });
+    return schema.validate(user);
+}
 
 const User = new mongoose.model("Normal users", userSchema);
 
-export { User, userValidator };
+export { User, userValidator, updateUserValidator };

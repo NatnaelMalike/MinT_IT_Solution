@@ -1,4 +1,4 @@
-import { User, userValidator } from "../models/user.js";
+import { updateUserValidator, User, userValidator } from "../models/user.js";
 import bcrypt from "bcrypt";
 import _ from "lodash";
 import Email from "../models/Email.js";
@@ -26,22 +26,53 @@ const addUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    const { error } = userValidator(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    let user = await User.findByIdAndUpdate(
-        req.params.id,
-        _.pick(req.body, ["fullName", "email", "password", "department", "phone"]),
-        {
-            new: true,
+    try {
+        // Validate the request body
+        const { error } = updateUserValidator(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
+        // Find the existing user
+        const oldUser = await User.findById(req.params.id);
+        if (!oldUser) return res.status(404).send("User not found!");
+
+        // Check if the new email already exists in the emails collection
+        const existingEmailByNewEmail = await Email.findOne({ email: req.body.email });
+
+        if (existingEmailByNewEmail && existingEmailByNewEmail.email !== oldUser.email) {
+            return res.status(400).send("Email already registered!");
         }
-    );
-    if (!user) return res.status(404).send("User not Found!");
-    const existingEmail = await Email.findOne({ email: req.body.email });
-    existingEmail.email = req.body.email
-    await newEmail.save();
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(user.password, salt);
-    res.send(user);
+
+        // Update the email in the emails collection
+        if (existingEmailByNewEmail) {
+            existingEmailByNewEmail.email = req.body.email;
+            await existingEmailByNewEmail.save();
+        } else {
+            const existingEmailByOldEmail = await Email.findOne({ email: oldUser.email });
+            if (existingEmailByOldEmail) {
+                existingEmailByOldEmail.email = req.body.email;
+                await existingEmailByOldEmail.save();
+            }
+        }
+
+        // Update the user document
+        let updatedUser = await User.findByIdAndUpdate(
+            req.params.id,
+            _.pick(req.body, [
+                "fullName",
+                "email",
+                "department",
+                "phone",
+            ]),
+            { new: true }
+        ).populate("department", "name");
+
+        if (!updatedUser) return res.status(404).send("User not found!");
+
+        res.send(updatedUser);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Server error");
+    }
 };
 
 const deleteUser = async (req, res) => {
