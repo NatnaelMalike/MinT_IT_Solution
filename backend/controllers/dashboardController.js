@@ -11,7 +11,9 @@ const getDashboardData = async (req, res)=> {
         const pendingReq = await Request.countDocuments({status: 'Pending'})
         const resolvedReq = await Request.countDocuments({status: 'Resolved'})
         const unresolvedReq = await Request.countDocuments({status: 'UnResolved'})
-        res.send({userCount, techCount, deptCount, pendingReq, resolvedReq, unresolvedReq})
+        const notAssigned = await Request.countDocuments({isAssigned: false})
+        const assigned = await Request.countDocuments({isAssigned: true})
+        res.send({userCount, techCount, deptCount, pendingReq, resolvedReq, unresolvedReq, assigned, notAssigned})
     } catch (error) {
         console.log('Internal Server Error', error.message)
     }

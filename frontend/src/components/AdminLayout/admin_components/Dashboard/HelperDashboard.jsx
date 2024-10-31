@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import tech from "@/assets/img/tech.png";
-
 import pending from "@/assets/img/pending.png";
 import request from "@/assets/img/request.png";
 import resolved from "@/assets/img/resolved.png";
+import notAssigned from "@/assets/img/notAssigned.png"
+import assigned from "@/assets/img/assigned.png"
 import { useAuthContext } from "@/hooks/useAuthContext";
 import axios from "axios";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
@@ -61,6 +62,28 @@ const HelperDashboard = () => {
               </CardTitle>
             </div>
             <div className="text-2xl font-bold">{data.unresolvedReq}</div>
+          </CardHeader>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-col items-start justify-between space-y-0 pb-2 gap-4">
+            <div className="space-y-4">
+              <img src={assigned} alt="" className="size-16" />
+              <CardTitle className="text-xl font-medium">
+                Assigned Requests
+              </CardTitle>
+            </div>
+            <div className="text-2xl font-bold">{data.assigned}</div>
+          </CardHeader>
+        </Card>
+        <Card>
+          <CardHeader className="flex flex-col items-start justify-between space-y-0 pb-2 gap-4">
+            <div className="space-y-4">
+              <img src={notAssigned} alt="" className="size-16" />
+              <CardTitle className="text-xl font-medium">
+                Not Assigned Requests
+              </CardTitle>
+            </div>
+            <div className="text-2xl font-bold">{data.notAssigned}</div>
           </CardHeader>
         </Card>
         <Card>
