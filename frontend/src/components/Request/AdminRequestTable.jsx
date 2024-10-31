@@ -1,37 +1,37 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select";
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { useRequestContext } from "@/hooks/useRequestContext";
 import { formatter } from "@/utility/timeFormatter";
 import emptyPhoto from "@/assets/img/Empty.png";
 const AdminRequestTable = () => {
-    const { requests = [] } = useRequestContext(); // Default to an empty array if requests is null or undefined
+  const { requests = [] } = useRequestContext(); // Default to an empty array if requests is null or undefined
   const [category, setCategory] = useState("all");
 
   const handleCategoryChange = (value) => {
@@ -59,11 +59,11 @@ const AdminRequestTable = () => {
         }
       })
     : [];
-    return (
-        <div className="flex flex-col gap-8">
-            <Card>
-                <CardHeader>
-                <div className="flex justify-between items-center">
+  return (
+    <div className="flex flex-col gap-8">
+      <Card>
+        <CardHeader>
+          <div className="flex justify-between items-center">
             <div className="space-y-2">
               <CardTitle>Requests</CardTitle>
               <CardDescription className="text-base">
@@ -87,67 +87,83 @@ const AdminRequestTable = () => {
               </SelectContent>
             </Select>
           </div>
-                </CardHeader>
-                <CardContent>
-                    {
-                        filteredRequests.length > 0?(
-
-                    <Table className="min-w-[840px] w-full border-collapse overflow-hidden">
-                        <TableHeader className="bg-secondary">
-                            <TableRow>
-                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">User Name</TableHead>
-                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">User's Department</TableHead>
-                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">User's Phone</TableHead>
-                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Issue Type</TableHead>
-                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Description</TableHead>
-                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Status</TableHead>
-                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Is Assigned</TableHead>
-                                <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">Requested At</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {filteredRequests.map((request) => (
-                                    <TableRow key={request._id}>
-                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
-                                            {request.user_id.fullName}
-                                        </TableCell>
-                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
-                                            {request.user_id.department.name}
-                                        </TableCell>
-                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
-                                            {request.user_id.phone}
-                                        </TableCell>
-                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
-                                            {request.issueType}
-                                        </TableCell>
-                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
-                                            {request.description}
-                                        </TableCell>
-                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">{request.status}</TableCell>
-                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
-                                            {request.isAssigned ? "Yes" : "No"}
-                                        </TableCell>
-                                        <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
-                                        {formatter(request.createdAt)}
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                        </TableBody>
-                    </Table>
-                        ):
-                        <div className="w-full flex flex-col justify-center items-center gap-8">
-                            <img
-                                src={emptyPhoto}
-                                alt="No Data Illustrator"
-                                className="max-w-lg"
-                            />
-                            <p className="text-2xl text-destructive"> Oops, No Requests!</p>
-                        </div>
-                    }
-                </CardContent>
-            </Card>
-        </div>
-    );
+        </CardHeader>
+        <CardContent>
+          {filteredRequests.length > 0 ? (
+            <Table className="min-w-[840px] w-full border-collapse overflow-hidden">
+              <TableHeader className="bg-secondary">
+                <TableRow>
+                  <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">
+                    User Name
+                  </TableHead>
+                  <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">
+                    User's Department
+                  </TableHead>
+                  <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">
+                    User's Phone
+                  </TableHead>
+                  <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">
+                    Issue Type
+                  </TableHead>
+                  <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">
+                    Description
+                  </TableHead>
+                  <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">
+                    Status
+                  </TableHead>
+                  <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">
+                    Is Assigned
+                  </TableHead>
+                  <TableHead className="whitespace-nowrap font-bold text-teal-800 opacity-100">
+                    Requested At
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredRequests.map((request) => (
+                  <TableRow key={request._id}>
+                    <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
+                      {request.user_id.fullName}
+                    </TableCell>
+                    <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
+                      {request.user_id.department.name}
+                    </TableCell>
+                    <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
+                      {request.user_id.phone}
+                    </TableCell>
+                    <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
+                      {request.issueType}
+                    </TableCell>
+                    <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
+                      {request.description}
+                    </TableCell>
+                    <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
+                      {request.status}
+                    </TableCell>
+                    <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
+                      {request.isAssigned ? "Yes" : "No"}
+                    </TableCell>
+                    <TableCell className="max-w-prose overflow-x-auto whitespace-nowrap">
+                      {formatter(request.createdAt)}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className="w-full flex flex-col justify-center items-center gap-8">
+              <img
+                src={emptyPhoto}
+                alt="No Data Illustrator"
+                className="max-w-lg"
+              />
+              <p className="text-2xl text-destructive"> Oops, No Requests!</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
 };
 
 export default AdminRequestTable;
