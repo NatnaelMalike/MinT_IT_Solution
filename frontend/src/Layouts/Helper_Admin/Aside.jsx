@@ -6,6 +6,7 @@ import {
     CalendarCheck,
     GitPullRequestArrow,
     Home,
+    HomeIcon,
     MapPin,
     Settings,
     Ticket,
@@ -39,6 +40,12 @@ const Aside = () => {
                             <User className="h-4 w-4" />
                             Profile
                         </NavLink>
+                        <NavLink
+                        to={"/helper_desk/dashboard"}
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                        <HomeIcon className="h-4 w-4" />
+                        Dashboard
+                    </NavLink>
                         <NavLink
                             to={"/helper_desk/requests"}
                             className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
