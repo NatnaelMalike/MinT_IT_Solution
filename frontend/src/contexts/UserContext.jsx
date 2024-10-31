@@ -9,6 +9,12 @@ export const userReducer = (state, action) => {
             return {
                 users : state.users.filter((user)=>user._id !== action.payload)
             }
+        case 'UPDATE_USER':
+            return {
+                users: state.users.map((user) =>
+                  user._id === action.payload._id ? { ...action.payload } : user
+              )
+              }
         default:
             return state;
     }

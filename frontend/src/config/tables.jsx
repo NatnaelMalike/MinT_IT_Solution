@@ -5,6 +5,7 @@ import DepartmentEditForm from "@/components/AdminLayout/admin_components/Depart
 import TechnicianDeleteDialog from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianDeleteDialog";
 import TechnicianEditForm from "@/components/AdminLayout/admin_components/Technician/technician_components/TechnicianEditForm";
 import UserDeleteDialog from "@/components/AdminLayout/admin_components/User/user_components/UserDeleteDialog";
+import UserEditForm from "@/components/AdminLayout/admin_components/User/user_components/UserEditForm";
 import EditDialog from "@/components/EditDialog";
 import RequestDeleteDialog from "@/components/Request/RequestDeleteDialog";
 import RequestEditForm from "@/components/Request/RequestEditForm";
@@ -79,7 +80,14 @@ export const usersConfig = {
     (entity) => (
       <div className="flex gap-4">
         {entity.isActive ? (
+          <div className="flex gap-4">
+          <IdContext.Provider value={entity._id}>
+            <EditDialog entity="User">
+              <UserEditForm />
+            </EditDialog>
+          </IdContext.Provider>
           <UserDeleteDialog id={entity._id} />
+        </div>
         ) : (
           <p className="text-destructive">No Action - Deleted</p>
         )}
