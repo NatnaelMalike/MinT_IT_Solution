@@ -43,7 +43,7 @@ app.use("/api/profile",profile)
 app.use("/api/dashboard",dashboard)
 
 mongoose
-    .connect(`mongodb://localhost:27017/MinT_IT_Solution`)
+    .connect(`mongodb://127.0.0.1:27017/MinT_IT_Solution`)
     .then(() => {
         console.log("DB Connected Successfully");
         app.listen(process.env.PORT, () => {
