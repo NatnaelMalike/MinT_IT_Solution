@@ -44,15 +44,8 @@ const validRoles = [
       name: Joi.string().required(),
       email: Joi.string().email().required(),
       phone: Joi.string().required(),
-      department: Joi.string()
-        .custom((value, helpers) => {
-          if (!mongoose.Types.ObjectId.isValid(value)) {
-            return helpers.error("Invalid department id");
-          }
-          return value;
-        })
-        .required(),
-      isActive: Joi.boolean().default(true),
+      profilePicture: Joi.string().allow("").optional(),
+
     }),
   };
   

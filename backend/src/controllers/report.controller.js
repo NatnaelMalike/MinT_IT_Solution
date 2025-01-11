@@ -7,16 +7,21 @@ const getReports = async (req, res) => {
   res.status(200).json(reports);
 };
 
+const getReportsByUser = async (req, res) => {
+  const reports = await Report.find({ reportedBy: req.user._id });
+  res.status(200).json(reports);
+}
+
 const issueReport = async (req, res) => {
   try {
-    const { error } = reportSchema.body.validate(req.body);
-    if (error) {
-      res.status(400).send(error.details[0].message);
-      return;
-    }
+    // const { error } = reportSchema.body.validate(req.body);
+    // if (error) {
+    //   res.status(400).send(error.details[0].message);
+    //   return;
+    // }
 
     const report = await Report.create({
-      userId: req.user?._id,
+      reportedBy: req.user?._id,
       ...req.body,
     });
 
@@ -84,4 +89,4 @@ const deleteReport = async (req, res) => {
   res.status(200).json({ message: "Report deleted successfully!" });
 };
 
-export { getReports, getReportById, issueReport, editReport, deleteReport };
+export { getReports,getReportsByUser, getReportById, issueReport, editReport, deleteReport };

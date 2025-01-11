@@ -9,9 +9,7 @@ import { ProfileDTO } from "../dtos/profile.dto.js";
 
 const getUsers = async (req, res) => {
   const users = await User.find();
-
   const profiles = users.map((user) => ProfileDTO.fromUser(user));
-
   res.status(200).json(profiles);
 };
 
@@ -33,7 +31,7 @@ const getUserById = async (req, res) => {
 
 const getCurrentUser = async (req, res) => {
   
-  const { _id: id } = req.body.user;
+  const { _id: id } = req.user;
 
   const user = await User.findById(id);
   if (!user) {
@@ -45,31 +43,32 @@ const getCurrentUser = async (req, res) => {
 };
 
 const editProfile = async (req, res) => {
-  let newReqBody = {};
-  newReqBody = {
-    name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-    department: req.body.department,
-  };
+  // let newReqBody = {};
+  // newReqBody = {
+  //   name: req.body.name,
+  //   email: req.body.email,
+  //   phone: req.body.phone,
+  //   department: req.body.department,
+  // };
 
-  const { error } = editProfileSchema.body.validate(newReqBody);
-  if (error) {
-    res.status(400).send(error.details[0].message);
-    return;
-  }
+  // const { error } = editProfileSchema.body.validate(newReqBody);
+  // if (error) {
+  //   res.status(400).send(error.details[0].message);
+  //   return;
+  // }
 
-  if (!isValidObjectId(req.body.profession)) {
-    res.status(400).json({ message: "Invalid Profession id." });
-    return;
-  }
-  if (req.body.user.role === "TechnicianUser") {
-    newReqBody = { ...newReqBody, profession: req.body.profession };
-  } else {
-    newReqBody = { ...newReqBody, profession: "None" };
-  }
+  // if (!isValidObjectId(req.body.profession)) {
+  //   res.status(400).json({ message: "Invalid Profession id." });
+  //   return;
+  // }
 
-  const user = await User.findByIdAndUpdate(req.body.user._id, newReqBody, {
+  // if (req.body.user.role === "TechnicianUser") {
+  //   newReqBody = { ...newReqBody, profession: req.body.profession };
+  // } else {
+  //   newReqBody = { ...newReqBody, profession: "None" };
+  // }
+
+  const user = await User.findByIdAndUpdate(req.user._id, req.body, {
     new: true,
   });
   if (!user) {

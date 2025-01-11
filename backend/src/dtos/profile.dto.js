@@ -7,11 +7,13 @@ export class ProfileDTO {
     phone,
     profilePicture,
     department,
+    role,
     profession,
     isActive
   ) {
     this.id = id;
     this.name = name;
+    this.role = role;
     this.email = email;
     this.phone = phone;
     this.profilePicture = profilePicture;
@@ -27,8 +29,10 @@ export class ProfileDTO {
       user.phone,
       user.profilePicture,
       user.department,
+      user.role,
       user.profession,
       user.isActive
     );
   }
+  
 }

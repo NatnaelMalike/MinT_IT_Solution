@@ -2,8 +2,24 @@ import Joi from "joi";
 
 const reportSchema = {
   body: Joi.object().keys({
-    issueTitle: Joi.string().required(),
-    issueDescription: Joi.string().required(),
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    priority: Joi.string()
+      .valid("Low", "Medium", "High", "Critical")
+      .default("Low"),
+    attachments: Joi.array()
+      .items(
+        Joi.object({
+          fileName: Joi.string().required(),
+          fileUrl: Joi.string().uri().required(),
+        })
+      )
+      .optional(),
+    tags: Joi.array().items(Joi.string()).optional(),
+    isConfidential: Joi.boolean().default(false),
+    status: Joi.string()
+      .valid("Pending", "In Progress", "Resolved", "Unresolved", "Closed")
+      .default("Pending"),
   }),
 };
 
