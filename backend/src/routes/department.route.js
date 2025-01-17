@@ -5,9 +5,9 @@ import departmentSchema from "../validations/department.validation.js";
 const router = Router()
 
 router.get('/', getDepartments)
-router.get('/:id',validate(departmentSchema), getDepartmentById)
+router.get('/:id', getDepartmentById)
 router.post('/',validate(departmentSchema), addDepartment)
 router.patch('/:id',validate(departmentSchema), updateDepartment)
-router.delete('/:id',validate(departmentSchema), deleteDepartment)
+router.delete('/:id', deleteDepartment)
 
 export default router

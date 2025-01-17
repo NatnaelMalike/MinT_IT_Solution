@@ -25,11 +25,11 @@ const getProfessionById = async (req, res) => {
 
 const addProfession = async (req, res) => {
   try {
-    const { error } = professionSchema.body.validate(req.body);
-    if (error) {
-      res.status(400).send(error.details[0].message);
-      return;
-    }
+    // const { error } = professionSchema.body.validate(req.body);
+    // if (error) {
+    //   res.status(400).send(error.details[0].message);
+    //   return;
+    // }
 
     const profession= await Profession.create(req.body);
     res.status(201).json(profession);
@@ -44,11 +44,11 @@ const updateProfession = async (req, res) => {
     res.status(400).json({ message: "Invalid profession id." });
     return;
   }
-  const { error } = professionSchema.body.validate(req.body);
-  if (error) {
-    res.status(400).send(error.details[0].message);
-    return;
-  }
+  // const { error } = professionSchema.body.validate(req.body);
+  // if (error) {
+  //   res.status(400).send(error.details[0].message);
+  //   return;
+  // }
 
   const profession =
     await Profession.findByIdAndUpdate(id, req.body, {

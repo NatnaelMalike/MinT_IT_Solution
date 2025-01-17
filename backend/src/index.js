@@ -9,10 +9,9 @@ import professionRoute from './routes/profession.route.js'
 import userRoute from './routes/user.route.js'
 import reportRoute from  './routes/report.route.js'
 import authMiddleware from "./middlewares/auth.middleware.js";
-import Joi from "joi";
-import joiObjectid from "joi-objectid";
 
-Joi.objectId = joiObjectid(Joi);
+
+
 dotenv.config();
 const app = express();
 app.use(

@@ -9,10 +9,10 @@ const getDepartments = async (req, res) => {
 
 const getDepartmentById = async (req, res) => {
   const { id } = req.params;
-  // if (!isValidObjectId(id)) {
-  //   res.status(400).json({ message: "Invalid department id." });
-  //   return;
-  // }
+  if (!isValidObjectId(id)) {
+    res.status(400).json({ message: "Invalid department id." });
+    return;
+  }
 
   const department = await Department.findById(id);
   if (!department) {
@@ -65,10 +65,10 @@ const updateDepartment = async (req, res) => {
 
 const deleteDepartment = async (req, res) => {
   const { id } = req.params;
-  // if (!isValidObjectId(id)) {
-  //   res.status(400).json({ message: "Invalid department id." });
-  //   return;
-  // }
+  if (!isValidObjectId(id)) {
+    res.status(400).json({ message: "Invalid department id." });
+    return;
+  }
 
   const department =
     await Department.findByIdAndDelete(id);

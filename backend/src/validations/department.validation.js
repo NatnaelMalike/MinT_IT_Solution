@@ -14,16 +14,16 @@ const departmentSchema = {
       .valid(...Sector)
       .required(),
   }),
-  params: Joi.object({
-    id: Joi.string()
-      .custom((value, helpers) => {
-        if (!mongoose.Types.ObjectId.isValid(value)) {
-          return helpers.message('"id" must be a valid MongoDB ObjectId');
-        }
-        return value;
-      }, 'Object Id Validation')
-      .required()
-  })
+  // params: Joi.object({
+  //   id: Joi.string()
+  //     .custom((value, helpers) => {
+  //       if (!mongoose.Types.ObjectId.isValid(value)) {
+  //         return helpers.message('"id" must be a valid MongoDB ObjectId');
+  //       }
+  //       return value;
+  //     }, 'Object Id Validation')
+  //     .required()
+  // })
 };
 
 export default departmentSchema;

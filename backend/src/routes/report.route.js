@@ -16,7 +16,7 @@ router.get("/", getReports);
 router.get("/me", getReportsByUser);
 router.get("/:id", getReportById);
 router.post("/",validate(reportSchema), issueReport);
-router.patch("/:id", editReport);
+router.patch("/:id",validate(reportSchema), editReport);
 router.delete("/:id", deleteReport);
 
 export default router
