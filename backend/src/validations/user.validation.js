@@ -15,7 +15,7 @@ const validRoles = [
       department: Joi.string()
         .custom((value, helpers) => {
           if (!mongoose.Types.ObjectId.isValid(value)) {
-            return helpers.error("Invalid department id");
+            return helpers.message('"id" must be a valid MongoDB ObjectId');
           }
           return value;
         })
@@ -25,7 +25,7 @@ const validRoles = [
         then: Joi.string()
           .custom((value, helpers) => {
             if (!mongoose.Types.ObjectId.isValid(value)) {
-              return helpers.error("Invalid profession id");
+              return helpers.message('"id" must be a valid MongoDB ObjectId');
             }
             return value;
           })
@@ -45,7 +45,6 @@ const validRoles = [
       email: Joi.string().email().required(),
       phone: Joi.string().required(),
       profilePicture: Joi.string().allow("").optional(),
-
     }),
   };
   
@@ -61,9 +60,8 @@ const validRoles = [
       .unknown(true)
       .custom((value, helpers) => {
         if (value.oldPassword === value.newPassword) {
-          return helpers.error("any.invalid", {
-            message: "New password must not be the same as the old password.",
-          });
+          return helpers.message("New password must not be the same as the old password.",
+          );
         }
         return value;
       }),

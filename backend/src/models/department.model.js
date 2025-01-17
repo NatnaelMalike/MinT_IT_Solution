@@ -6,6 +6,7 @@ const departmentSchema = mongoose.Schema(
         name: {
             type: String,
             required: true,
+            trim: true,
         },
         sector: {
             type: String,
@@ -15,6 +16,7 @@ const departmentSchema = mongoose.Schema(
               "Adminstration Sector",
               "ICT and Digital Economy Sector",
             ],
+            trim: true,
           },
         isActive: {
             type: Boolean,

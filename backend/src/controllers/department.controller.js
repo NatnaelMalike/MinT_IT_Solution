@@ -9,10 +9,10 @@ const getDepartments = async (req, res) => {
 
 const getDepartmentById = async (req, res) => {
   const { id } = req.params;
-  if (!isValidObjectId(id)) {
-    res.status(400).json({ message: "Invalid department id." });
-    return;
-  }
+  // if (!isValidObjectId(id)) {
+  //   res.status(400).json({ message: "Invalid department id." });
+  //   return;
+  // }
 
   const department = await Department.findById(id);
   if (!department) {
@@ -25,11 +25,11 @@ const getDepartmentById = async (req, res) => {
 
 const addDepartment = async (req, res) => {
   try {
-    const { error } = departmentSchema.body.validate(req.body);
-    if (error) {
-      res.status(400).send(error.details[0].message);
-      return;
-    }
+    // const { error } = departmentSchema.body.validate(req.body);
+    // if (error) {
+    //   res.status(400).send(error.details[0].message);
+    //   return;
+    // }
 
     const department= await Department.create(req.body);
     res.status(201).json(department);
@@ -45,11 +45,11 @@ const updateDepartment = async (req, res) => {
     return;
   }
 
-  const { error } = departmentSchema.body.validate(req.body);
-  if (error) {
-    res.status(400).send(error.details[0].message);
-    return;
-  }
+  // const { error } = departmentSchema.body.validate(req.body);
+  // if (error) {
+  //   res.status(400).send(error.details[0].message);
+  //   return;
+  // }
 
   const department =
     await Department.findByIdAndUpdate(id, req.body, {
@@ -65,10 +65,10 @@ const updateDepartment = async (req, res) => {
 
 const deleteDepartment = async (req, res) => {
   const { id } = req.params;
-  if (!isValidObjectId(id)) {
-    res.status(400).json({ message: "Invalid department id." });
-    return;
-  }
+  // if (!isValidObjectId(id)) {
+  //   res.status(400).json({ message: "Invalid department id." });
+  //   return;
+  // }
 
   const department =
     await Department.findByIdAndDelete(id);
