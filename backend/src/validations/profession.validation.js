@@ -1,5 +1,4 @@
 import Joi from "joi";
-import mongoose from "mongoose";
 
 const professionSchema = {
   body: Joi.object().keys({

@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import route404 from "./middlewares/route404.middleware.js";
+import errorHandler from "./middlewares/error.middleware.js";
 import authRoute from './routes/auth.route.js'
 import departmentRoute from './routes/department.route.js'
 import professionRoute from './routes/profession.route.js'
@@ -29,6 +31,8 @@ app.use('/user', userRoute)
 app.use('/department', departmentRoute )
 app.use('/profession',  professionRoute)
 app.use('/report', reportRoute)
+app.use(route404)
+app.use(errorHandler)
 
 
 mongoose
@@ -39,9 +43,5 @@ mongoose
             console.log(`Server is running on port ${process.env.PORT}`);
         });
     })
-    .catch((err) => console.log(`Couldn't Connect to DB`, err));
-
-
-
-
+    .catch((err) => console.error(`Couldn't Connect to DB`, err));
 

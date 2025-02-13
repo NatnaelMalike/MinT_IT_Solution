@@ -12,14 +12,15 @@ const validate = (schema) => (req, res, next) => {
   const { value, error } = Joi.compile(schema).validate(object);
 
   if (error) {
+    let errorMessage = ""
     const errors = error.details.map((detail) => ({
       key: detail.context?.key,
-      message: detail.message,
+      message: `${detail.context?.key} field ${detail.type === 'any.required' ? 'is required' : detail.message.replace(/["']/g, '')}`,
     }));
+    errorMessage
     res.status(400).json({ error: true, errors });
     return;
   }
-
   return next();
 };
 

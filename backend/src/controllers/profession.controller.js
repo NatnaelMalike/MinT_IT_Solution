@@ -3,8 +3,12 @@ import { isValidObjectId } from "mongoose";
 import professionSchema from "../validations/profession.validation.js";
 
 const getProfessions = async (req, res) => {
-  const professions = await Profession.find();
-  res.status(200).json(professions);
+  try {
+    const professions = await Profession.find();
+    res.status(200).json(professions);
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong." });
+  }
 };
 
 const getProfessionById = async (req, res) => {
