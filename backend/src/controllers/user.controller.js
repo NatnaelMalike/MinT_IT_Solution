@@ -27,6 +27,7 @@ const getUserById = async (req, res) => {
   }
 
   res.status(200).json(ProfileDTO.fromUser(user));
+  
 };
 
 const getCurrentUser = async (req, res) => {

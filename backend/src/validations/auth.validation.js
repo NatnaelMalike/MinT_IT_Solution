@@ -8,4 +8,9 @@ const loginSchema = {
     })
 
 }
-export default  loginSchema;
+const refreshTokenSchema = {
+    body: Joi.object().keys({
+      refreshToken: Joi.string().required(),
+    }),
+  };
+export {loginSchema, refreshTokenSchema};

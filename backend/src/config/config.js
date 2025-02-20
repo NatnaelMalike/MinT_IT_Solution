@@ -7,7 +7,8 @@ export default {
     env: process.env.NODE_ENV || "development",
     jwt:{
         secret: process.env.JWT_SECRET,
-        expiry: process.env.JWT_EXPIRY || "1d",
+        expiry: process.env.JWT_ACCESS_EXPIRY,
+        r_expiry: process.env.JWT_REFRESH_EXPIRY
     }
 
 }

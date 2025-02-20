@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { tokenTypes } from "../config/tokens.js";
 
 const tokenSchema = new mongoose.Schema(
   {
@@ -32,3 +33,4 @@ const tokenSchema = new mongoose.Schema(
 );
 
 const Token = mongoose.model("Token", tokenSchema);
+export default Token
