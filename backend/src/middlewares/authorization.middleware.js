@@ -1,25 +1,23 @@
-const userMiddleware = (req,  res, next) => {
-    if(req.user?.role !== 'NormalUser'){
-        res.status(403).json({message: 'You are not authorized to access this resource'})
-        next()
+import passport from "passport";
+
+const authorizeRole = (requiredRole) => (req, res, next) => {
+  passport.authenticate("jwt", { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.status(401).json({ message: "Unauthorized" });
     }
-}
-const adminMiddleware = (req,  res, next) => {
-    if(req.user?.role !== 'SuperAdmin'){
-        res.status(403).json({message: 'You are not authorized to access this resource'})
-        next()
+
+    if (user.role !== requiredRole) {
+      return res.status(403).json({ message: "You are not authorized to access this resource" });
     }
-}
-const helperMiddleware = (req,  res, next) => {
-    if(req.user?.role !== 'HelperAdmin'){
-        res.status(403).json({message: 'You are not authorized to access this resource'})
-        next()
-    }
-}
-const technicianMiddleware = (req,  res, next) => {
-    if(req.user?.role !== 'TechnicianUser'){
-        res.status(403).json({message: 'You are not authorized to access this resource'})
-        next()
-    }
-}
-export  {userMiddleware, adminMiddleware, helperMiddleware, technicianMiddleware}
+
+    req.user = user;
+    next();
+  })(req, res, next);
+};
+
+const userMiddleware = authorizeRole("NormalUser");
+const adminMiddleware = authorizeRole("SuperAdmin");
+const helperMiddleware = authorizeRole("HelperAdmin");
+const technicianMiddleware = authorizeRole("TechnicianUser");
+
+export { userMiddleware, adminMiddleware, helperMiddleware, technicianMiddleware };

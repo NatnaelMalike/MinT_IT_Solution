@@ -1,20 +1,36 @@
-import jwt from "jsonwebtoken";
+import passport from "passport";
 
-const authMiddleware = (req, res, next) => {
-  const { authorization } = req.headers;
-  const token = authorization?.split(" ")[1];
-
-  if (!token) {
-    res.status(401).json({ message: "Access Denied!, No token Provided" });
-    return;
+const verifyCallback = (req, resolve, reject) => async (err, user, info) => {
+  if (err) {
+    return reject(err);
   }
+
+  if (info) {
+    return reject(new Error(info.message || "Please authenticate")); 
+  }
+
+  if (!user) {
+    return reject(new Error("Invalid token or user not found"));
+  }
+
+  req.user = user;
+  resolve();
+};
+
+const auth = async (req, res, next) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded;
+    await new Promise((resolve, reject) => {
+      passport.authenticate(
+        "jwt",
+        { session: false },
+        verifyCallback(req, resolve, reject)
+      )(req, res, next);
+    });
+
     next();
   } catch (error) {
-    res.status(401).json({ message: "Invalid authentication token." });
+    res.status(401).json({ message: error.message || "Unauthorized" });
   }
 };
 
-export default authMiddleware;
+export default auth;

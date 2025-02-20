@@ -9,8 +9,13 @@ import departmentRoute from './routes/department.route.js'
 import professionRoute from './routes/profession.route.js'
 import userRoute from './routes/user.route.js'
 import reportRoute from  './routes/report.route.js'
+import passport from "passport";
+import { jwtStrategy } from "./config/passport.js";
 import authMiddleware from "./middlewares/auth.middleware.js";
+
 const app = express();
+app.use(passport.initialize());
+passport.use('jwt',jwtStrategy);
 
 process.on('uncaughtException', unExpectedErrorHandler);
 process.on('unhandledRejection', unHandledRejectionHandler)
@@ -32,7 +37,7 @@ app.use(
 
 app.use(express.json());
 app.use('/auth',  authRoute);
-// app.use(authMiddleware)
+app.use(authMiddleware)
 app.use('/user', userRoute)
 app.use('/department', departmentRoute )
 app.use('/profession',  professionRoute)
