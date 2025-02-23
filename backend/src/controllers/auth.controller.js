@@ -15,8 +15,7 @@ const signup = asyncMiddleware(async (req, res) => {
     ...req.body,
     password: await bcrypt.hash(req.body.password, 10),
   });
-  const token = await generateAuthTokens(user._id, user.role);
-  res.status(201).json({ user: ProfileDTO.fromUser(user), token });
+  res.status(201).json({ user: ProfileDTO.fromUser(user) });
 });
 
 const signin = asyncMiddleware(async (req, res) => {
@@ -24,14 +23,18 @@ const signin = asyncMiddleware(async (req, res) => {
 
   const user = await User.findOne({ email });
 
+  if (user.status !== 'active') {
+    res.status(400).json({ message: 'Your account is not yet approved' });
+    return
+  }
   if (!user) {
-    res.status(401).send("Invalid credentials");
+    res.status(401).json({ message: "Invalid Credentials" });
     return;
   }
 
   const isValidPassword = await bcrypt.compare(password, user.password);
   if (!isValidPassword) {
-    res.status(401).send("Invalid credentials");
+    res.status(401).json({ message: "Invalid Credentials" });
     return;
   }
 
@@ -43,5 +46,6 @@ const refreshToken = asyncMiddleware(async (req, res) => {
   const tokens = await refreshAuthToken(req.body.refreshToken);
   res.status(200).json({ ...tokens });
 });
+
 
 export { signup, signin, refreshToken };

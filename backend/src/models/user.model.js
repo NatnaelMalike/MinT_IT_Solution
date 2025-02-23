@@ -6,12 +6,14 @@ const userSchema = new mongoose.Schema(
       required: true,
       minLength: 5,
       maxLength: 50,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
       lowerCase: true,
+      trim: true,
     },
     password: {
       type: String,
@@ -30,6 +32,7 @@ const userSchema = new mongoose.Schema(
     phone: {
       type: String,
       required: true,
+      match: [/^\+251\d{9}$/, "Phone number must start with +251 followed by 9 digits"],
     },
     profession: {
       type: mongoose.Schema.Types.Mixed,
@@ -38,10 +41,7 @@ const userSchema = new mongoose.Schema(
       },
       default: "None",
     },
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
+    status: { type: String, enum: ['pending', 'active', 'inactive'], default: 'pending' },
     role: {
       type: String,
       required: true,
@@ -51,8 +51,6 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-
 
 
 const User = new mongoose.model("User", userSchema);

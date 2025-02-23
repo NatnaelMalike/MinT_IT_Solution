@@ -29,7 +29,8 @@ mongoose
 app.use(
     cors({
         origin: "http://localhost:5173",
-        methods: ["GET", "POST", "PUT", "DELETE"],
+        methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+        credentials: true,
         allowedHeaders: ["Content-Type", "Authorization"],
     })
 );
@@ -37,7 +38,7 @@ app.use(
 
 app.use(express.json());
 app.use('/auth',  authRoute);
-app.use(authMiddleware)
+// app.use(authMiddleware)
 app.use('/user', userRoute)
 app.use('/department', departmentRoute )
 app.use('/profession',  professionRoute)

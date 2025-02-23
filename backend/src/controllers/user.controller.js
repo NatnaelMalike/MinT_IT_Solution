@@ -6,6 +6,7 @@ import {
 } from "../validations/user.validation.js";
 import bcrypt from "bcrypt";
 import { ProfileDTO } from "../dtos/profile.dto.js";
+import asyncMiddleware from "../middlewares/async.middleware.js";
 
 const getUsers = async (req, res) => {
   const users = await User.find();
@@ -103,7 +104,7 @@ const changePassword = async (req, res) => {
   res.status(200).json({ message: "Password changed successfully" });
 };
 
-const deleteUser = async (req, res) => {
+const deleteUser = asyncMiddleware(async (req, res) => {
   const { id } = req.params;
   if (!isValidObjectId(id)) {
     res.status(400).json({ message: "Invalid user id." });
@@ -117,9 +118,21 @@ const deleteUser = async (req, res) => {
   }
 
   res.status(200).json({ message: "User deleted successfully." });
-};
+});
+
+const approveUser = asyncMiddleware(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    res.status(404).json({ message: "User not found" });
+    return;
+  }
+  user.status = "active";
+  await user.save();
+  res.status(200).json({ message: 'User approved successfully' });
+})
 
 export {
+  approveUser,
   getUsers,
   getUserById,
   getCurrentUser,
