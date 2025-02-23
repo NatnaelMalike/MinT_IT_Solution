@@ -79,4 +79,17 @@ const verifyToken = async (token, type) => {
   return tokenDoc;
 };
 
-export { generateAuthTokens, saveToken, verifyToken };
+const generateInviteToken = async (role) => {
+  return jwt.sign({role}, config.jwt.invite, {expiresIn: '1d'});
+};
+
+const verifyInviteToken = async (token) => {
+  const payload = jwt.verify(token, config.jwt.invite);
+  const {role} = payload;
+  if (role !== 'HelperAdmin' && role !== 'TechnicianUser') {
+     res.status(400).json({ message: 'Invalid role in invite link' });
+     return
+  }
+  return role
+}
+export { generateAuthTokens, saveToken, verifyToken, generateInviteToken, verifyInviteToken };

@@ -1,11 +1,16 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
-import { generateAuthTokens } from "../services/token.service.js";
+import { generateAuthTokens, generateInviteToken, verifyInviteToken } from "../services/token.service.js";
 import { ProfileDTO } from "../dtos/profile.dto.js";
 import asyncMiddleware from "../middlewares/async.middleware.js";
 import { refreshAuthToken } from "../services/auth.service.js";
 
 const signup = asyncMiddleware(async (req, res) => {
+  let role = 'NormalUser';
+  const {token} = req.body;
+  if(token){
+    role = verifyInviteToken(token);
+  }
   const emailExists = await User.findOne({ email: req.body.email });
   if (emailExists) {
     res.status(400).json({ message: "Email already exists" });
@@ -13,6 +18,7 @@ const signup = asyncMiddleware(async (req, res) => {
   }
   const user = await User.create({
     ...req.body,
+    role,
     password: await bcrypt.hash(req.body.password, 10),
   });
   res.status(201).json({ user: ProfileDTO.fromUser(user) });
@@ -47,5 +53,10 @@ const refreshToken = asyncMiddleware(async (req, res) => {
   res.status(200).json({ ...tokens });
 });
 
+const InviteToken = asyncMiddleware(async (req, res) => {
+  const {role} = req.body;
+  const token = await generateInviteToken(role);
+  res.status(200).json({token});
+});
 
-export { signup, signin, refreshToken };
+export { signup, signin, refreshToken, InviteToken };

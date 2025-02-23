@@ -13,4 +13,11 @@ const refreshTokenSchema = {
       refreshToken: Joi.string().required(),
     }),
   };
-export {loginSchema, refreshTokenSchema};
+const inviteTokenSchema = {
+    body: Joi.object().keys({
+      role: Joi.string()
+              .valid("HelperAdmin", "TechnicianUser")
+              .required(),
+    }),
+  };
+export {loginSchema, refreshTokenSchema, inviteTokenSchema};
