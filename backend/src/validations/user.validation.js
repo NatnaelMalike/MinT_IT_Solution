@@ -11,7 +11,16 @@ const validRoles = [
       name: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string().required(),
-      phone: Joi.string().required(),
+      confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+        'any.only': 'Confirm password must match password',
+      }),
+      phone: Joi.string()
+      .pattern(/^\+251\d{9}$/)
+      .required()
+      .messages({
+          'string.pattern.base': 'Phone number must start with +251 followed by 9 digits',
+          'any.required': 'Phone number is required'
+      }),
       department: Joi.string()
         .custom((value, helpers) => {
           if (!mongoose.Types.ObjectId.isValid(value)) {
