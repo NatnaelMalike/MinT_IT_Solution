@@ -1,14 +1,18 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
-import { generateAuthTokens, generateInviteToken, verifyInviteToken } from "../services/token.service.js";
+import {
+  generateAuthTokens,
+  generateInviteToken,
+  verifyInviteToken,
+} from "../services/token.service.js";
 import { ProfileDTO } from "../dtos/profile.dto.js";
 import asyncMiddleware from "../middlewares/async.middleware.js";
 import { refreshAuthToken } from "../services/auth.service.js";
 
 const signup = asyncMiddleware(async (req, res) => {
-  let role = 'NormalUser';
-  const {token} = req.body;
-  if(token){
+  let role = "NormalUser";
+  const { token } = req.body;
+  if (token) {
     role = verifyInviteToken(token);
   }
   const emailExists = await User.findOne({ email: req.body.email });
@@ -16,9 +20,11 @@ const signup = asyncMiddleware(async (req, res) => {
     res.status(400).json({ message: "Email already exists" });
     return;
   }
+  const profilePicturePath = req.file ? req.file.path : "";
   const user = await User.create({
     ...req.body,
     role,
+    profilePicture: profilePicturePath,
     password: await bcrypt.hash(req.body.password, 10),
   });
   res.status(201).json({ user: ProfileDTO.fromUser(user) });
@@ -29,9 +35,9 @@ const signin = asyncMiddleware(async (req, res) => {
 
   const user = await User.findOne({ email });
 
-  if (user.status !== 'active') {
-    res.status(400).json({ message: 'Your account is not yet approved' });
-    return
+  if (user.status !== "active") {
+    res.status(400).json({ message: "Your account is not yet approved" });
+    return;
   }
   if (!user) {
     res.status(401).json({ message: "Invalid Credentials" });
@@ -54,9 +60,9 @@ const refreshToken = asyncMiddleware(async (req, res) => {
 });
 
 const InviteToken = asyncMiddleware(async (req, res) => {
-  const {role} = req.body;
+  const { role } = req.body;
   const token = await generateInviteToken(role);
-  res.status(200).json({token});
+  res.status(200).json({ token });
 });
 
 export { signup, signin, refreshToken, InviteToken };

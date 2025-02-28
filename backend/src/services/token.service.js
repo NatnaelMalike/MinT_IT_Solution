@@ -1,47 +1,41 @@
 import jwt from "jsonwebtoken";
-import dayjs from "dayjs"
+import dayjs from "dayjs";
 import config from "../config/config.js";
 import { tokenTypes } from "../config/tokens.js";
 import Token from "../models/token.model.js";
 
-const generateToken = (
-  userId,
-  role,
-  expires,
-  type
-) => {
+const generateToken = (userId, role, expires, type) => {
   const payload = {
     role,
     sub: userId,
     iat: dayjs().unix(),
     exp: expires.unix(),
-    type
+    type,
   };
   return jwt.sign(payload, config.jwt.secret);
 };
 
-const generateAuthTokens = async(userId, role) => {
-  const accessTokenExpires = dayjs().add(
-    config.jwt.expiry,
-    'minutes'
-  );
+const generateAuthTokens = async (userId, role) => {
+  const accessTokenExpires = dayjs().add(config.jwt.expiry, "minutes");
   const accessToken = generateToken(
     userId,
     role,
     accessTokenExpires,
     tokenTypes.ACCESS
   );
-  const refreshTokenExpires = dayjs().add(
-    config.jwt.r_expiry,
-    'days'
-  );
+  const refreshTokenExpires = dayjs().add(config.jwt.r_expiry, "days");
   const refreshToken = generateToken(
     userId,
     role,
     refreshTokenExpires,
     tokenTypes.REFRESH
   );
-  await saveToken(refreshToken, userId, refreshTokenExpires, tokenTypes.REFRESH)
+  await saveToken(
+    refreshToken,
+    userId,
+    refreshTokenExpires,
+    tokenTypes.REFRESH
+  );
   return {
     access: {
       token: accessToken,
@@ -74,22 +68,28 @@ const verifyToken = async (token, type) => {
     blacklisted: false,
   });
   if (!tokenDoc) {
-    throw new Error('Token not found');
+    throw new Error("Token not found");
   }
   return tokenDoc;
 };
 
 const generateInviteToken = async (role) => {
-  return jwt.sign({role}, config.jwt.invite, {expiresIn: '1d'});
+  return jwt.sign({ role }, config.jwt.invite, { expiresIn: "1d" });
 };
 
 const verifyInviteToken = async (token) => {
   const payload = jwt.verify(token, config.jwt.invite);
-  const {role} = payload;
-  if (role !== 'HelperAdmin' && role !== 'TechnicianUser') {
-     res.status(400).json({ message: 'Invalid role in invite link' });
-     return
+  const { role } = payload;
+  if (role !== "HelperAdmin" && role !== "TechnicianUser") {
+    res.status(400).json({ message: "Invalid role in invite link" });
+    return;
   }
-  return role
-}
-export { generateAuthTokens, saveToken, verifyToken, generateInviteToken, verifyInviteToken };
+  return role;
+};
+export {
+  generateAuthTokens,
+  saveToken,
+  verifyToken,
+  generateInviteToken,
+  verifyInviteToken,
+};
