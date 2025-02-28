@@ -32,12 +32,6 @@ const issueSchema = new mongoose.Schema(
       enum: ["Low", "Medium", "High", "Critical"],
     },
 
-    assignedTo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      default: null,
-    },
-
     attachments: [
       {
         filePath: { type: String },
