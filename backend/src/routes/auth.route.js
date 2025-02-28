@@ -16,7 +16,7 @@ import { uploadProfilePicture } from "../services/fileUpload.service.js";
 
 const router = Router();
 
-router.post("/signup", uploadProfilePicture, validate(userSchema), signup);
+router.post("/signup", validate(userSchema), uploadProfilePicture, signup);
 router.post("/signin", validate(loginSchema), signin);
 router.post("/refresh-token", validate(refreshTokenSchema), refreshToken);
 router.post("/generate-invite", validate(inviteTokenSchema), InviteToken);

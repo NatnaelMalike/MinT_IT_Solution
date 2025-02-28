@@ -16,7 +16,7 @@ const router = Router();
 router.get("/", getReports);
 router.get("/me", getReportsByUser);
 router.get("/:id", getReportById);
-router.post("/", uploadIssueFiles, validate(reportSchema), issueReport);
+router.post("/", validate(reportSchema), uploadIssueFiles, issueReport);
 router.patch("/:id", validate(reportSchema), editReport);
 router.delete("/:id", deleteReport);
 
