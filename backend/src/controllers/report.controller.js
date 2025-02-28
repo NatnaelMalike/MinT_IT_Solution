@@ -14,9 +14,11 @@ const getReportsByUser = asyncMiddleware(async (req, res) => {
 });
 
 const issueReport = asyncMiddleware(async (req, res) => {
+  const files = req.files.map((file) => file.filename);
   const report = await Report.create({
     reportedBy: req.user?._id,
     ...req.body,
+    attachments: files.map((filePath) => ({ filePath })),
   });
 
   res.status(201).json(report);

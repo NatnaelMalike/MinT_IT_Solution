@@ -40,8 +40,7 @@ const issueSchema = new mongoose.Schema(
 
     attachments: [
       {
-        fileName: { type: String },
-        fileUrl: { type: String },
+        filePath: { type: String },
       },
     ],
 

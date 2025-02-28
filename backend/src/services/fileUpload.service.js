@@ -55,6 +55,6 @@ const uploadIssueFiles = multer({
       );
     }
   },
-}).array("files", 5);
+}).array("attachments", 5);
 
 export { uploadProfilePicture, uploadIssueFiles };
