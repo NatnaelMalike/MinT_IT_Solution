@@ -82,4 +82,5 @@ const changePasswordSchema = {
       return value;
     }),
 };
+
 export { userSchema, editProfileSchema, changePasswordSchema };

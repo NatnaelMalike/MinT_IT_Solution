@@ -13,10 +13,17 @@ import {
 } from "../validations/auth.validation.js";
 import { userSchema } from "../validations/user.validation.js";
 import { uploadProfilePicture } from "../services/fileUpload.service.js";
+import setRoleFromToken from "../middlewares/setRoleFromToken.middleware.js";
 
 const router = Router();
 
-router.post("/signup", validate(userSchema), uploadProfilePicture, signup);
+router.post(
+  "/signup",
+  setRoleFromToken,
+  validate(userSchema),
+  uploadProfilePicture,
+  signup
+);
 router.post("/signin", validate(loginSchema), signin);
 router.post("/refresh-token", validate(refreshTokenSchema), refreshToken);
 router.post("/generate-invite", validate(inviteTokenSchema), InviteToken);

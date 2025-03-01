@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import {
   generateAuthTokens,
   generateInviteToken,
-  verifyInviteToken,
 } from "../services/token.service.js";
 import { ProfileDTO } from "../dtos/profile.dto.js";
 import asyncMiddleware from "../middlewares/async.middleware.js";
@@ -13,24 +12,6 @@ import inviteEmail from "../utils/inviteEmail.js";
 import config from "../config/config.js";
 
 const signup = asyncMiddleware(async (req, res) => {
-  const token = req.query.token;
-  let role = "NormalUser";
-
-  if (token) {
-    try {
-      role = verifyInviteToken(token);
-      if (!["HelperAdmin", "TechnicianUser"].includes(role)) {
-        return res
-          .status(400)
-          .json({ message: "Invalid or expired invite token" });
-      }
-    } catch (err) {
-      return res
-        .status(400)
-        .json({ message: "Invalid or expired invite token" });
-    }
-  }
-
   const emailExists = await User.findOne({ email: req.body.email });
   if (emailExists) {
     return res.status(400).json({ message: "Email already exists" });
