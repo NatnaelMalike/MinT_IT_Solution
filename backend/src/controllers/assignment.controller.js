@@ -1,6 +1,6 @@
-import asyncMiddleware from "../middlewares/async.middleware";
-import Assignment from "../models/assignment.model";
-import Issue from "../models/report.model";
+import asyncMiddleware from "../middlewares/async.middleware.js";
+import Assignment from "../models/assignment.model.js";
+import Issue from "../models/report.model.js";
 
 const assignIssue = asyncMiddleware(async (req, res) => {
   const issueId = req.params.id;

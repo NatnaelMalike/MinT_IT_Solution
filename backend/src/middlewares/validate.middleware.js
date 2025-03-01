@@ -17,7 +17,7 @@ const validate = (schema) => (req, res, next) => {
       key: detail.context?.key,
       message: `${
         detail.type === "any.required"
-          ? "is required"
+          ? detail.context?.key + " is required"
           : detail.message.replace(/["']/g, "")
       }`,
     }));

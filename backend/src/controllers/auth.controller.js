@@ -8,25 +8,43 @@ import {
 import { ProfileDTO } from "../dtos/profile.dto.js";
 import asyncMiddleware from "../middlewares/async.middleware.js";
 import { refreshAuthToken } from "../services/auth.service.js";
+import sendEmail from "../services/email.service.js";
+import inviteEmail from "../utils/inviteEmail.js";
+import config from "../config/config.js";
 
 const signup = asyncMiddleware(async (req, res) => {
+  const token = req.query.token;
   let role = "NormalUser";
-  const { token } = req.body;
+
   if (token) {
-    role = verifyInviteToken(token);
+    try {
+      role = verifyInviteToken(token);
+      if (!["HelperAdmin", "TechnicianUser"].includes(role)) {
+        return res
+          .status(400)
+          .json({ message: "Invalid or expired invite token" });
+      }
+    } catch (err) {
+      return res
+        .status(400)
+        .json({ message: "Invalid or expired invite token" });
+    }
   }
+
   const emailExists = await User.findOne({ email: req.body.email });
   if (emailExists) {
-    res.status(400).json({ message: "Email already exists" });
-    return;
+    return res.status(400).json({ message: "Email already exists" });
   }
+
   const profilePicturePath = req.file ? req.file.path : "";
+
   const user = await User.create({
     ...req.body,
     role,
     profilePicture: profilePicturePath,
     password: await bcrypt.hash(req.body.password, 10),
   });
+
   res.status(201).json({ user: ProfileDTO.fromUser(user) });
 });
 
@@ -60,9 +78,18 @@ const refreshToken = asyncMiddleware(async (req, res) => {
 });
 
 const InviteToken = asyncMiddleware(async (req, res) => {
-  const { role } = req.body;
+  const { role, email, name } = req.body;
+
+  const allowedRoles = ["HelperAdmin", "TechnicianUser"];
+  if (!allowedRoles.includes(role)) {
+    return res.status(400).json({ message: "Invalid role in invite link" });
+  }
+
   const token = await generateInviteToken(role);
-  res.status(200).json({ token });
+  const inviteLink = `${config.frontendUrl}/signup?token=${token}`;
+  const htmlContent = inviteEmail(name, role, inviteLink);
+  await sendEmail(email, "Invite Link", htmlContent);
+  res.status(200).json({ message: "Invite link sent successfully" });
 });
 
 export { signup, signin, refreshToken, InviteToken };

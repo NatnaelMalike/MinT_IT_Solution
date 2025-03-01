@@ -50,7 +50,6 @@ const editProfile = asyncMiddleware(async (req, res) => {
     res.status(404).json({ message: "User not found" });
     return;
   }
-
   res.status(200).json(ProfileDTO.fromUser(user));
 });
 
@@ -89,7 +88,6 @@ const deleteUser = asyncMiddleware(async (req, res) => {
     res.status(404).json({ message: "User not found." });
     return;
   }
-
   res.status(200).json({ message: "User deleted successfully." });
 });
 
