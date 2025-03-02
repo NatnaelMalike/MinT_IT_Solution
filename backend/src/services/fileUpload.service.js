@@ -1,7 +1,8 @@
 import multer from "multer";
 import path from "path";
 
-const uploadProfilePicture = multer({
+const uploadProfile
+ = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, "uploads/profiles");
@@ -57,4 +58,5 @@ const uploadIssueFiles = multer({
   },
 }).array("attachments", 5);
 
-export { uploadProfilePicture, uploadIssueFiles };
+export { uploadProfile
+  , uploadIssueFiles };

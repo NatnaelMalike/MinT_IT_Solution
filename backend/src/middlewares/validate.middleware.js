@@ -9,7 +9,7 @@ const validate = (schema) => (req, res, next) => {
     }
     return obj;
   }, {});
-  const { value, error } = Joi.compile(schema).validate(object);
+  const { error } = Joi.compile(schema).validate(object);
 
   if (error) {
     let errorMessage = "";

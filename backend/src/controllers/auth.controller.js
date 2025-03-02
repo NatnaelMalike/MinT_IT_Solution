@@ -17,12 +17,9 @@ const signup = asyncMiddleware(async (req, res) => {
     return res.status(400).json({ message: "Email already exists" });
   }
 
-  const profilePicturePath = req.file ? req.file.path : "";
-
   const user = await User.create({
     ...req.body,
     role,
-    profilePicture: profilePicturePath,
     password: await bcrypt.hash(req.body.password, 10),
   });
 
