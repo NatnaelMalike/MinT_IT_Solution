@@ -16,7 +16,6 @@ const signup = asyncMiddleware(async (req, res) => {
   if (emailExists) {
     return res.status(400).json({ message: "Email already exists" });
   }
-
   const user = await User.create({
     ...req.body,
     role,

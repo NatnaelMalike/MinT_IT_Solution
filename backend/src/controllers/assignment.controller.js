@@ -112,7 +112,7 @@ const escalateIssue = asyncMiddleware(async (req, res) => {
   if (!assignee || assignee.role !== "SuperAdmin") {
     return res
       .status(400)
-      .json({ message: "Escalation must be ro a SuperAdmin" });
+      .json({ message: "Escalation must be to a SuperAdmin" });
   }
 
   if (issue.status === "Closed") {
