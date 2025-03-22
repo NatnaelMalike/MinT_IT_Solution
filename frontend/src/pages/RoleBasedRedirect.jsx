@@ -39,7 +39,7 @@ const RoleBasedRedirect = () => {
                 navigate("/admin/dashboard");
                 break;
             default:
-                navigate("/unauthorized");
+                navigate("/");
                 break;
         }
     }, [token, navigate]);

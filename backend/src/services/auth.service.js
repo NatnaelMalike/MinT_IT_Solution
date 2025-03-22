@@ -21,5 +21,4 @@ const refreshAuthToken = async (refreshToken) => {
         throw error;
     }
   };
-
-  export {refreshAuthToken}
+export {refreshAuthToken}

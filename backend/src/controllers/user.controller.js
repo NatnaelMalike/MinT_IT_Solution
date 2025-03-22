@@ -7,6 +7,7 @@ import {
 import bcrypt from "bcrypt";
 import { ProfileDTO } from "../dtos/profile.dto.js";
 import asyncMiddleware from "../middlewares/async.middleware.js";
+import Token from "../models/token.model.js";
 
 const getUsers = asyncMiddleware(async (req, res) => {
   const users = await User.find();
@@ -31,8 +32,7 @@ const getUserById = asyncMiddleware(async (req, res) => {
 });
 
 const getCurrentUser = asyncMiddleware(async (req, res) => {
-  const { _id: id } = req.user;
-
+  const { _id:id} = req.user;
   const user = await User.findById(id);
   if (!user) {
     res.status(404).json({ message: "User not found" });
@@ -109,4 +109,5 @@ export {
   getCurrentUser,
   editProfile,
   deleteUser,
+  
 };

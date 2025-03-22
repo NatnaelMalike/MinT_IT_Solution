@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import config from "../config/config.js";
 import { tokenTypes } from "../config/tokens.js";
 import Token from "../models/token.model.js";
-import asyncMiddleware from "../middlewares/async.middleware.js";
 
 const generateToken = (userId, role, expires, type) => {
   const payload = {

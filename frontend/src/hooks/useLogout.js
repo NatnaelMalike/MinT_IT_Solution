@@ -1,18 +1,22 @@
-import { useAuthContext } from "./useAuthContext";
+import publicApiClient from "@/lib/publicApiClient";
+import useAuthStore from "@/store/authStore";
+import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { useRequestContext } from "./useRequestContext";
+
 export const useLogout = () => {
-const navigate = useNavigate();
-    const { dispatch } = useAuthContext();
-    const { dispatch:  dispatchRequest } = useRequestContext();
+  const { logout } = useAuthStore();
+  const navigate = useNavigate();
 
-
-    const logout = () => {
-        localStorage.removeItem("token");
-        dispatch({ type: "LOGOUT" });
-        dispatchRequest({ type: 'CLEAR_REQUESTS' });
-        navigate('/')
-
-    };
-    return {logout}
+  return useMutation({
+    mutationFn: () => publicApiClient.post("/auth/logout"),
+    onSuccess: () => {
+      logout();
+      navigate("/");
+    },
+    onError: (error) => {
+      console.error("Logout failed:", error.message);
+      logout(); // Force logout
+      navigate("/");
+    },
+  });
 };

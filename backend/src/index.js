@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import config from "./config/config.js";
 import route404 from "./middlewares/route404.middleware.js";
 import {errorHandler, unExpectedErrorHandler, unHandledRejectionHandler} from "./middlewares/error.middleware.js";
@@ -36,9 +37,11 @@ app.use(
 );
 
 
+
 app.use(express.json());
+app.use(cookieParser());
 app.use('/auth',  authRoute);
-// app.use(authMiddleware)
+app.use(authMiddleware)
 app.use('/user', userRoute)
 app.use('/department', departmentRoute )
 app.use('/profession',  professionRoute)
