@@ -1,37 +1,21 @@
-export class ProfileDTO {
-  constructor(
-    id,
-    name,
-    email,
-    phone,
-    profilePicture,
-    department,
-    role,
-    profession,
-    isActive
-  ) {
-    this.id = id;
-    this.name = name;
-    this.role = role;
-    this.email = email;
-    this.phone = phone;
-    this.profilePicture = profilePicture;
-    this.department = department;
-    this.profession = profession;
-    this.isActive = isActive;
-  }
-  static fromUser(user) {
-    return new ProfileDTO(
-      user._id,
-      user.name,
-      user.email,
-      user.phone,
-      user.profilePicture,
-      user.department,
-      user.role,
-      user.profession,
-      user.isActive
-    );
-  }
-  
-}
+import { format } from 'date-fns'; // Ensure this is imported
+
+export const ProfileDTO = (user) => {
+  const formattedDate = user.createdAt
+    ? format(new Date(user.createdAt), 'MMMM d, yyyy h:mm a')
+    : null;
+
+  return {
+    id: user._id,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    profilePicture: user.profilePicture,
+    department: user.department,
+    role: user.role,
+    profession: user.profession,
+    isActive: user.isActive,
+    createdAt: formattedDate
+  };
+};
+

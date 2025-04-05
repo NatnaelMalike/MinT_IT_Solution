@@ -1,17 +1,12 @@
 import User from "../models/user.model.js";
 import { isValidObjectId } from "mongoose";
-import {
-  changePasswordSchema,
-  editProfileSchema,
-} from "../validations/user.validation.js";
-import bcrypt from "bcrypt";
+
 import { ProfileDTO } from "../dtos/profile.dto.js";
 import asyncMiddleware from "../middlewares/async.middleware.js";
-import Token from "../models/token.model.js";
 
 const getUsers = asyncMiddleware(async (req, res) => {
   const users = await User.find();
-  const profiles = users.map((user) => ProfileDTO.fromUser(user));
+  const profiles = users.map((user) => ProfileDTO(user));
   res.status(200).json(profiles);
 });
 
@@ -28,18 +23,17 @@ const getUserById = asyncMiddleware(async (req, res) => {
     return;
   }
 
-  res.status(200).json(ProfileDTO.fromUser(user));
+  res.status(200).json(ProfileDTO(user));
 });
 
 const getCurrentUser = asyncMiddleware(async (req, res) => {
   const { _id:id} = req.user;
-  const user = await User.findById(id);
+  const user = await User.findById(id).populate("department");
   if (!user) {
     res.status(404).json({ message: "User not found" });
     return;
   }
-
-  res.status(200).json(ProfileDTO.fromUser(user));
+  res.status(200).json(ProfileDTO(user));
 });
 
 const editProfile = asyncMiddleware(async (req, res) => {
@@ -50,7 +44,7 @@ const editProfile = asyncMiddleware(async (req, res) => {
     res.status(404).json({ message: "User not found" });
     return;
   }
-  res.status(200).json(ProfileDTO.fromUser(user));
+  res.status(200).json(ProfileDTO(user));
 });
 
 // const changePassword = async (req, res) => {

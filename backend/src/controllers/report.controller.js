@@ -1,7 +1,7 @@
-import reportSchema from "../validations/report.validation.js";
 import Issue from "../models/report.model.js";
 import { isValidObjectId } from "mongoose";
 import asyncMiddleware from "../middlewares/async.middleware.js";
+import { ReportDTO } from "../dtos/report.dto.js";
 
 const getReports = asyncMiddleware(async (req, res) => {
   const reports = await Issue.find();
@@ -10,7 +10,8 @@ const getReports = asyncMiddleware(async (req, res) => {
 
 const getReportsByUser = asyncMiddleware(async (req, res) => {
   const reports = await Issue.find({ reportedBy: req.user._id });
-  res.status(200).json(reports);
+  const r_reports = reports.map((report) => ReportDTO(report));
+  res.status(200).json({ reports: r_reports });
 });
 
 const issueReport = asyncMiddleware(async (req, res) => {
@@ -19,7 +20,7 @@ const issueReport = asyncMiddleware(async (req, res) => {
     ...req.body,
   });
 
-  res.status(201).json({ message: "Issue reported successfully" }, report);
+  res.status(201).json({ message: "Issue reported successfully" , report});
 });
 
 const getReportById = asyncMiddleware(async (req, res) => {
@@ -28,7 +29,6 @@ const getReportById = asyncMiddleware(async (req, res) => {
     res.status(400).json({ message: "Invalid issue id." });
     return;
   }
-
   const report = await Issue.findById(id);
   if (!report) {
     res.status(404).json({ message: "Issue not found." });

@@ -1,5 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
+import path from 'path';
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import config from "./config/config.js";
@@ -14,7 +15,9 @@ import passport from "passport";
 import { jwtStrategy } from "./config/passport.js";
 import authMiddleware from "./middlewares/auth.middleware.js";
 
+
 const app = express();
+const __dirname = path.resolve();
 app.use(passport.initialize());
 passport.use('jwt',jwtStrategy);
 
@@ -37,9 +40,10 @@ app.use(
 );
 
 
-
+// app.all("/api/auth/*", toNodeHandler(auth));
 app.use(express.json());
 app.use(cookieParser());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/auth',  authRoute);
 app.use(authMiddleware)
 app.use('/user', userRoute)

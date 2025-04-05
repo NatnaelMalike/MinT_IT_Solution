@@ -7,6 +7,7 @@ const uploadProfilePicture = asyncMiddleware(async(req, res) =>{
     } 
     res.status(200).json({fileUrl: req.file.path})
     // Saving to the DB will be implemented
+    
 })
 const uploadIssueAttachements = asyncMiddleware(async(req, res)=>{
     if (!req.files || req.files.length === 0) {

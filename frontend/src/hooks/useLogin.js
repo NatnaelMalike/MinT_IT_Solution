@@ -1,9 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import apiClient from "@/lib/publicApiClient";
 import useAuthStore from "@/store/authStore";
 import decodeToken from "@/lib/jwtDecode";
-import authApiClient from "@/lib/authApiClient";
+import apiClient from "@/lib/apiClient";
 
 export const useLogin = () => {
   const { setAuth } = useAuthStore();
@@ -11,12 +10,12 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: async (data) => {
-      const response = await authApiClient.post("/auth/signin", data);
+      const response = await apiClient.post("/auth/signin", data);
       return response.data;
     },
     onSuccess: (data) => {
-      setAuth(data.user, data.accessToken);
-      const decodedToken = decodeToken(data.accessToken);
+      setAuth(data.user, data.token);
+      const decodedToken = decodeToken(data.token);
       const role = decodedToken?.role;
 
       switch (role) {

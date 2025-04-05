@@ -18,10 +18,8 @@ import logo from "../../assets/img/MinT-Logo.jpg";
 
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useLogout } from "@/hooks/useLogout";
 
 const Header = () => {
-  const { mutate: logout } = useLogout();
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-background/90 px-4 lg:h-[60px] lg:px-6">

@@ -3,7 +3,6 @@ import {
 } from "react-router-dom";
 import LoginPage from "./pages/login/LoginPage";
 import AdminHomepage from "./pages/Admin/AdminHomepage";
-import UserHomepage from "./pages/User/UserHomepage";
 import TechnicianHomepage from "./pages/Technnician/TechnicianHomepage";
 import UserSignup from "./pages/User/UserSignupPage";
 import AdminMain from "./components/Admin/AdminMain";
@@ -13,19 +12,24 @@ import DepartmentMain from "./components/AdminLayout/admin_components/Department
 import UserMain from "./components/AdminLayout/admin_components/User/UserMain";
 import HelperHomepage from "./pages/HelperDesk/HelperHomepage";
 import ForgetPassword from "./pages/reset_password/ForgetPassword";
-import RequestPage from "./components/User/RequestPage";
 import RequestTable from "./components/Request/RequestTable";
 import UnAuthorized from "./pages/UnAuthorized";
 import RoleBasedRedirect from "./pages/RoleBasedRedirect";
-import ProfilePage from "./components/ProfilePage";
 import TechnicianRequestTable from "./components/Technician/TechnicianRequestTable";
 import PasswordReset from "./pages/reset_password/PasswordReset";
 import AdminRequestTable from "./components/Request/AdminRequestTable";
 import AssignedRequests from "./components/Request/AssignedRequests";
-import RequestList from "./components/User/RequestsList";
 import HelpCenter from "./pages/HelpCenter";
 import HelperDashboard from "./components/AdminLayout/admin_components/Dashboard/HelperDashboard";
 import AuthProvider from "./components/AuthProvider";
+import UserDashboard from "./components/User/dashboard";
+import Userlayout from "./components/User/layout";
+import RequestForm from "./components/Form/request-form";
+import UserHero from "./components/User/hero";
+import TestComponent from "./components/User/report-table";
+import ProfilePage from "./components/User/profile-page";
+import IssueDetail from "./components/issue-detail";
+import IssueDetailView from "./components/User/issue-detail-view";
 const router = createBrowserRouter([
   // Login Page
   {
@@ -36,6 +40,10 @@ const router = createBrowserRouter([
     </AuthProvider>
     ,
   },
+  {
+path: "test-user",
+element: <UserDashboard />,
+  },
   // Role Based Redirect
   {
     path: "/redirect",
@@ -45,11 +53,14 @@ const router = createBrowserRouter([
   // User Dashboard
   {
     path: "/user",
-    element: <UserHomepage />,
+    element: <Userlayout />,
     children: [
-      { path: "add_request", element: <RequestPage /> },
-      { path: "requests", element: <RequestList /> },
+      {index: true, element: <UserHero />},
+      { path: "add-request", element: <RequestForm /> },
+      { path: "requests", element: <TestComponent /> },
       { path: "profile", element: <ProfilePage /> },
+      {path: "test", element: <IssueDetail/>},
+      {path: "issue/:id", element: <IssueDetailView/>}
     ],
   },
 

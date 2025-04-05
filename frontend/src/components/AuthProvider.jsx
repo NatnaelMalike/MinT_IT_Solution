@@ -1,56 +1,67 @@
-import { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
-import useAuthStore from '@/store/authStore';
-import authApiClient from '@/lib/authApiClient';
-import decodeToken from '@/lib/jwtDecode';
+import { useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import useAuthStore from "@/store/authStore";
+import authApiClient from "@/lib/apiClient";
+import decodeToken from "@/lib/jwtDecode";
 
 const AuthProvider = ({ children }) => {
-  const { setAuth, logout, accessToken } = useAuthStore();
+  const { setAuth, logout, token, user } = useAuthStore();
   const navigate = useNavigate();
 
+  // ✅ Check token expiration on app load
+  useEffect(() => {
+    if (token) {
+      const decodedToken = decodeToken(token);
+
+      // Token expired? Clear Zustand store + Persistent Storage
+      if (!decodedToken || decodedToken.exp * 1000 < Date.now()) {
+        logout(); // Clears Zustand state
+        localStorage.removeItem("auth-storage"); // Clear persisted token
+        navigate("/");
+      }else{
+        handleNavigation(decodedToken.role);
+      }
+      
+      
+    }
+  }, [token, logout, navigate]);
+
+  // ✅ Fetch user data only if `token` is valid
   const { data: userData, isLoading } = useQuery({
-    queryKey: ['authUser'],
+    queryKey: ["authUser"],
     queryFn: async () => {
-      const response = await authApiClient.get('/user/me');
+      const response = await authApiClient.get("/user/me");
       return response.data;
     },
-    enabled: !!accessToken,
+    enabled: !!token,
     retry: false,
+    staleTime: Infinity,
+    initialData: user ? { user } : undefined,
     onSuccess: (data) => {
-      setAuth(data.user, useAuthStore.getState().accessToken);
+      setAuth(data.user, token);
+      handleNavigation(data.user.role);
     },
     onError: () => {
       logout();
-      navigate('/');
+      localStorage.removeItem("auth-storage"); // Clear token on error
+      navigate("/");
     },
   });
 
-  useEffect(() => {
-    if (userData) {
-      const decodedToken = decodeToken(accessToken);
-      const role = decodedToken?.role;
-      switch (role) {
-        case 'NormalUser':
-          navigate('/user');
-          break;
-        case 'TechnicianUser':
-          navigate('/technician');
-          break;
-        case 'HelperAdmin':
-          navigate('/helper_desk/dashboard');
-          break;
-        case 'SuperAdmin':
-          navigate('/admin/dashboard');
-          break;
-        default:
-          navigate('/');
-          break;
-      }
-    }
-  }, [userData, accessToken, navigate]);
+  // ✅ Centralized navigation logic
+  const handleNavigation = (role) => {
+    const routes = {
+      NormalUser: "/user",
+      TechnicianUser: "/technician",
+      HelperAdmin: "/helper_desk/dashboard",
+      SuperAdmin: "/admin/dashboard",
+    };
+    navigate(routes[role] || "/");
+  };
 
-  if (isLoading && accessToken) return <div>Loading...</div>;
+  if (isLoading && token) return <div>Loading...</div>;
+
   return children;
 };
 

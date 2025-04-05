@@ -10,23 +10,28 @@ import { DepartmentContextProvider } from "./contexts/DepartmentContext";
 import { RequestContextProvider } from "./contexts/RequestContext";
 import { UserContextProvider } from "./contexts/UserContext";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-const queryClient = new QueryClient()
+import { ThemeProvider } from "@/components/theme-provider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <AdminContextProvider>
-        <TechnicianContextProvider>
-          <DepartmentContextProvider>
-            <RequestContextProvider>
-              <UserContextProvider>
-                <QueryClientProvider client={queryClient}>
-                  <RouterProvider router={router} />
-                </QueryClientProvider>
-              </UserContextProvider>
-            </RequestContextProvider>
-          </DepartmentContextProvider>
-        </TechnicianContextProvider>
-      </AdminContextProvider>
-    </AuthContextProvider>
+    <ThemeProvider>
+      <AuthContextProvider>
+        <AdminContextProvider>
+          <TechnicianContextProvider>
+            <DepartmentContextProvider>
+              <RequestContextProvider>
+                <UserContextProvider>
+                  <QueryClientProvider client={queryClient}>
+                    <RouterProvider router={router} />
+                    <ReactQueryDevtools initialIsOpen={false}/>
+                  </QueryClientProvider>
+                </UserContextProvider>
+              </RequestContextProvider>
+            </DepartmentContextProvider>
+          </TechnicianContextProvider>
+        </AdminContextProvider>
+      </AuthContextProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
