@@ -4,12 +4,12 @@ import asyncMiddleware from "../middlewares/async.middleware.js";
 import { ReportDTO } from "../dtos/report.dto.js";
 
 const getReports = asyncMiddleware(async (req, res) => {
-  const reports = await Issue.find();
+  const reports = await Issue.find().populate("reportedBy", "name");
   res.status(200).json(reports);
 });
 
 const getReportsByUser = asyncMiddleware(async (req, res) => {
-  const reports = await Issue.find({ reportedBy: req.user._id });
+  const reports = await Issue.find({ reportedBy: req.user._id }).populate("reportedBy", "name");
   const r_reports = reports.map((report) => ReportDTO(report));
   res.status(200).json({ reports: r_reports });
 });
@@ -29,7 +29,7 @@ const getReportById = asyncMiddleware(async (req, res) => {
     res.status(400).json({ message: "Invalid issue id." });
     return;
   }
-  const report = await Issue.findById(id);
+  const report = await Issue.findById(id).populate("reportedBy", "name");
   if (!report) {
     res.status(404).json({ message: "Issue not found." });
     return;
@@ -50,7 +50,7 @@ const editReport = asyncMiddleware(async (req, res) => {
   }
   if (issue.status === "Pending") {
     const e_issue = await Issue.findByIdAndUpdate(id, req.body, { new: true });
-    res.status(200).json({ message: "Issue updated successfully" }, e_issue);
+    res.status(200).json({ message: "Issue updated successfully", e_issue });
   } else {
     res.status(400).json({
       message: "You can't edit an issue unless it is in a Pending state",

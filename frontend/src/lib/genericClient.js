@@ -23,6 +23,10 @@ class GenericClient {
         const response = await apiClient.put(`${this.endpoint}/${id}`, data, config);
         return response.data;
       };
+      updateP = async (id, data, config = {}) => {
+        const response = await apiClient.patch(`${this.endpoint}/${id}`, data, config);
+        return response.data;
+      };
     
       delete = async (id, config = {}) => {
         const response = await apiClient.delete(`${this.endpoint}/${id}`, config);

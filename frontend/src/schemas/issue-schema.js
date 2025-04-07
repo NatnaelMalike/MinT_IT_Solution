@@ -15,3 +15,6 @@ export const issueSchema = z.object({
   isConfidential: z.boolean().default(false),
 
 });
+export const updateIssueSchema = issueSchema.partial().extend({
+  status: z.enum(["Pending", "In Progress", "Resolved", "Unresolved", "Closed"]).optional(),
+});
