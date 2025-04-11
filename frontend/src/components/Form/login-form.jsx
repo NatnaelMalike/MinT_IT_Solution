@@ -17,19 +17,15 @@ import { useLogin } from "@/hooks/useLogin";
 import { TailSpin } from "react-loader-spinner";
 import { useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { authSchema } from "@/schemas/login-schema";
 
-const formSchema = z.object({
-  email: z.string().email({ message: "Invalid Email Address" }),
-  password: z
-    .string()
-    .min(6, { message: "Password must be 6 or more characters long" }),
-});
+
 
 export default function LoginForm() {
   const [isvisible, setVisible] = useState(false);
   const { mutate: login, isLoading, error } = useLogin();
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(authSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -99,8 +95,8 @@ export default function LoginForm() {
           )}
         </Button>
       </form>
-      <FormMessage className="text-center p-4 text-base">
-        {error && error.message}
+      <FormMessage className="text-center text-base">
+        {error && error?.response?.data.message}
       </FormMessage>
     </Form>
   );

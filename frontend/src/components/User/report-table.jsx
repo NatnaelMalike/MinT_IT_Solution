@@ -2,11 +2,12 @@ import React from "react";
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { useApiQuery } from "@/hooks/useApiQuery";
+import DataTableSkeleton from "../common/table-skeleton";
 
-const TestComponent = () => {
+const ReportTable = () => {
   const { data, isLoading, error } = useApiQuery(["report"], "/report/me", {staleTime: 1000 * 60 * 5});
 
-  if (isLoading) return <p className="text-center">Loading...</p>;
+  if (isLoading) return <DataTableSkeleton/>;
   if (error) return <p className="text-center text-red-500">Error: {error.message}</p>;
 
   return (
@@ -20,4 +21,4 @@ const TestComponent = () => {
   );
 };
 
-export default TestComponent;
+export default ReportTable;

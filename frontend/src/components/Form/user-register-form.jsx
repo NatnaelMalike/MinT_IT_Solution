@@ -2,14 +2,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { z } from "zod";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,57 +28,28 @@ import {
 import { Check, ChevronsUpDown, EyeIcon, EyeOffIcon } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { useSignup } from "@/hooks/useSignup";
 import { TailSpin } from "react-loader-spinner";
-
-const formSchema = z
-  .object({
-    email: z.string().email({ message: "Invalid Email Address" }),
-    password: z
-      .string()
-      .min(6, { message: "Password must be 6 or more characters long" }),
-    fullName: z
-      .string()
-      .min(6, { message: "Name must be 6 or more characters long" }),
-    confirmPassword: z
-      .string()
-      .min(6, { message: "Password must be 6 or more characters long" }),
-
-    department: z.string().min(1, {
-      message: "Please select a department.",
-    }),
-    phone: z.string().refine((value) => /^(?:\+251)?0[1-9]\d{8}$/.test(value), {
-      message: "Invalid phone number format",
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"], // set the path of the error
-  });
+import { userSchema } from "@/schemas/user-schema";
+import { useApiQuery } from "@/hooks/useApiQuery";
+import { useSignup } from "@/hooks/useSignup";
 
 export default function UserForm() {
-  const { signup, isLoading, error } = useSignup();
-  const [departments, setDepartments] = useState([]);
+  const {
+    data: departments,
+    isLoading: deptLoading,
+    error: deptError,
+  } = useApiQuery(["department"], "/department", { staleTime: 1000 * 60 * 5 });
+  const { mutate: signup, isLoading, error } = useSignup();
   const [isvisible, setVisible] = useState(false);
   const togglePasswordVisibility = () => {
     setVisible(!isvisible);
   };
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/department")
-      .then((response) => {
-        setDepartments(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+
   const form = useForm({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(userSchema),
     defaultValues: {
       email: "",
-      fullName: "",
+      name: "",
       phone: "",
       department: "",
       password: "",
@@ -89,26 +58,37 @@ export default function UserForm() {
   });
 
   function onSubmit(data) {
-    signup(data, "user");
+    signup(data);
+  }
+  if (deptLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <TailSpin color="#000" height={80} width={80} />
+      </div>
+    );
+  }
+  if (deptError) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-destructive">{deptError}</p>
+      </div>
+    );
   }
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid md:grid-cols-2 lg:gap-x-[10%] gap-4 w-3/4 mx-auto items-start"
+        className="space-y-4 max-w-2xl sm:min-w-xl mx-auto w-full"
       >
         <FormField
           control={form.control}
-          name="fullName"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter Your Full Name" {...field} />
+                <Input placeholder="eg. Natnael Malike Meliyon" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your Full Name for The MinT_IT_Solution user account.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -120,12 +100,9 @@ export default function UserForm() {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Enter Your Email" {...field} />
+                <Input placeholder="eg. natnaelmk12@gmail.com" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your email address for The MinT_IT_Solution user
-                account.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -137,11 +114,9 @@ export default function UserForm() {
             <FormItem>
               <FormLabel>Phone Number</FormLabel>
               <FormControl>
-                <Input placeholder="Enter Your Phone Number" {...field} />
+                <Input placeholder="eg. 0915231212" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your phone number for The MinT_IT_Solution user account.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -153,18 +128,19 @@ export default function UserForm() {
             <FormItem>
               <FormLabel>Department</FormLabel>
               <Popover>
-                <PopoverTrigger asChild>
+                <PopoverTrigger>
                   <FormControl>
                     <Button
+                      type="button"
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-full justify-between text-base",
+                        "w-full justify-between ",
                         !field.value && "text-muted-foreground"
                       )}
                     >
                       {field.value
-                        ? departments.find(
+                        ? departments?.find(
                             (department) => department._id === field.value
                           )?.name
                         : "Select Your Department"}
@@ -172,7 +148,7 @@ export default function UserForm() {
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="p-0 max-h-80 overflow-y-scroll">
+                <PopoverContent className="p-0  max-h-80 overflow-y-auto">
                   <Command>
                     <CommandInput
                       placeholder="Search Department..."
@@ -203,9 +179,7 @@ export default function UserForm() {
                   </Command>
                 </PopoverContent>
               </Popover>
-              <FormDescription>
-                This is the name of the Your Department.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -220,7 +194,7 @@ export default function UserForm() {
                 <div className="relative ">
                   <Input
                     type={isvisible ? "text" : "password"}
-                    placeholder={"Enter Your Password"}
+                    placeholder={"eg. MinT1234"}
                     {...field}
                   />
                   <span
@@ -235,9 +209,7 @@ export default function UserForm() {
                   </span>
                 </div>
               </FormControl>
-              <FormDescription>
-                This is your password for The user account.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
@@ -252,7 +224,7 @@ export default function UserForm() {
                 <div className="relative ">
                   <Input
                     type={isvisible ? "text" : "password"}
-                    placeholder={"Enter Your Password"}
+                    placeholder={"eg. MinT1234"}
                     {...field}
                   />
                   <span
@@ -267,20 +239,18 @@ export default function UserForm() {
                   </span>
                 </div>
               </FormControl>
-              <FormDescription className="hidden lg:block">
-                Please confirm your password.
-              </FormDescription>
+
               <FormMessage />
             </FormItem>
           )}
         />
         <FormMessage className="text-center text-base p-4">
-          {error && error}
+          {error && error?.message}
         </FormMessage>
         <Button
           disabled={isLoading}
           type="submit"
-          className="mt-4 col-span-2 place-self-center w-1/2"
+          className="mt-8 w-full self-center"
         >
           {isLoading ? (
             <TailSpin color="#fff" height={30} width={30} />

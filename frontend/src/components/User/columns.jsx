@@ -12,6 +12,21 @@ import { MoreHorizontal } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Link } from "react-router-dom";
+const statusColors = {
+  Pending: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+  "In Progress":
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300",
+  Resolved:
+    "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300",
+  Closed: "bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300",
+};
+const priorityColors = {
+  Low: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
+  Medium: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
+  High: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300",
+  Critical: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
+};
+
 export const columns = [
   {
     accessorKey: "issuedAt",
@@ -38,14 +53,50 @@ export const columns = [
   {
     accessorKey: "priority",
     header: "Priority",
+    cell: ({ row }) => {
+      return (
+        <Badge
+        className={`${
+          priorityColors[row.original.priority]
+        } text-sm px-3 py-1`}
+      >
+        {row.original.priority}
+      </Badge>
+      );
+    },
   },
   {
     accessorKey: "isConfidential",
     header: "Confidential",
+    cell: ({ row }) => {
+      return (
+        row.original.isConfidential ? (
+          <Badge className="bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300 text-sm px-3 py-1">
+            Yes
+          </Badge>
+        ) : (
+          <Badge className="bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300 text-sm px-3 py-1">
+            No
+          </Badge>
+        )
+     
+      );
+    },
   },
   {
     accessorKey: "status",
     header: "Status",
+    cell: ({ row }) => {
+      return (
+        <Badge
+        className={`${
+          statusColors[row.original.status]
+        } text-sm px-3 py-1`}
+      >
+        {row.original.status}
+      </Badge>
+      );
+    },
   },
   {
     accessorKey: "tags",
@@ -60,6 +111,7 @@ export const columns = [
   },
   {
     id: "actions",
+    header: "Actions",
     cell: ({ row }) => {
       const issue = row.original;
 
@@ -74,7 +126,7 @@ export const columns = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View Reporter</DropdownMenuItem>
+            <DropdownMenuItem><Link to={`/user/id/${issue.reportedBy._id}`}> View Reporter</Link></DropdownMenuItem>
             <DropdownMenuItem><Link to={`/user/issue/${issue.id}`}> View issue details</Link></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

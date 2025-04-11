@@ -17,7 +17,7 @@ const signup = asyncMiddleware(async (req, res) => {
   }
   const user = await User.create({
     ...req.body,
-    role,
+    role:'NormalUser',
     password: await bcrypt.hash(req.body.password, 10),
   });
 
@@ -28,7 +28,12 @@ const signin = asyncMiddleware(async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email }).populate("department");
-
+  
+  const isValidPassword = await bcrypt.compare(password, user.password);
+  if (!isValidPassword) {
+    res.status(401).json({ message: "Invalid Credentials" });
+    return;
+  }
   if (!user) {
     res.status(401).json({ message: "Invalid Credentials" });
     return;
@@ -39,11 +44,6 @@ const signin = asyncMiddleware(async (req, res) => {
     return;
   }
 
-  const isValidPassword = await bcrypt.compare(password, user.password);
-  if (!isValidPassword) {
-    res.status(401).json({ message: "Invalid Credentials" });
-    return;
-  }
 
   const token = generateAuthToken(user._id, user.role);
 

@@ -1,10 +1,10 @@
 import {
   createBrowserRouter,
 } from "react-router-dom";
-import LoginPage from "./pages/login/LoginPage";
+import LoginPage from "./pages/login/login-page";
 import AdminHomepage from "./pages/Admin/AdminHomepage";
 import TechnicianHomepage from "./pages/Technnician/TechnicianHomepage";
-import UserSignup from "./pages/User/UserSignupPage";
+import UserSignup from "./pages/User/user-signup-page";
 import AdminMain from "./components/Admin/AdminMain";
 import Dashboard from "./components/AdminLayout/admin_components/Dashboard/Dashboard";
 import TechnicianMain from "./components/AdminLayout/admin_components/Technician/TechnicianMain";
@@ -22,7 +22,6 @@ import AssignedRequests from "./components/Request/AssignedRequests";
 import HelpCenter from "./pages/HelpCenter";
 import HelperDashboard from "./components/AdminLayout/admin_components/Dashboard/HelperDashboard";
 import AuthProvider from "./components/AuthProvider";
-import UserDashboard from "./components/User/dashboard";
 import Userlayout from "./components/User/layout";
 import RequestForm from "./components/Form/request-form";
 import UserHero from "./components/User/hero";
@@ -30,6 +29,7 @@ import TestComponent from "./components/User/report-table";
 import ProfilePage from "./components/User/profile-page";
 import IssueDetail from "./components/issue-detail";
 import IssueDetailView from "./components/User/issue-detail-view";
+import UserDetail from "./components/User/user-deatil";
 const router = createBrowserRouter([
   // Login Page
   {
@@ -40,10 +40,7 @@ const router = createBrowserRouter([
     </AuthProvider>
     ,
   },
-  {
-path: "test-user",
-element: <UserDashboard />,
-  },
+
   // Role Based Redirect
   {
     path: "/redirect",
@@ -60,7 +57,8 @@ element: <UserDashboard />,
       { path: "requests", element: <TestComponent /> },
       { path: "profile", element: <ProfilePage /> },
       {path: "test", element: <IssueDetail/>},
-      {path: "issue/:id", element: <IssueDetailView/>}
+      {path: "issue/:id", element: <IssueDetailView/>},
+      {path: "id/:id", element: <UserDetail/>}
     ],
   },
 
