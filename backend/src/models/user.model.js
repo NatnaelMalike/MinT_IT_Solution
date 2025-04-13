@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema(
     },
     profession: {
       type: mongoose.Schema.Types.Mixed,
+      ref: "Profession",
       required: function () {
         return this.role === "TechnicianUser";
       },

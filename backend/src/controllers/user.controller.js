@@ -5,7 +5,17 @@ import { ProfileDTO } from "../dtos/profile.dto.js";
 import asyncMiddleware from "../middlewares/async.middleware.js";
 
 const getUsers = asyncMiddleware(async (req, res) => {
-  const users = await User.find();
+  const users = await User.find({role: "NormalUser"}).populate("department");
+  const profiles = users.map((user) => ProfileDTO(user));
+  res.status(200).json(profiles);
+});
+const getAdminUsers = asyncMiddleware(async (req, res) => {
+  const users = await User.find({role:"HelperAdmin"}).populate("department");
+  const profiles = users.map((user) => ProfileDTO(user));
+  res.status(200).json(profiles);
+});
+const getTechnicianUsers = asyncMiddleware(async (req, res) => {
+  const users = await User.find({role: "TechnicianUser"}).populate("department", "name sector").populate("profession", "name");
   const profiles = users.map((user) => ProfileDTO(user));
   res.status(200).json(profiles);
 });
@@ -99,9 +109,10 @@ const approveUser = asyncMiddleware(async (req, res) => {
 export {
   approveUser,
   getUsers,
+  getAdminUsers,
+  getTechnicianUsers,
   getUserById,
   getCurrentUser,
   editProfile,
   deleteUser,
-  
 };

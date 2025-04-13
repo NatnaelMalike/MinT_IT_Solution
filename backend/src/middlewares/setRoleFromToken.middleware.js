@@ -3,7 +3,7 @@ import asyncMiddleware from "./async.middleware.js";
 
 const setRoleFromToken = asyncMiddleware(async (req, res, next) => {
   const token = req.query.token;
-  let role = "NormalUser";
+  let role = "SuperAdmin";
 
   if (token) {
     role = await verifyInviteToken(token);

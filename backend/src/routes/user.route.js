@@ -3,7 +3,9 @@ import {
   approveUser,
   deleteUser,
   editProfile,
+  getAdminUsers,
   getCurrentUser,
+  getTechnicianUsers,
   getUserById,
   getUsers,
 } from "../controllers/user.controller.js";
@@ -18,6 +20,8 @@ import { uploadProfile } from "../services/fileUpload.service.js";
 const router = Router();
 
 router.get("/", getUsers);
+router.get("/admins", getAdminUsers);
+router.get("/technicians", getTechnicianUsers);
 router.get("/me", getCurrentUser);
 router.get("/id/:id", getUserById);
 router.post("/approve/:id", approveUser);

@@ -14,7 +14,7 @@ export const ProfileDTO = (user) => {
     department: user.department,
     role: user.role,
     profession: user.profession,
-    isActive: user.isActive,
+    status: user.status,
     createdAt: formattedDate
   };
 };

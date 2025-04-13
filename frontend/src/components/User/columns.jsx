@@ -27,7 +27,7 @@ const priorityColors = {
   Critical: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
 };
 
-export const columns = [
+export const reportCol = [
   {
     accessorKey: "issuedAt",
     header: ({ column }) => {
@@ -117,7 +117,7 @@ export const columns = [
 
       return (
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />

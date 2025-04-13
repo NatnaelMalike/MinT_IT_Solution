@@ -5,13 +5,14 @@ import { ReportDTO } from "../dtos/report.dto.js";
 
 const getReports = asyncMiddleware(async (req, res) => {
   const reports = await Issue.find().populate("reportedBy", "name");
-  res.status(200).json(reports);
+  const r_reports = reports.map((report) => ReportDTO(report));
+  res.status(200).json(r_reports);
 });
 
 const getReportsByUser = asyncMiddleware(async (req, res) => {
   const reports = await Issue.find({ reportedBy: req.user._id }).populate("reportedBy", "name");
   const r_reports = reports.map((report) => ReportDTO(report));
-  res.status(200).json({ reports: r_reports });
+  res.status(200).json(r_reports);
 });
 
 const issueReport = asyncMiddleware(async (req, res) => {

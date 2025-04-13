@@ -29,7 +29,7 @@ export const useLogin = () => {
           navigate("/helper_desk/dashboard");
           break;
         case "SuperAdmin":
-          navigate("/admin/dashboard");
+          navigate("/admin");
           break;
         default:
           navigate("/");

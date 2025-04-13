@@ -1,13 +1,13 @@
 import React from "react";
-import Sidebar from "../layout/sidebar";
-import TopNav from "../layout/top-nav";
 import { Outlet } from "react-router-dom";
-import { userNavItems } from "@/constants/navigation";
+import TopNav from "../layout/top-nav";
+import Sidebar from "../layout/sidebar";
+import { helperNavItems } from "@/constants/navigation";
 
-const Userlayout = () => {
+const HelperLayout = () => {
   return (
     <div className="flex h-screen">
-      <Sidebar navItems={userNavItems} />
+      <Sidebar navItems={helperNavItems} />
       <div className="w-full flex flex-1 flex-col">
         <header className="h-16 border-b">
           <TopNav />
@@ -20,4 +20,4 @@ const Userlayout = () => {
   );
 };
 
-export default Userlayout;
+export default HelperLayout;

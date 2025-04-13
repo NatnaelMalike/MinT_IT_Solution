@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
       NormalUser: "/user",
       TechnicianUser: "/technician",
       HelperAdmin: "/helper_desk/dashboard",
-      SuperAdmin: "/admin/dashboard",
+      SuperAdmin: "/admin",
     };
     navigate(routes[role] || "/");
   };
