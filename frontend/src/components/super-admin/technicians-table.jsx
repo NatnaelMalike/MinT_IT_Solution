@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { GenericTable } from "../common/generic-table";
 import { userCol } from "./columns";
+import RegistrationDialog from "./register-user-dialog";
 
 export default function TechniciansTable() {
     const {
@@ -51,6 +52,7 @@ export default function TechniciansTable() {
   
     return (
       <div className="mx-auto">
+        <RegistrationDialog/>
         <div className="flex justify-between items-center py-4">
           <Input
             placeholder="Search name..."
@@ -60,7 +62,6 @@ export default function TechniciansTable() {
             }
             className="max-w-sm"
           />
-  
           <DropdownMenu>
             <DropdownMenuTrigger>
               <Button variant="outline">Columns</Button>
@@ -82,7 +83,6 @@ export default function TechniciansTable() {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-  
         <GenericTable table={table} />
       </div>
     );

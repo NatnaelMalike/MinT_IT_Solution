@@ -17,22 +17,21 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { GenericTable } from "../common/generic-table";
-import { userCol } from "./columns";
-import RegistrationDialog from "./register-user-dialog";
+import { professionCol } from "./columns";
 
-export default function AdminsTable() {
+export default function ProfessionsTable() {
   const {
-    data: users =[],
+    data: professions =[],
     isLoading,
     error,
-  } = useApiQuery(["users", "admins"], "/user/admins", { staleTime: 1000 * 60 * 5 });
+  } = useApiQuery(["professions"], "/profession", { staleTime: 1000 * 60 * 5 });
   const [columnFilters, setColumnFilters] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
 
-  const table = useReactTable({
-      data: users,
-      columns: userCol,
+  const table =  useReactTable({
+      data: professions,
+      columns: professionCol,
       state: {
         columnFilters,
         sorting,
@@ -52,8 +51,6 @@ export default function AdminsTable() {
 
   return (
     <div className="mx-auto">
-              <RegistrationDialog/>
-      
       <div className="flex justify-between items-center py-4">
         <Input
           placeholder="Search name..."

@@ -17,6 +17,10 @@ export const userSchema = z
       .string()
       .min(1, "Department is required")
       .max(100, "Department must be at most 100 characters"),
+    profession: z
+      .string()
+      .min(1, "profession is required")
+      .max(100, "profession must be at most 100 characters"),
     email: z.string().min(1, "Email is required").email("Invalid email format"),
     password: z
       .string()

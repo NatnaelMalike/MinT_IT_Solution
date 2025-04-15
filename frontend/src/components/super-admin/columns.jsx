@@ -91,3 +91,26 @@ export const departmentCol = [
     },
   },
 ];
+export const professionCol = [
+  {
+    accessorKey: "name",
+    header: "Name",
+  },
+  {
+    accessorKey: "description",
+    header: "Description",
+  },
+  // {
+  //   accessorKey: "isActive",
+  //   header: "Available",
+  //   cell: ({ row }) => {
+  //     return row.original.isActive ? (
+  //       <Badge className="text-sm px-3 py-1">Yes</Badge>
+  //     ) : (
+  //       <Badge variant={"destructive"} className="text-sm px-3 py-1">
+  //         No
+  //       </Badge>
+  //     );
+  //   },
+  // },
+];

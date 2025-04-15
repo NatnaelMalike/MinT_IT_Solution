@@ -34,15 +34,15 @@ export default function Sidebar({navItems}) {
         className={`
                 fixed inset-y-0 left-0 z-[70] w-64  transform transition-transform duration-200 ease-in-out
                 lg:translate-x-0 lg:static lg:w-64 border-r
-                ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+                ${isMobileMenuOpen ? "translate-x-0 bg-sidebar" : "-translate-x-full"}
             `}
       >
-        <div className="h-full flex flex-col">
+        <div className="h-full flex  flex-col">
           <Link
             href="https://www.mint.gov.et/"
             target="_blank"
             rel="noopener noreferrer"
-            className="h-16 px-6 flex items-center "
+            className="h-16 px-6 flex items-center border-b"
           >
             <div className="flex items-center gap-3">
               <Building2 />
@@ -92,7 +92,7 @@ export default function Sidebar({navItems}) {
 
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 b bg-opacity-50 z-[65] lg:hidden"
+          className="fixed inset-0   z-[65] lg:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         />
       )}

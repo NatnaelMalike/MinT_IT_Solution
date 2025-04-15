@@ -35,6 +35,11 @@ import { useSignup } from "@/hooks/useSignup";
 
 export default function UserForm() {
   const {
+    data: professions,
+    isLoading: proLoading,
+    error: proError,
+  } = useApiQuery(["professions"], "/profession", { staleTime: 1000 * 60 * 5 });
+  const {
     data: departments,
     isLoading: deptLoading,
     error: deptError,
@@ -52,6 +57,7 @@ export default function UserForm() {
       name: "",
       phone: "",
       department: "",
+      profession: "",
       password: "",
       confirmPassword: "",
     },
@@ -169,6 +175,69 @@ export default function UserForm() {
                             className={cn(
                               "ml-auto h-4 w-4",
                               department._id === field.value
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="profession"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Profession</FormLabel>
+              <Popover>
+                <PopoverTrigger>
+                  <FormControl>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "w-full justify-between ",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value
+                        ? professions?.find(
+                            (profession) => profession._id === field.value
+                          )?.name
+                        : "Select Your Profession"}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="p-0  max-h-80 overflow-y-auto">
+                  <Command>
+                    <CommandInput
+                      placeholder="Search Profession..."
+                      className="h-9"
+                    />
+                    <CommandEmpty>No Department found.</CommandEmpty>
+                    <CommandGroup>
+                      {professions?.map((profession) => (
+                        <CommandItem
+                          value={profession._id}
+                          key={profession._id}
+                          onSelect={() => {
+                            form.setValue("profession", profession._id);
+                          }}
+                        >
+                          {profession.name}
+                          <Check
+                            className={cn(
+                              "ml-auto h-4 w-4",
+                              profession._id === field.value
                                 ? "opacity-100"
                                 : "opacity-0"
                             )}

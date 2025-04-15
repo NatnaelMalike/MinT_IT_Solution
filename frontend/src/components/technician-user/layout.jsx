@@ -3,13 +3,13 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import TopNav from "../layout/top-nav";
 import Sidebar from "../layout/sidebar";
-import { adminNavItems } from "@/constants/navigation";
+import { technicianNavItems } from "@/constants/navigation";
 import { Toaster } from "../ui/sonner";
 
-const AdminLayout = () => {
+const TechnicianLayout = () => {
   return (
     <div className="flex h-screen">
-      <Sidebar navItems={adminNavItems} />
+      <Sidebar navItems={technicianNavItems} />
       <div className="w-full flex flex-1 flex-col">
         <header className="h-16 border-b">
           <TopNav />
@@ -23,4 +23,4 @@ const AdminLayout = () => {
   );
 };
 
-export default AdminLayout;
+export default TechnicianLayout;

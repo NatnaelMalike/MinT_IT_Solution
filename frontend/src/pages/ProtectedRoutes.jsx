@@ -1,9 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { useAuthContext } from "../hooks/useAuthContext";
 import { jwtDecode } from "jwt-decode"; // Correct import
+import useAuthStore from "@/store/authStore";
 
 const ProtectedRoutes = ({ children, role }) => {
-    const { token } = useAuthContext();
+    const { token } = useAuthStore();
 
     if (!token) {
         return <Navigate to="/" />;

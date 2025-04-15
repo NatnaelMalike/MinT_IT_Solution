@@ -1,6 +1,6 @@
 import Joi from "joi";
-
 const validate = (schema) => (req, res, next) => {
+
   const keys = Object.keys(schema);
 
   const object = keys.reduce((obj, key) => {
@@ -9,6 +9,7 @@ const validate = (schema) => (req, res, next) => {
     }
     return obj;
   }, {});
+
   const { error } = Joi.compile(schema).validate(object);
 
   if (error) {
@@ -25,6 +26,7 @@ const validate = (schema) => (req, res, next) => {
     res.status(400).json({ error: true, errors });
     return;
   }
+
   return next();
 };
 

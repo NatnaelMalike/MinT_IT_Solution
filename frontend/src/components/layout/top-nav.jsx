@@ -1,11 +1,10 @@
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Bell, ChevronRight } from "lucide-react";
-import Profile01 from "../User/profile-01";
+import Profile01 from "../normal-user/profile-01";
 import { Link, useLocation } from "react-router-dom";
 import { ModeToggle } from "../mode-toggle";
 
@@ -37,9 +36,7 @@ export default function TopNav() {
             <div key={item.href} className="flex items-center">
               <ChevronRight className="h-4 w-4 text-muted-foreground mx-1" />
               {isLast ? (
-                <span className="">
-                  {item.label}
-                </span>
+                <span className="">{item.label}</span>
               ) : (
                 <Link
                   to={item.href}

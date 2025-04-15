@@ -15,9 +15,10 @@ const signup = asyncMiddleware(async (req, res) => {
   if (emailExists) {
     return res.status(400).json({ message: "Email already exists" });
   }
+  console.log("role",req.body.role);
   const user = await User.create({
-    role:'NormalUser',
     ...req.body,
+    
     password: await bcrypt.hash(req.body.password, 10),
   });
 

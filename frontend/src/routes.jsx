@@ -1,32 +1,29 @@
 import { createBrowserRouter } from "react-router-dom";
-import LoginPage from "./pages/login/login-page";
-import TechnicianHomepage from "./pages/Technnician/TechnicianHomepage";
-import UserSignup from "./pages/User/user-signup-page";
-import HelperHomepage from "./pages/HelperDesk/HelperHomepage";
-import ForgetPassword from "./pages/reset_password/ForgetPassword";
-import RequestTable from "./components/Request/RequestTable";
+import LoginPage from "./pages/login-page";
+import UserSignup from "./pages/user-signup-page";
+import ForgetPassword from "./pages/ForgetPassword";
 import UnAuthorized from "./pages/UnAuthorized";
-import RoleBasedRedirect from "./pages/RoleBasedRedirect";
-import TechnicianRequestTable from "./components/Technician/TechnicianRequestTable";
-import PasswordReset from "./pages/reset_password/PasswordReset";
-import AssignedRequests from "./components/Request/AssignedRequests";
-import HelpCenter from "./pages/HelpCenter";
-import HelperDashboard from "./components/AdminLayout/admin_components/Dashboard/HelperDashboard";
+import PasswordReset from "./pages/PasswordReset";
+import HelpCenter from "./pages/contact-center";
 import AuthProvider from "./components/AuthProvider";
-import Userlayout from "./components/User/layout";
+import Userlayout from "./components/normal-user/layout";
 import RequestForm from "./components/Form/request-form";
-import UserHero from "./components/User/hero";
-import ReportTable from "./components/User/report-table";
-import ProfilePage from "./components/User/profile-page";
+import UserHero from "./components/normal-user/hero";
+import ReportTable from "./components/normal-user/report-table";
+import ProfilePage from "./components/normal-user/profile-page";
 import IssueDetail from "./components/issue-detail";
-import IssueDetailView from "./components/User/issue-detail-view";
-import UserDetail from "./components/User/user-deatil";
+import IssueDetailView from "./components/normal-user/issue-detail-view";
+import UserDetail from "./components/normal-user/user-deatil";
 import AdminLayout from "./components/super-admin/layout";
 import UsersTable from "./components/super-admin/users-table";
 import TechniciansTable from "./components/super-admin/technicians-table";
 import AdminsTable from "./components/super-admin/admins-table";
 import DepartmentsTable from "./components/super-admin/departments-table";
 import HelperLayout from "./components/helper-admin/layout";
+import ProfessionsTable from "./components/super-admin/professions-table";
+import TechnicianLayout from "./components/technician-user/layout";
+import NotFound from "./pages/error-page";
+import ContactPage from "./pages/contact-center";
 const router = createBrowserRouter([
   // Login Page
   {
@@ -36,12 +33,13 @@ const router = createBrowserRouter([
         <LoginPage />
       </AuthProvider>
     ),
+    errorElement: <NotFound/>
   },
 
-  // Role Based Redirect
+  // User Signup
   {
-    path: "/redirect",
-    element: <RoleBasedRedirect />,
+    path: "/signup",
+    element: <UserSignup />,
   },
 
   // User Dashboard
@@ -59,10 +57,43 @@ const router = createBrowserRouter([
     ],
   },
 
-  // User Signup
+  // Super Admin Dashboard
   {
-    path: "/signup",
-    element: <UserSignup />,
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      { index: true, element: <UserHero /> },
+      { path: "profile", element: <ProfilePage /> },
+      { path: "reports", element: <ReportTable /> },
+      { path: "admin_users", element: <AdminsTable /> },
+      { path: "users", element: <UsersTable /> },
+      { path: "technicians", element: <TechniciansTable /> },
+      { path: "departments", element: <DepartmentsTable /> },
+      { path: "professions", element: <ProfessionsTable /> },
+      { path: "forgot-password", element: <ForgetPassword /> },
+      { path: "reset-password/:email", element: <PasswordReset /> },
+    ],
+  },
+
+  // Helper Admin Dashboard
+  {
+    path: "/helper-admin",
+    element: <HelperLayout />,
+    children: [
+      { index: true, element: <UserHero /> },
+      { path: "reports", element: <ReportTable /> },
+      { path: "profile", element: <ProfilePage /> },
+    ],
+  },
+
+  // Technician Dashboard
+  {
+    path: "/technician",
+    element: <TechnicianLayout />,
+    children: [
+      { path: "requests", element: <ReportTable /> },
+      { path: "profile", element: <ProfilePage /> },
+    ],
   },
 
   // Forgot Password
@@ -80,41 +111,10 @@ const router = createBrowserRouter([
     path: "/unauthorized",
     element: <UnAuthorized />,
   },
-  // Helper Admin Dashboard
+  // Contact 
   {
-    path: "/helper-admin",
-    element: <HelperLayout />,
-    children: [
-      { index: true, element: <UserHero /> },
-      { path: "reports", element: <ReportTable /> },
-      { path: "profile", element: <ProfilePage /> },
-    ],
-  },
-  // Admin Dashboard
-  {
-    path: "/admin",
-    element: <AdminLayout />,
-    children: [
-      { index: true, element: <UserHero /> },
-      { path: "profile", element: <ProfilePage /> },
-      { path: "reports", element: <ReportTable /> },
-      { path: "admin_users", element: <AdminsTable /> },
-      { path: "users", element: <UsersTable /> },
-      { path: "technicians", element: <TechniciansTable /> },
-      { path: "departments", element: <DepartmentsTable /> },
-      { path: "forgot-password", element: <ForgetPassword /> },
-      { path: "reset-password/:email", element: <PasswordReset /> },
-    ],
-  },
-
-  // Technician Dashboard
-  {
-    path: "/technician",
-    element: <TechnicianHomepage />,
-    children: [
-      { path: "requests", element: <TechnicianRequestTable /> },
-      { path: "profile", element: <ProfilePage /> },
-    ],
+    path: "/contact",
+    element: <ContactPage />,
   },
 ]);
 

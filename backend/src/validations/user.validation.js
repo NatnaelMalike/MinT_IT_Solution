@@ -35,23 +35,17 @@ const userSchema = {
         return value;
       })
       .required(),
-    profession: Joi.alternatives().conditional("role", {
-      is: "TechnicianUser",
-      then: Joi.string()
-        .custom((value, helpers) => {
-          if (!mongoose.Types.ObjectId.isValid(value)) {
-            return helpers.message('"id" must be a valid MongoDB ObjectId');
-          }
-          return value;
-        })
+    profession: Joi.string().custom((value, helpers) => {
+      if (!mongoose.Types.ObjectId.isValid(value)) {
+        return helpers.message('"id" must be a valid MongoDB ObjectId');
+      }
+      return value;
+    })
         .required(),
-      otherwise: Joi.string().valid("None").default("None"),
-    }),
     isActive: Joi.boolean().default(true),
 
     role: Joi.string()
       .valid(...validRoles)
-      .default("NormalUser"),
   }),
 };
 const editProfileSchema = {
