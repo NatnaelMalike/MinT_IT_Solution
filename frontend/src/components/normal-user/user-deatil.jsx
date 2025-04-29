@@ -78,13 +78,13 @@ export default function UserDetail() {
               <h1 className="mt-6 text-3xl font-bold tracking-tight">{user.name}</h1>
 
               <div className="mt-2 flex items-center gap-2">
-                <Badge variant={user.isActive ? "default" : "secondary"} className="text-xs px-3 py-1">
-                  {user.isActive ? "Active" : "Inactive"}
+              <Badge className="text-xs px-3 py-1" variant={"secondary"}>
+                  {user.status}
                 </Badge>
-                {user.isActive && <BadgeCheck className="h-5 w-5 text-primary" />}
+                {user.status =="active" && <BadgeCheck className="h-5 w-5 text-primary" />}
               </div>
 
-              <p className="mt-2 text-muted-foreground text-lg font-medium">{user.profession == "None"? "Employee": user.profession}</p>
+              <p className="mt-2 text-muted-foreground text-lg font-medium">{user.profession == "None"? "Employee": user.profession.name}</p>
 
               <div className="mt-4 flex items-center text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4 mr-1" />

@@ -24,6 +24,8 @@ import ProfessionsTable from "./components/super-admin/professions-table";
 import TechnicianLayout from "./components/technician-user/layout";
 import NotFound from "./pages/error-page";
 import ContactPage from "./pages/contact-center";
+import ProtectedRoutes from "./pages/ProtectedRoutes";
+
 const router = createBrowserRouter([
   // Login Page
   {
@@ -42,10 +44,14 @@ const router = createBrowserRouter([
     element: <UserSignup />,
   },
 
-  // User Dashboard
+  // User Dashboard (NormalUser only)
   {
     path: "/user",
-    element: <Userlayout />,
+    element: (
+      <ProtectedRoutes role="NormalUser">
+        <Userlayout />
+      </ProtectedRoutes>
+    ),
     children: [
       { index: true, element: <UserHero /> },
       { path: "add-request", element: <RequestForm /> },
@@ -53,14 +59,18 @@ const router = createBrowserRouter([
       { path: "profile", element: <ProfilePage /> },
       { path: "test", element: <IssueDetail /> },
       { path: "issue/:id", element: <IssueDetailView /> },
-      { path: "id/:id", element: <UserDetail /> },
+      // REMOVED: { path: "id/:id", element: <UserDetail /> },
     ],
   },
 
   // Super Admin Dashboard
   {
     path: "/admin",
-    element: <AdminLayout />,
+    element: (
+      <ProtectedRoutes role="SuperAdmin">
+        <AdminLayout />
+      </ProtectedRoutes>
+    ),
     children: [
       { index: true, element: <UserHero /> },
       { path: "profile", element: <ProfilePage /> },
@@ -78,7 +88,11 @@ const router = createBrowserRouter([
   // Helper Admin Dashboard
   {
     path: "/helper-admin",
-    element: <HelperLayout />,
+    element: (
+      <ProtectedRoutes role="HelperAdmin">
+        <HelperLayout />
+      </ProtectedRoutes>
+    ),
     children: [
       { index: true, element: <UserHero /> },
       { path: "reports", element: <ReportTable /> },
@@ -89,11 +103,25 @@ const router = createBrowserRouter([
   // Technician Dashboard
   {
     path: "/technician",
-    element: <TechnicianLayout />,
+    element: (
+      <ProtectedRoutes role="TechnicianUser">
+        <TechnicianLayout />
+      </ProtectedRoutes>
+    ),
     children: [
       { path: "requests", element: <ReportTable /> },
       { path: "profile", element: <ProfilePage /> },
     ],
+  },
+
+  // User Detail Route (SuperAdmin & HelperAdmin only)
+  {
+    path: "/user/id/:id",
+    element: (
+      <ProtectedRoutes role={["SuperAdmin", "HelperAdmin"]}>
+        <UserDetail />
+      </ProtectedRoutes>
+    ),
   },
 
   // Forgot Password

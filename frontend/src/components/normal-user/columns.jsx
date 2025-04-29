@@ -12,6 +12,7 @@ import { MoreHorizontal } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Link } from "react-router-dom";
+import { useRoles } from "@/hooks/useRoles";
 const statusColors = {
   Pending: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
   "In Progress":
@@ -26,7 +27,6 @@ const priorityColors = {
   High: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300",
   Critical: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300",
 };
-
 export const reportCol = [
   {
     accessorKey: "issuedAt",
@@ -114,6 +114,7 @@ export const reportCol = [
     header: "Actions",
     cell: ({ row }) => {
       const issue = row.original;
+      const {isUser} = useRoles()
 
       return (
         <DropdownMenu>
@@ -126,7 +127,11 @@ export const reportCol = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem><Link to={`/user/id/${issue.reportedBy._id}`}> View Reporter</Link></DropdownMenuItem>
+            {!isUser && (
+            <DropdownMenuItem>
+              <Link to={`/user/id/${issue.reportedBy._id}`}>View Reporter</Link>
+            </DropdownMenuItem>
+          )}
             <DropdownMenuItem><Link to={`/user/issue/${issue.id}`}> View issue details</Link></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

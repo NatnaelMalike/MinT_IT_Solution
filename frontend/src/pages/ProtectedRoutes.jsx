@@ -1,23 +1,17 @@
 import { Navigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode"; // Correct import
 import useAuthStore from "@/store/authStore";
 
+// Accepts a single role or an array of roles
 const ProtectedRoutes = ({ children, role }) => {
-    const { token } = useAuthStore();
+    const { token, user } = useAuthStore();
 
-    if (!token) {
+    if (!token || !user) {
         return <Navigate to="/" />;
     }
 
-    let decoded;
-    try {
-        decoded = jwtDecode(token);
-    } catch (e) {
-        // console.error("Invalid token:", e);
-        return <Navigate to="/" />;
-    }
-
-    if (decoded.role !== role) {
+    // Allow role to be a string or array
+    const allowedRoles = Array.isArray(role) ? role : [role];
+    if (!allowedRoles.includes(user.role)) {
         return <Navigate to="/unauthorized" />;
     }
 

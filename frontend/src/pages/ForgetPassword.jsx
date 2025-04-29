@@ -13,12 +13,9 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import logo from "../../assets/img/MinT-Logo.jpg";
-import { toast } from "sonner";
 import axios from "axios";
 import { useState } from "react";
 import { TailSpin } from "react-loader-spinner";
-import { Toaster } from "@/components/ui/sonner";
 import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({

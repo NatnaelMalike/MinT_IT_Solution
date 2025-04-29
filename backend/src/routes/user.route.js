@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   approveUser,
+  activateUser,
   deleteUser,
   editProfile,
   getAdminUsers,
@@ -10,6 +11,7 @@ import {
   getUsers,
 } from "../controllers/user.controller.js";
 import validate from "../middlewares/validate.middleware.js";
+import { adminMiddleware } from "../middlewares/authorization.middleware.js";
 import {
   changePasswordSchema,
   editProfileSchema,
@@ -28,6 +30,7 @@ router.post("/approve/:id", approveUser);
 router.post("/profile-picture", uploadProfile, uploadProfilePicture)
 router.patch("/edit", validate(editProfileSchema), editProfile);
 // router.patch('/changePassword',validate(changePasswordSchema), changePassword)
+router.patch("/activate/:id", adminMiddleware, activateUser);
 router.delete("/delete/:id", deleteUser);
 
 export default router;

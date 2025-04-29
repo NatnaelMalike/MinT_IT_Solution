@@ -37,10 +37,7 @@ const userSchema = new mongoose.Schema(
     profession: {
       type: mongoose.Schema.Types.Mixed,
       ref: "Profession",
-      required: function () {
-        return this.role === "TechnicianUser";
-      },
-      default: "None",
+      required: true
     },
     status: { type: String, enum: ['pending', 'active', 'inactive'], default: 'pending' },
     role: {

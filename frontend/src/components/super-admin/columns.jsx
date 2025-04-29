@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { Badge } from "../ui/badge";
+import { Link } from "react-router-dom";
 
 const userStatus = {
   pending: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300",
@@ -66,6 +67,18 @@ export const userCol = [
   {
     accessorKey: "createdAt",
     header: "Member since",
+  },
+  {
+    id: "actions",
+    header: "",
+    cell: ({ row }) => {
+
+      return (
+        <Button className="p-0" variant={"link"}>
+          <Link to={`/user/id/${row.original.id}`}>View User</Link>
+        </Button>
+      );
+    },
   },
 ];
 export const departmentCol = [

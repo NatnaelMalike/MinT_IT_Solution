@@ -27,7 +27,7 @@ const getUserById = asyncMiddleware(async (req, res) => {
     return;
   }
 
-  const user = await User.findById(id).populate("department");
+  const user = await User.findById(id).populate("department").populate("profession");
   if (!user) {
     res.status(404).json({ message: "User not found." });
     return;
@@ -106,6 +106,24 @@ const approveUser = asyncMiddleware(async (req, res) => {
   res.status(200).json({ message: "User approved successfully" });
 });
 
+// Activate user by admin
+const activateUser = asyncMiddleware(async (req, res) => {
+  const { id } = req.params;
+  if (!isValidObjectId(id)) {
+    return res.status(400).json({ message: "Invalid user id." });
+  }
+  const user = await User.findById(id);
+  if (!user) {
+    return res.status(404).json({ message: "User not found." });
+  }
+  if (user.status === "active") {
+    return res.status(400).json({ message: "User is already active." });
+  }
+  user.status = "active";
+  await user.save();
+  res.status(200).json({ message: "User activated successfully." });
+});
+
 export {
   approveUser,
   getUsers,
@@ -115,4 +133,5 @@ export {
   getCurrentUser,
   editProfile,
   deleteUser,
+  activateUser,
 };
