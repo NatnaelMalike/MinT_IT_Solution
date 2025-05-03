@@ -17,9 +17,9 @@ export const helperNavItems = [
  
   ];
 export const technicianNavItems = [
-    { href: '/technician', label: 'Home', icon: Home },
-    { href: '/technician/reports', label: 'Assets', icon: FileStack }, // Keep commented if not used
-    { href: '/technician/profile', label: 'Transactions', icon: User2 },
+    { href: '/technician', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/technician/reports', label: 'Reports', icon: FileStack }, // Keep commented if not used
+    { href: '/technician/profile', label: 'Profile', icon: User2 },
 
   ];  
 export const userNavItems = [

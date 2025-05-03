@@ -28,7 +28,7 @@ const signup = asyncMiddleware(async (req, res) => {
 const signin = asyncMiddleware(async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email }).populate("department");
+  const user = await User.findOne({ email }).populate("department").populate("profession");
   
   const isValidPassword = await bcrypt.compare(password, user.password);
   if (!isValidPassword) {

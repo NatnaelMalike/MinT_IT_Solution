@@ -47,7 +47,7 @@ export default function ProfilePage() {
                 {user.status =="active" && <BadgeCheck className="h-5 w-5 text-primary" />}
               </div>
 
-              <p className="mt-2 text-muted-foreground text-lg font-medium">{user.profession == "None"? "Employee": user.profession}</p>
+              <p className="mt-2 text-muted-foreground text-lg font-medium">{user.profession.name == "None"? "Employee": user.profession.mame}</p>
 
               <div className="mt-4 flex items-center text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4 mr-1" />

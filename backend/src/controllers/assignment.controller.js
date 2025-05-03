@@ -6,6 +6,7 @@ const assignIssue = asyncMiddleware(async (req, res) => {
   const issueId = req.params.id;
   const issue = await Issue.findById(issueId);
   const { assignedTo, assignedBy, message } = req.body;
+  
   // if issue is not found
   if (!issue) {
     res.status(404).json({ message: "Issue not found" });

@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema(
       ref: "Profession",
       required: true
     },
-    status: { type: String, enum: ['pending', 'active', 'inactive'], default: 'pending' },
+    status: { type: String, enum: ['pending', 'active', 'inactive'], default: 'active' },
     role: {
       type: String,
       required: true,

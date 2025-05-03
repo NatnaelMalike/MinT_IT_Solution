@@ -38,7 +38,7 @@ const getUserById = asyncMiddleware(async (req, res) => {
 
 const getCurrentUser = asyncMiddleware(async (req, res) => {
   const { _id:id} = req.user;
-  const user = await User.findById(id).populate("department");
+  const user = await User.findById(id).populate("department").populate("profession");
   if (!user) {
     res.status(404).json({ message: "User not found" });
     return;
