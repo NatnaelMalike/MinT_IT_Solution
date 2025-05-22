@@ -4,7 +4,8 @@ import decodeToken from '@/lib/jwtDecode'; // Decodes the JWT token
 
 // ✅ Create API Client Instance
 const apiClient = axios.create({
-  baseURL: 'http://localhost:4000/', // Replace with your backend URL
+  baseURL: 'https://mint-it-solution.onrender.com/', // Replace with your backend URL
+  // baseURL: 'http://localhost:4000/', // Replace with your backend URL
   headers: {
     'Content-Type': 'application/json',
   },

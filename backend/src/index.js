@@ -35,14 +35,18 @@ mongoose
   })
   .catch((err) => console.error(`Couldn't Connect to DB`, err));
 
-app.use(
-  cors({
-    origin: "https://mint-isuue-report-system.vercel.app/",
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    credentials: true,
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+  app.use(
+    cors({
+      origin: [
+        "https://mint-isuue-report-system.vercel.app",
+        "http://localhost:5173",
+      ],
+      methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+      credentials: true,
+      allowedHeaders: ["Content-Type", "Authorization"],
+    })
+  );
+  
 
 // app.all("/api/auth/*", toNodeHandler(auth));
 app.use(express.json());
