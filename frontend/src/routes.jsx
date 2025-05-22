@@ -8,7 +8,6 @@ import HelpCenter from "./pages/contact-center";
 import AuthProvider from "./components/AuthProvider";
 import Userlayout from "./components/normal-user/layout";
 import RequestForm from "./components/Form/request-form";
-import UserHero from "./components/normal-user/hero";
 import ReportTable from "./components/normal-user/report-table";
 import ProfilePage from "./components/normal-user/profile-page";
 import IssueDetail from "./components/issue-detail";
@@ -25,6 +24,12 @@ import TechnicianLayout from "./components/technician-user/layout";
 import NotFound from "./pages/error-page";
 import ContactPage from "./pages/contact-center";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
+
+// Import the new role-based hero components
+import UserHero from "./components/dashboard-heroes/UserHero";
+import TechnicianHero from "./components/dashboard-heroes/TechnicianHero";
+import HelperAdminHero from "./components/dashboard-heroes/HelperAdminHero";
+import SuperAdminHero from "./components/dashboard-heroes/SuperAdminHero";
 
 const router = createBrowserRouter([
   // Login Page
@@ -72,7 +77,7 @@ const router = createBrowserRouter([
       </ProtectedRoutes>
     ),
     children: [
-      { index: true, element: <UserHero /> },
+      { index: true, element: <SuperAdminHero /> },
       { path: "profile", element: <ProfilePage /> },
       { path: "reports", element: <ReportTable /> },
       { path: "admin_users", element: <AdminsTable /> },
@@ -94,7 +99,7 @@ const router = createBrowserRouter([
       </ProtectedRoutes>
     ),
     children: [
-      { index: true, element: <UserHero /> },
+      { index: true, element: <HelperAdminHero /> },
       { path: "reports", element: <ReportTable /> },
       { path: "profile", element: <ProfilePage /> },
     ],
@@ -109,7 +114,7 @@ const router = createBrowserRouter([
       </ProtectedRoutes>
     ),
     children: [
-      { index: true, element: <UserHero /> },
+      { index: true, element: <TechnicianHero /> },
       { path: "reports", element: <ReportTable /> },
       { path: "profile", element: <ProfilePage /> },
     ],

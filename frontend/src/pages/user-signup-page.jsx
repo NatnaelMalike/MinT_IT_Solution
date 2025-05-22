@@ -124,7 +124,7 @@ const UserSignupPage = () => {
 
                 {/* Right side - Form */}
                 <motion.div 
-                  className="p-6 sm:p-8 md:col-span-3  relative"
+                  className="p-6 sm:p-8 md:col-span-3 -relative"
                   variants={itemVariants}
                 >
                   <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 blur-3xl z-0"></div>
