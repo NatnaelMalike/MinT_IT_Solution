@@ -38,7 +38,7 @@ mongoose
   app.use(
     cors({
       origin: [
-        "https://mint-isuue-report-system.vercel.app",
+        "https://mintissuereportsystem.vercel.app/",
         "http://localhost:5173",
       ],
       methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
